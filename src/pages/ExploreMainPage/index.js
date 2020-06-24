@@ -1,7 +1,7 @@
 import React, {
   useContext,
 } from 'react';
-import { DrinksContext, } from '../../contexts/DrinksContext';
+import { DrinksContext } from '../../contexts/DrinksContext';
 
 function ExploreMainPage() {
   const context = useContext(
