@@ -1,14 +1,14 @@
 import React, {
   useContext,
 } from 'react';
-import { DrinksContext } from '../../contexts/DrinksContext';
+import { DrinksContext, } from '../../contexts/DrinksContext';
 
 function ExploreMainPage() {
   const context = useContext(
-    DrinksContext
+    DrinksContext,
   );
   const { state } = context;
-  return (<div>TESTE</div>);
+  return <div>{state}</div>;
 }
 
 export default ExploreMainPage;
