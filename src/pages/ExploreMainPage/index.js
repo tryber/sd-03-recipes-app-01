@@ -8,7 +8,7 @@ function ExploreMainPage() {
     DrinksContext
   );
   const { state } = context;
-  return (<div>{state}</div>);
+  return (<div>TESTE</div>);
 }
 
 export default ExploreMainPage;
