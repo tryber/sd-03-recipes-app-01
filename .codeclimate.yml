@@ -17,7 +17,7 @@ checks:
       threshold: 20
   method-lines:
     config:
-      threshold: 30
+      threshold: 45
   nested-control-flow:
     config:
       threshold: 4
@@ -37,6 +37,7 @@ exclude_patterns:
   - "**/libs/*.css"
   - "**/libs/*.js"
   - "cypress/**/*"
+  - "node_modules/"
 plugins:
   csslint:
     enabled: true
