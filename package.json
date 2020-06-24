@@ -9,6 +9,7 @@
     "axios": "^0.19.1",
     "clipboard-copy": "^3.1.0",
     "lodash": "^4.17.15",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-logger": "^1.1.0",
@@ -43,7 +44,7 @@
   "devDependencies": {
     "clipboardy": "^2.1.0",
     "cypress": "^3.7.0",
-    "cypress-multi-reporters": "^1.4.0",
+    "cypress-multi-reporters": "^1.4.0",   
     "fs-extra": "^9.0.1",
     "mocha": "^8.0.1",
     "mochawesome": "^6.1.1",
