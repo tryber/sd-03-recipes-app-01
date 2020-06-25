@@ -4,7 +4,7 @@ import { render, waitForDomChange, cleanup } from '@testing-library/react';
 import { FoodsPage } from '../pages';
 import Provider from '../contexts/Provider';
 
-import meals from '../mocks/meals';
+import meals from '../../cypress/mocks/meals';
 
 const renderWithFoodContext = (children) => render(<Provider>{children}</Provider>);
 
