@@ -42,6 +42,4 @@ export async function fetchCategoriesApi() {
   return response.ok ? Promise.resolve(json) : Promise.reject(json);
 }
 
-export const handleCategoriesData = ({ strCategory }) => {
-  return { category: strCategory };
-};
+export const handleCategoriesData = ({ strCategory }) => ({ category: strCategory });
