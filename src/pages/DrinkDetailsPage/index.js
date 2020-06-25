@@ -14,7 +14,7 @@ function DrinkDetailsPage({ id }) {
     fetchDetailsDrink(id)
       .then(({ drinks: drk }) => setDrink(handleDrinksData(drk[0])))
       .then(() => setLoading(false))
-      .catch((err) => { console.log(err); setError(err); })
+      .catch((err) => { console.log(err); setError(err); });
   }, [id, setError, setDrink, setLoading]);
 
   if (error) return <h1>Aconteceu algo errado em detalhes de bebidas 1</h1>;

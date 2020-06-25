@@ -1,7 +1,2 @@
-import { default as Card } from './Card';
-import { default as DetailsCard } from './DetailsCard';
-
-export {
-  Card,
-  DetailsCard,
-};
+export { default as Card } from './Card';
+export { default as DetailsCard } from './DetailsCard';

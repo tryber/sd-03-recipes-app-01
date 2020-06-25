@@ -20,7 +20,6 @@ function FoodsPage() {
 
   if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
   if (loading) return <h1>Loading...</h1>;
-  console.log(foods[0])
 
   return (
     <div>

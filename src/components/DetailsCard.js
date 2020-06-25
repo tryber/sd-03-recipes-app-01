@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 
 import Card from './Card';
@@ -18,14 +19,14 @@ function DetailsCard({ eat, type }) {
     fetch(url).then((res) => res.json())
       .then((obj) => {
         let arr = [];
-        Object.entries(obj).map(([key, value]) => {
+        Object.entries(obj).forEach(([key, value]) => {
           if (key === 'drinks') arr = value.slice(0, 2).map((drk) => handleDrinksData(drk));
           if (key === 'meals') arr = value.slice(0, 2).map((meal) => handleFoodsData(meal));
         });
         setRecomends(arr);
       }).then(() => setLoading(false))
-      .catch((err) => { console.log(err); setError(err) });
-  }, [])
+      .catch((err) => { console.log(err); setError(err); });
+  }, []);
 
   const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
 
@@ -36,14 +37,14 @@ function DetailsCard({ eat, type }) {
         name={name}
         index={-100}
         srcImage={srcImage}
-        testid={{ title: "recipe-title", img: 'recipe-photo' }}
+        testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
       <p data-testid="recipe-category">Category: {category}</p>
-      {(isAlcoholic !== undefined) && <p>Alcólica: {isAlcoholic ? 'Yup' : 'No'}</p>}
+      {(typeof isAlcoholic === 'boolean') && <p>Alcólica: {isAlcoholic ? 'Yup' : 'No'}</p>}
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
           <li data-testid={`${index}-ingredient-name-and-measure`} key={ingredient}>
-            {ingredient} -> {measure}
+            {ingredient} {measure}
           </li>
         ))}
       </ul>
@@ -63,5 +64,25 @@ function DetailsCard({ eat, type }) {
     </div>
   );
 }
+
+DetailsCard.propTypes = {
+  eat: PropTypes.shape({
+    id: PropTypes.string.isRequired, // number as string
+    name: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    instructions: PropTypes.string.isRequired,
+    origin: PropTypes.string.isRequired,
+    srcImage: PropTypes.string.isRequired,
+    video: PropTypes.string.isRequired,
+    source: PropTypes.string.isRequired,
+    ingredients: PropTypes.arrayOf(
+      PropTypes.objectOf(
+        PropTypes.string.isRequired,
+      ).isRequired,
+    ).isRequired,
+  }).isRequired,
+  isAlcoholic: PropTypes.bool,
+  type: PropTypes.oneOf(['food', 'drink']).isRequired,
+};
 
 export default DetailsCard;

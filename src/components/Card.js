@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Card({ srcImage, name, index, testid }) {
-
   return (
-    <div data-testid={testid.title ||`${index}-recipe-card`}>
+    <div data-testid={testid.title || `${index}-recipe-card`}>
       <h3 data-testid={`${index}-card-name`}>{name}</h3>
       <img
         alt="food"
@@ -25,7 +24,7 @@ Card.propTypes = {
   }),
 };
 
-Card.propType = {
+Card.defaultProps = {
   testid: { title: false, img: false },
   index: null,
 };

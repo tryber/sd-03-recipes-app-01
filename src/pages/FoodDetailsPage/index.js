@@ -14,7 +14,7 @@ function FoodDetailsPage({ id }) {
     fetchDetailsFood(id)
       .then(({ meals }) => setFood(handleFoodsData(meals[0])))
       .then(() => setLoading(false))
-      .catch((err) => { console.log(err); setError(err); })
+      .catch((err) => { console.log(err); setError(err); });
   }, [id, setError, setFood, setLoading]);
 
   if (error) return <h1>Aconteceu algo errado em detalhes de comida</h1>;
