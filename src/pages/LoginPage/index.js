@@ -10,7 +10,7 @@ function LoginPage() {
   );
 
   const storage = () => {
-    localStorage.setItem('email', email);
+    localStorage.setItem('user', JSON.stringify({ 'email': email }));
   };
 
   return (
