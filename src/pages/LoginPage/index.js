@@ -11,8 +11,8 @@ function LoginPage() {
 
   const storage = () => {
     localStorage.setItem('user', JSON.stringify({ email }));
-    localStorage.setItem('mealsToken',1);
-    localStorage.setItem('cocktailsToken',1);
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
   };
 
   return (

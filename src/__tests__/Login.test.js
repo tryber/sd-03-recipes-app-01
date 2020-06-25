@@ -46,7 +46,7 @@ describe('Test Email Login', () => {
     expect(inputEmail).toHaveValue("email@email.com");
     expect(button).toBeDisabled();
     fireEvent.change(inputPassword, { target: { value: 1234567 } });
-    expect(button).not.toBeDisabled()
+    expect(button).not.toBeDisabled();
   });
 
   test('Test button disabled ', () => {
@@ -60,6 +60,6 @@ describe('Test Email Login', () => {
     expect(inputEmail).toHaveValue("email@email.com");
     expect(button).toBeDisabled();
     fireEvent.change(inputPassword, { target: { value: 12345 } });
-    expect(button).toBeDisabled()
+    expect(button).toBeDisabled();
   });
 });
