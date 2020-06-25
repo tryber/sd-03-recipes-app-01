@@ -27,23 +27,38 @@ function DetailsCard({ eat, type }) {
       .catch((err) => { console.log(err); setError(err) });
   }, [])
 
-  const { id, name, srcImage, video, category, ingredients, instructions } = eat;
+  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
 
   return (
     <div>
-      <Card key={id} name={name} index={-100} srcImage={srcImage} />
+      <Card
+        key={id}
+        name={name}
+        index={-100}
+        srcImage={srcImage}
+        testid={{ title: "recipe-title", img: 'recipe-photo' }}
+      />
       <p>Category: {category}</p>
+      {(isAlcoholic !== undefined) && <p>Alcólica: {isAlcoholic ? 'Yup' : 'No'} </p>}
       <ul>
-        {ingredients.map(({ ingredient, measure }) => (
-          <li key={ingredient}>{ingredient} -> {measure}</li>
+        {ingredients.map(({ ingredient, measure }, index) => (
+          <li data-testid={`${index}-ingredient-name-and-measure`} key={ingredient}>
+            {ingredient} -> {measure}
+          </li>
         ))}
       </ul>
-      <p>{instructions}</p>
-      {video && <ReactPlayer url={video} />}
+      <p data-testid="instructions">{instructions}</p>
+      {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
       {error.length > 0 && <h3>Aconteceu algo errado em detalhes de comida</h3>}
       {!error && loading && <h3>Carrgando detalhes de comida...</h3>}
       {!error && !loading && recomends && recomends.map(({ name: n, srcImage: src }, i) => (
-        <Card key={name} name={n} srcImage={src} index={i} />
+        <Card
+          key={name}
+          name={n}
+          srcImage={src}
+          index={i}
+          testid={{ title: `${i}-recomendation-title`, img: `${i}-recomendation-card` }}
+        />
       ))}
     </div>
   );
