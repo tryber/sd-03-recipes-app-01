@@ -6,11 +6,13 @@ function LoginPage() {
   const [password, setPassword] = useState('');
 
   const emailPassword = () => (
-    password.length > 6 && /^[a-zA-Z0-9]+@[a-zA-Z0-9]+.[A-Za-z]+$/.test(email)
+    password.length > 6 && /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)
   );
 
   const storage = () => {
     localStorage.setItem('user', JSON.stringify({ email }));
+    localStorage.setItem('mealsToken',1);
+    localStorage.setItem('cocktailsToken',1);
   };
 
   return (
@@ -30,7 +32,7 @@ function LoginPage() {
         required
         type="password"
       />
-      <Link to="./FoodsPage">
+      <Link to="./comidas">
         <button
           type="button"
           disabled={!emailPassword()}
