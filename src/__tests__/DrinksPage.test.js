@@ -1,0 +1,58 @@
+import React from 'react';
+import { render, waitForDomChange, cleanup } from '@testing-library/react';
+
+import { DrinksPage } from '../pages';
+import Provider from '../contexts/Provider';
+
+import drinks from '../mocks/drinks';
+
+const renderWithFoodContext = (children) => render(<Provider>{children}</Provider>);
+
+const mockedFetch = (url) => Promise.resolve({
+  ok: 200,
+  json: () => {
+    switch (url) {
+      case 'https://www.themealdb.com/api/json/v1/1/search.php?s=':
+        return Promise.resolve(meals);
+      case 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=':
+        return Promise.resolve(drinks);
+      default: return Promise.reject('test, wrong'); 
+    }
+  },
+})
+
+const clean = () => {
+  global.fetch.mockClear();
+  cleanup();
+};
+
+describe('DrinksPage', () => {
+  afterEach(clean);
+  const fetch = jest.spyOn(global, 'fetch').mockImplementation(mockedFetch);
+
+  test('should open whth a requisition and a message of loading', async () => {
+    const { getByText } = renderWithFoodContext(<DrinksPage />);
+    
+    expect(getByText('Loading...')).toBeInTheDocument(); // not essencial for cy
+
+    await waitForDomChange();
+    expect(fetch).toHaveBeenCalledTimes(1);
+
+    expect(getByText('Bebidas')).toBeInTheDocument();  
+  });
+
+  test('should render 12 Cards with image', async () => {
+    const { getByTestId } = renderWithFoodContext(<DrinksPage />);
+
+    await waitForDomChange();
+
+    drinks.drinks.slice(0, 12).forEach((drink, index) => {
+      const card = getByTestId(`${index}-recipe-card`)
+      expect(card).toBeInTheDocument();
+      const cardName = getByTestId(`${index}-card-name`);
+      expect(cardName).toHaveTextContent(drink.strDrink)
+      const cardImage = getByTestId(`${index}-card-img`, drink.strDrinkThumb);
+      expect(cardImage).toHaveAttribute('src');
+    });
+  });
+});
