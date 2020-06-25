@@ -5,7 +5,6 @@ import { FoodsPage } from '../pages';
 import Provider from '../contexts/Provider';
 
 import meals from '../mocks/meals';
-import drinks from '../mocks/drinks';
 
 const renderWithFoodContext = (children) => render(<Provider>{children}</Provider>);
 
@@ -23,13 +22,13 @@ const mockedFetch = (url) => Promise.resolve({
 
 
 const clean = () => {
-  global.fetch.mockClear();
   cleanup();
 };
 
 describe('FoodPage', () => {
   afterEach(clean);
   jest.spyOn(global, 'fetch').mockImplementation(mockedFetch);
+
   test('should open whth a requisition and a message of loading', async () => {
     const { getByText } = renderWithFoodContext(<FoodsPage />);
     
@@ -54,5 +53,16 @@ describe('FoodPage', () => {
       const cardImage = getByTestId(`${index}-card-img`);
       expect(cardImage).toHaveAttribute('src', food.strMealThumb);
     });
+  });
+
+  test('should handle error', async () => {
+    global.fetch.mockReturnValueOnce(
+      Promise.resolve({ ok: 0, json: () => Promise.resolve('Opss') }),
+    );
+    const { getByTestId } = renderWithFoodContext(<FoodsPage />);
+
+    await waitForDomChange();
+
+    expect(getByTestId('error-foods-page')).toHaveTextContent('Something Went Wrong');
   });
 });

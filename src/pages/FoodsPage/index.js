@@ -7,17 +7,17 @@ import { fetchFoods, handleFoodsData } from '../../services/APIs/FOODS_API';
 
 function FoodsPage() {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(true);
+  const [error, setError] = useState('');
   const [{ foods }, { setFoods }] = useContext(FoodsContext);
 
   useEffect(() => {
     fetchFoods()
       .then(({ meals }) => setFoods(meals.map((food) => handleFoodsData(food))))
       .then(() => setLoading(false))
-      .catch((err) => { console.log(err); setError(err); });
+      .catch((err) => setError(err));
   }, [setFoods, setLoading]);
 
-  if (error.length > 0) return <h1>Something Went Wrong</h1>;
+  if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
   if (loading) return <h1>Loading...</h1>;
 
   return (
