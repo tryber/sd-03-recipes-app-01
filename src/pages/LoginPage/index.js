@@ -1,14 +1,11 @@
-import React, {
-  useContext,
-} from 'react';
-import { FoodsContext } from '../../contexts/FoodsContext';
+import React from 'react';
 
 function LoginPage() {
-  const context = useContext(
-    FoodsContext,
+  return (
+    <div>
+      <h1>This is LoginPage</h1>
+    </div>
   );
-  const { state } = context;
-  return (<div>{state}</div>);
 }
 
 export default LoginPage;

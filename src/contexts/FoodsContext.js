@@ -6,20 +6,19 @@ import PropTypes from 'prop-types';
 
 export const FoodsContext = createContext();
 
-export function FoodsProvider({
-  children,
-}) {
-  const [state, setState] = useState(
-    'food',
-  );
+export function FoodsProvider({ children }) {
+  const [foods, setFoods] = useState([]);
 
-  const context = {
-    state,
-    setState,
+  const state = {
+    foods,
+  };
+
+  const setState = {
+    setFoods,
   };
 
   return (
-    <FoodsContext.Provider value={context}>
+    <FoodsContext.Provider value={[state, setState]}>
       {children}
     </FoodsContext.Provider>
   );
