@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Card({ food, index }) {
-  const { name, srcImage } = food;
+function Card({ srcImage, name, index }) {
   return (
     <div data-testid={`${index}-recipe-card`}>
       <h3 data-testid={`${index}-card-name`}>{name}</h3>
@@ -16,6 +15,8 @@ function Card({ food, index }) {
 }
 
 Card.propTypes = {
+  name: PropTypes.string.isRequired,
+  srcImage: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
 };
 

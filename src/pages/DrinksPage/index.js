@@ -23,8 +23,8 @@ function FoodsPage() {
   return (
     <div>
       <h1>Comidas</h1>
-      {drinks.slice(0, 12).map((food, index) => (
-        <Card key={index} food={food} index={index} />
+      {drinks.slice(0, 12).map(({ name, srcImage }, index) => (
+        <Card key={index} name={name} index={index} srcImage={srcImage} />
       ))}
     </div>
   );
