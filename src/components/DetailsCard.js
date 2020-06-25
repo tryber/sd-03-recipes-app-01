@@ -80,13 +80,9 @@ DetailsCard.propTypes = {
         PropTypes.string.isRequired,
       ).isRequired,
     ).isRequired,
+    isAlcoholic: PropTypes.bool,
   }).isRequired,
-  isAlcoholic: PropTypes.bool,
   type: PropTypes.oneOf(['food', 'drink']).isRequired,
-};
-
-DetailsCard.defaultProps = {
-  eat: { isAlcoholic: null },
 };
 
 export default DetailsCard;
