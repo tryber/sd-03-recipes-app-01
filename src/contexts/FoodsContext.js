@@ -12,7 +12,7 @@ export function FoodsProvider({ children }) {
   const state = {
     foods,
   };
-  
+
   const setState = {
     setFoods,
   };
