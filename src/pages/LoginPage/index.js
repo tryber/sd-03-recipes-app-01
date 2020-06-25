@@ -18,7 +18,7 @@ function LoginPage() {
       <h1>Login</h1>
       <input
         placeholder="Email"
-        data-testids="email-input"
+        data-testid="email-input"
         onChange={(event) => setEmail(event.target.value)}
         type="email"
         required
