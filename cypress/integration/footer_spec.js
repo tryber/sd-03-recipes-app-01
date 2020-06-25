@@ -148,7 +148,7 @@ describe('O menu inferior só deve aparecer apenas nas telas indicadas pelo prot
   });
 });
 
-describe('Ao clicar no ícone de comidas, a pessoa deve ser redirecionada para uma lista de comidas', () => {
+describe('Ao clicar no ícone de bebidas, a pessoa deve ser redirecionada para uma lista de cocktails', () => {
   it('Redireciona para a rota correta', () => {
     cy.visit('http://localhost:3000/comidas');
 
@@ -157,7 +157,7 @@ describe('Ao clicar no ícone de comidas, a pessoa deve ser redirecionada para u
   });
 });
 
-describe('Ao clicar no ícone de bebidas, a pessoa deve ser redirecionada para uma lista de cocktails', () => {
+describe('Ao clicar no ícone de exploração, a rota deve mudar para a tela de explorar', () => {
   it('Redireciona para a rota correta', () => {
     cy.visit('http://localhost:3000/comidas');
 
@@ -166,7 +166,7 @@ describe('Ao clicar no ícone de bebidas, a pessoa deve ser redirecionada para u
   });
 });
 
-describe('Ao clicar no ícone de exploração, a rota deve mudar para a tela de explorar', () => {
+describe('Ao clicar no ícone de comidas, a pessoa deve ser redirecionada para uma lista de comidas', () => {
   it('Redireciona para a rota correta', () => {
     cy.visit('http://localhost:3000/bebidas');
 
