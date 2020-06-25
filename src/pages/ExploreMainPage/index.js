@@ -1,14 +1,11 @@
-import React, {
-  useContext,
-} from 'react';
-import { DrinksContext } from '../../contexts/DrinksContext';
+import React from 'react';
 
 function ExploreMainPage() {
-  const context = useContext(
-    DrinksContext,
+  return (
+    <div>
+      <h1>This is ExploreMainPage</h1>
+    </div>
   );
-  const { state } = context;
-  return <div>{state}</div>;
 }
 
 export default ExploreMainPage;
