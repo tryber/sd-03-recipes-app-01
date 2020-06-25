@@ -1,23 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function CardFilters({ srcImage, name, index }) {
+function CardFilters({ categories }) {
   return (
-    <div data-testid={`${index}-recipe-card`}>
-      <h3 data-testid={`${index}-card-name`}>{name}</h3>
-      <img
-        alt="food"
-        data-testid={`${index}-card-img`}
-        src={srcImage}
-      />
+    <div>
+      <button type="button">All</button>
+      {categories.slice(0, 5).map(({ category }) => (
+        <button
+          type="button"
+          data-testid={`${category}-category-filter`}
+          value={category}
+          onClick={({ target: { value } }) => console.log(value)}
+        >
+          {category}
+        </button>
+      ))}
     </div>
   );
 }
 
-Card.propTypes = {
-  name: PropTypes.string.isRequired,
-  srcImage: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
+CardFilters.propTypes = {
+  categories: PropTypes.instanceOf(Array).isRequired,
 };
 
 export default CardFilters;

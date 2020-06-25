@@ -1,6 +1,2 @@
-import Card from './Card';
-
-export {
-  Card,
-};
-export default Card;
+export { default as Card } from './Card';
+export { default as CardFilters } from './CardFilters';

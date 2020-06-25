@@ -1,11 +1,8 @@
-export const fetchFoods = () => (
-  fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=').then(
-    (response) => response.json().then((json) => {
-      if (response.ok) return Promise.resolve(json);
-      return Promise.reject(json);
-    }),
-  )
-);
+export async function fetchFoodsApi() {
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+  const json = await response.json();
+  return response.ok ? Promise.resolve(json) : Promise.reject(json);
+}
 
 // missing strDrinkAlternate, dateModified
 export const handleFoodsData = ({
@@ -37,4 +34,14 @@ export const handleFoodsData = ({
     return ing;
   }, []);
   return obj;
+};
+
+export async function fetchCategoriesApi() {
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+  const json = await response.json();
+  return response.ok ? Promise.resolve(json) : Promise.reject(json);
+}
+
+export const handleCategoriesData = ({ strCategory }) => {
+  return { category: strCategory };
 };
