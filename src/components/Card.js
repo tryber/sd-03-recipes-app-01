@@ -8,7 +8,7 @@ function Card({ srcImage, name, index, testid }) {
       <h3 data-testid={`${index}-card-name`}>{name}</h3>
       <img
         alt="food"
-        data-testid={testid || `${index}-card-img`}
+        data-testid={testid.img || `${index}-card-img`}
         src={srcImage}
       />
     </div>

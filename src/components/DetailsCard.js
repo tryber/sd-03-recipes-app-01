@@ -38,8 +38,8 @@ function DetailsCard({ eat, type }) {
         srcImage={srcImage}
         testid={{ title: "recipe-title", img: 'recipe-photo' }}
       />
-      <p>Category: {category}</p>
-      {(isAlcoholic !== undefined) && <p>Alcólica: {isAlcoholic ? 'Yup' : 'No'} </p>}
+      <p data-testid="recipe-category">Category: {category}</p>
+      {(isAlcoholic !== undefined) && <p>Alcólica: {isAlcoholic ? 'Yup' : 'No'}</p>}
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
           <li data-testid={`${index}-ingredient-name-and-measure`} key={ingredient}>
