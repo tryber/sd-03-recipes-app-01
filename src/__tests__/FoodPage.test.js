@@ -19,8 +19,6 @@ const mockedFetch = (url) => Promise.resolve({
   },
 });
 
-
-
 const clean = () => {
   cleanup();
 };
