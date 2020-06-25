@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import './Header.css';
 
-const searchBar = (searchTerm, setSearchTerm, radioFilter, setRadioFilter) => {
-  return (
+const searchBar = (searchTerm, setSearchTerm, radioFilter, setRadioFilter) =>
+  (
     <div>
       <div>
         <input
-          placeholder='Buscar Receita'
+          placeholder="Buscar Receita"
           onChange={(evt) => setSearchTerm(evt.target.value)}
         />
       </div>
-      <div className='radioSearchButtons'>
+      <div className="radioSearchButtons">
         <form onChange={(evt) => setRadioFilter(evt.target.value)}>
           <label htmlFor="ingredient">Ingrediente</label>
           <input type="radio" name="searchTerm" id="ingredient" value="ingredient" />
@@ -25,7 +25,6 @@ const searchBar = (searchTerm, setSearchTerm, radioFilter, setRadioFilter) => {
       <button onClick={() => alert(`Busca por ${searchTerm} e ${radioFilter}`)}>Buscar</button>
     </div>
   );
-};
 
 const Header = (titleTag, isSearchablePage) => {
   const [displaySearch, setDisplaySearch] = useState(false);
@@ -44,7 +43,7 @@ const Header = (titleTag, isSearchablePage) => {
             className="searchButton"
             onClick={() => setDisplaySearch(!displaySearch)}
           />
-        ) : <div /> 
+        ) : <div />
         }
       </div>
       <div className="searchBar"> {
