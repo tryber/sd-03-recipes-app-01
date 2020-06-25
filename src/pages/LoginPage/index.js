@@ -27,13 +27,17 @@ function LoginPage() {
         onChange={(event) => setPassword(event.target.value)}
         placeholder="Senha"
         required
-        type="password" />
-      <Link to='./FoodsPage'>
+        type="password"
+      />
+      <Link to="./FoodsPage">
         <button
           type="button"
           disabled={!emailPassword()}
           data-testid="login-submit-btn"
-          onClick={() => storage()}>Entrar</button>
+          onClick={() => storage()}
+        >
+          Entrar
+          </button>
       </Link>
     </div>
   );
