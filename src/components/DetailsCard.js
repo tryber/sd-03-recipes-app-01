@@ -85,4 +85,8 @@ DetailsCard.propTypes = {
   type: PropTypes.oneOf(['food', 'drink']).isRequired,
 };
 
+DetailsCard.defaultProps = {
+  eat: { isAlcoholic: null },
+};
+
 export default DetailsCard;
