@@ -7,6 +7,15 @@ export const fetchDrinks = () => (
   )
 );
 
+export const fetchDetailsDrink = (id) => (
+  fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+    .then((response) => response.json().then((json) => {
+      if (response.ok) return Promise.resolve(json);
+      return Promise.reject(json);
+    }),
+  )
+);
+
 // missing strDrinkAlternate, dateModified
 export const handleDrinksData = ({
   idDrink,
@@ -17,7 +26,8 @@ export const handleDrinksData = ({
   strDrinkThumb,
   strYoutube,
   strSource,
-  ...food
+  strAlcoholic,
+  ...drink
 }) => {
   const obj = {
     id: idDrink,
@@ -28,12 +38,14 @@ export const handleDrinksData = ({
     srcImage: strDrinkThumb,
     video: strYoutube,
     source: strSource,
+    isAlcoholic: strAlcoholic,
   };
 
   const ingredientBase = /^strIngredient(\d*)$/;
-  obj.ingredients = Object.entries(food).reduce((ing, [key, value]) => {
+  obj.ingredients = Object.entries(drink).reduce((ing, [key, value]) => {
     const [, id] = key.match(ingredientBase) || [];
-    if (id) return [...ing, { ingredient: value, measure: food[`strMeasure${id}`] || null }];
+    if (id && value !== null && value !== '')
+      return [...ing, { ingredient: value, measure: drink[`strMeasure${id}`] || null }];
     return ing;
   }, []);
   return obj;

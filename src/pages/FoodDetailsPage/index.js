@@ -19,7 +19,7 @@ function FoodDetailsPage({ id }) {
 
   if (error) return <h1>Aconteceu algo errado em detalhes de comida</h1>;
   if (loading) return <h1>Carrgando detalhes de comida...</h1>;
-  if (food) return <DetailsCard food={food} />;
+  if (food) return <DetailsCard type="food" eat={food} />;
   return <h1>Não parou em nenhum</h1>;
 }
 
