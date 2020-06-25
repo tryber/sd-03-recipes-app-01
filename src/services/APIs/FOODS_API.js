@@ -9,10 +9,11 @@ export const fetchFoods = () => (
 
 export const fetchDetailsFood = (id) => (
   fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
-  .then((response) => {
-    if (response.ok) return Promise.resolve(json);
-    return Promise.reject(json);
-  })
+    .then((response) => response.json().then((json) => {
+      if (response.ok) return Promise.resolve(json);
+      return Promise.reject(json);
+    }),
+  )
 );
 
 // missing strDrinkAlternate, dateModified
@@ -39,9 +40,11 @@ export const handleFoodsData = ({
   };
 
   const ingredientBase = /^strIngredient(\d*)$/;
-  obj.ingredients = Object.entries(food).reduce((ing, [key, value], _, keys) => {
+  obj.ingredients = Object.entries(food).reduce((ing, [key, value]) => {
     const [, id] = key.match(ingredientBase) || [];
-    if (id) return [...ing, { ingredient: value, measure: keys[`strMeasure${id}`] || null }];
+    if (id && value !== '') {
+      return [...ing, { ingredient: value, measure: food[`strMeasure${id}`] || null }];
+    }
     return ing;
   }, []);
   return obj;

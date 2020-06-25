@@ -31,9 +31,9 @@ export const handleDrinksData = ({
   };
 
   const ingredientBase = /^strIngredient(\d*)$/;
-  obj.ingredients = Object.entries(food).reduce((ing, [key, value], _, keys) => {
+  obj.ingredients = Object.entries(food).reduce((ing, [key, value]) => {
     const [, id] = key.match(ingredientBase) || [];
-    if (id) return [...ing, { ingredient: value, measure: keys[`strMeasure${id}`] || null }];
+    if (id) return [...ing, { ingredient: value, measure: food[`strMeasure${id}`] || null }];
     return ing;
   }, []);
   return obj;
