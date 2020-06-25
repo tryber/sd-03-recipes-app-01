@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Card } from '../../components';
 
@@ -25,7 +26,9 @@ function FoodsPage() {
     <div>
       <h1>Comidas</h1>
       {foods.slice(0, 12).map(({ id, name, srcImage }, index) => (
-        <Card key={id} name={name} index={index} srcImage={srcImage} />
+        <Link to={`/comidas/${id}`}>
+          <Card key={id} name={name} index={index} srcImage={srcImage} />
+        </Link>
       ))}
     </div>
   );
