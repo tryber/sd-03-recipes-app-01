@@ -14,7 +14,7 @@ function FoodsPage() {
     fetchFoods()
       .then(({ meals }) => setFoods(meals.map((food) => handleFoodsData(food))))
       .then(() => setLoading(false))
-      .catch((err) => { console.log(err); setError(err) });
+      .catch((err) => { console.log(err); setError(err); });
   }, [setFoods, setLoading]);
 
   if (error.length > 0) return <h1>Something Went Wrong</h1>;

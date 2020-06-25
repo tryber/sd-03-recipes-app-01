@@ -3,7 +3,7 @@ export const fetchDrinks = () => (
     (response) => response.json().then((json) => {
       if (response.ok) return Promise.resolve(json);
       return Promise.reject(json);
-    })
+    }),
   )
 );
 

@@ -1,2 +1,5 @@
-import { default as Card } from './Card';
+import Card from './Card';
+export {
+  Card,
+}
 export default Card;
