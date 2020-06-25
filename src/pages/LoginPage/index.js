@@ -10,7 +10,7 @@ function LoginPage() {
   );
 
   const storage = () => {
-    localStorage.setItem('Email', email);
+    localStorage.setItem('email', email);
   };
 
   return (
@@ -18,9 +18,10 @@ function LoginPage() {
       <h1>Login</h1>
       <input
         placeholder="Email"
-        data-tesid="email-input"
+        data-testids="email-input"
         onChange={(event) => setEmail(event.target.value)}
         type="email"
+        required
       />
       <input
         data-testid="password-input"
