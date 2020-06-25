@@ -9,19 +9,20 @@ export const DrinksContext = createContext();
 export function DrinksProvider({
   children,
 }) {
-  const [state, setState] = useState(
-    'drinks',
-  );
+  const [drinks, setDrinks] = useState([]);
 
-  const context = {
-    state,
-    setState,
+  const state = {
+    drinks,
+  };
+
+  const setState = {
+    setDrinks,
   };
 
   return (
-    <DrinksContext.Provider value={context}>
+    <DrinksContext.Provider value={[state, setState]}>
       {children}
-    </DrinksContext.Provider >
+    </DrinksContext.Provider>
   );
 }
 
