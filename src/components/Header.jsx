@@ -16,21 +16,24 @@ const searchBar = (searchTerm, setSearchTerm, radioFilter, setRadioFilter) =>
       <div className="radioSearchButtons">
         <form onChange={(evt) => setRadioFilter(evt.target.value)}>
           <label htmlFor="ingredient">Ingrediente</label>
-          <input type="radio"
+          <input
+            type="radio"
             data-testid="ingredient-search-radio"
             name="searchTerm"
             id="ingredient"
             value="ingredient"
           />
           <label htmlFor="name">Nome</label>
-          <input type="radio"
+          <input
+            type="radio"
             data-testid="name-search-radio"
             name="searchTerm"
             id="name"
             value="name"
           />
           <label htmlFor="firstLetter">Primeira Letra</label>
-          <input type="radio"
+          <input
+            type="radio"
             data-testid="first-letter-search-radio"
             name="searchTerm"
             id="firstLetter"
