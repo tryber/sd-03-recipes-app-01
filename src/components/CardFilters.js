@@ -1,18 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function CardFilters({ categories, setCategorySel }) {
+function CardFilters({ categories, categorySel, setCategorySel }) {
   return (
     <div>
-      <button type="button" value="all" onClick={({ target: { value } }) => setCategorySel(value)}>
+      <button type='button' value='all' onClick={({ target: { value } }) => setCategorySel(value)}>
         All
       </button>
       {categories.slice(0, 5).map(({ category }) => (
         <button
-          type="button"
+          type='button'
           data-testid={`${category}-category-filter`}
           value={category}
-          onClick={({ target: { value } }) => setCategorySel(value)}
+          onClick={({ target: { value } }) => {
+            categorySel === value ? setCategorySel('all') : setCategorySel(value);
+          }}
         >
           {category}
         </button>
