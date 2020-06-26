@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Card from './Card';
+import './Carrosel.css';
 
 function Carrosel({ cards }) {
   const [index, setIndex] = useState(1);
@@ -19,22 +20,22 @@ function Carrosel({ cards }) {
         />
       ))}
       <div className="dots-containers">
-        <span className={`dot ${index === 1 ? 'active' : ''}`} onClick={() => setIndex(1)} />
-        <span className={`dot ${index === 2 ? 'active' : ''}`} onClick={() => setIndex(2)} />
-        <span className={`dot ${index === 3 ? 'active' : ''}`} onClick={() => setIndex(3)} />
+        <button className={`dot ${index === 1 ? 'active' : ''}`} onClick={() => setIndex(1)} />
+        <button className={`dot ${index === 2 ? 'active' : ''}`} onClick={() => setIndex(2)} />
+        <button className={`dot ${index === 3 ? 'active' : ''}`} onClick={() => setIndex(3)} />
       </div>
-        <button className="prev" onClick={() => setIndex(index === 1 ? 3 : index - 1)}>
-          &#10094;
-        </button>
-        <button className="next" onClick={() => setIndex(index === 3 ? 1 : index + 1)}>
-          &#10095;
-        </button>
+      <button className="prev" onClick={() => setIndex(index === 1 ? 3 : index - 1)}>
+        &#10094;
+      </button>
+      <button className="next" onClick={() => setIndex(index === 3 ? 1 : index + 1)}>
+        &#10095;
+      </button>
     </div>
   );
 }
 
 Carrosel.defaultProps = {
-  card: PropTypes.arrayOf(
+  cards: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired, // number as string
       name: PropTypes.string.isRequired,
