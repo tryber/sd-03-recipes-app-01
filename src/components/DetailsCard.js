@@ -1,35 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 
 import Card from './Card';
 
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
+
 import { handleDrinksData } from '../services/APIs/DRINKS_API';
 import { handleFoodsData } from '../services/APIs/FOODS_API';
 import './DetailsCard.css';
-
-const defineIndex = (i, s) => {
-  if (i === 0 || i === 1) {
-    if (s < 1 && s > 0) return true;
-    else return false;
-  } else if (i === 2 || i === 3) {
-    if (s < 2 && s > 3) return true;
-    else return false;
-  } else if (i === 4 || i === 5) {
-    if (s < 4 && s > 5) return true;
-    else return false;
-  }
-}
 
 function DetailsCard({ eat, type }) {
   const [recomends, setRecomends] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [slideIndex, setSlideIndex] = useState(1);
-
-  useEffect(() => {
-
-  }, [slideIndex]);
+  const [favorite, setFavorite] = useState(false);
+  const [copy, setCopy] = useState(false);
 
   useEffect(() => {
     let url = '';
@@ -48,7 +37,26 @@ function DetailsCard({ eat, type }) {
       .catch((err) => { console.log(err); setError(err); });
   }, [type]);
 
-  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
+  const {
+    id,
+    name,
+    srcImage,
+    video,
+    category,
+    ingredients,
+    instructions,
+    isAlcoholic,
+    source,
+  } = eat;
+
+  useEffect(() => {
+    if (copy) {
+      navigator.clipboard.writeText(source)
+        .then(() => console.log('copy succes'))
+        .then(() => setCopy(false))
+        .catch((err) => console.log('Não foi possível copiar', err));
+    }
+  }, [copy]);
 
   return (
     <div>
@@ -59,6 +67,17 @@ function DetailsCard({ eat, type }) {
         srcImage={srcImage}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
+      <div>
+        {favorite
+          ? <img src={blackHeartIcon} onClick={() => setFavorite(false)} />
+          : <img src={whiteHeartIcon} onClick={() => setFavorite(true)} />
+        }
+          <span>
+            <span className="tooltiptext">Copiar</span>
+            <img className="tooltip" src={shareIcon} onClick={() => setCopy(true)} />
+          </span>
+        {source ? <a href={source}>Link para a receita</a> : `dosen1t have link to source`}
+      </div>
       <p data-testid="recipe-category">Category: {category}</p>
       {(typeof isAlcoholic === 'boolean') && <p>{isAlcoholic ? 'Alcoholic' : 'No Alcoholic'}</p>}
       <ul>
@@ -105,7 +124,7 @@ DetailsCard.propTypes = {
     name: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     instructions: PropTypes.string.isRequired,
-    origin: PropTypes.string.isRequired,
+    origin: PropTypes.string,
     srcImage: PropTypes.string.isRequired,
     video: PropTypes.string.isRequired,
     source: PropTypes.string.isRequired,
@@ -118,5 +137,9 @@ DetailsCard.propTypes = {
   }).isRequired,
   type: PropTypes.oneOf(['food', 'drink']).isRequired,
 };
+
+DetailsCard.defaultProps = {
+  eat: { isAlcoholic: null, origin: '', video: '' },
+}
 
 export default DetailsCard;
