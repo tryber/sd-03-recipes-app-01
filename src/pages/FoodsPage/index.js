@@ -33,7 +33,7 @@ function FoodsPage() {
       .catch((err) => setError(err));
   }, [setLoading]);
 
-  if (error.length > 0) return <h1 data-testid='error-foods-page'>Something Went Wrong</h1>;
+  if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
   if (loading) return <Loading />;
 
   const filterCategory = () => {
@@ -43,7 +43,7 @@ function FoodsPage() {
 
   return (
     <div>
-      <Header titleTag='Comidas' isSearchablePage='true' />
+      <Header titleTag="Comidas" isSearchablePage="true" />
       <CardFilters
         categories={categories}
         setCategorySel={(value) => setCategorySel(value)}
