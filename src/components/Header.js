@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import './Header.css';
 
@@ -50,10 +51,10 @@ const searchBar = (searchTerm, setSearchTerm, radioFilter, setRadioFilter) =>
     </div>
   );
 
-const Header = (titleTag, isSearchablePage) => {
-/*   const [radioFilter, setRadioFilter] = useState('');
+const Header = ({ titleTag, isSearchablePage }) => {
+  const [displaySearch, setDisplaySearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [displaySearch, setDisplaySearch] = useState(false); */
+  const [radioFilter, setRadioFilter] = useState('');
 
   return (
     <div className="topBar">
@@ -62,22 +63,27 @@ const Header = (titleTag, isSearchablePage) => {
           <img data-testid="profile-top-btn" src={profileIcon} alt="Ícone de perfil" />
         </Link>
         <h2>{titleTag}</h2>
-{/*         { isSearchablePage ? (
+        {isSearchablePage ? (
           <button
             className="searchButton"
             onClick={() => setDisplaySearch(!displaySearch)}
           />
         ) : <div />
-        } */}
+        }
       </div>
       <div className="searchBar"> {
-/*         displaySearch ?
-        searchBar(searchTerm, setSearchTerm, radioFilter, setRadioFilter) :
-        null */
+        displaySearch ?
+          searchBar(searchTerm, setSearchTerm, radioFilter, setRadioFilter) :
+          null
       }
       </div>
     </div>
   );
+};
+
+Header.propTypes = {
+  titleTag: PropTypes.string.isRequired,
+  isSearchablePage: PropTypes.bool.isRequired,
 };
 
 export default Header;
