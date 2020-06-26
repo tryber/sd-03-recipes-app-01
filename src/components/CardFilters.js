@@ -15,8 +15,8 @@ function CardFilters({ categories, categorySel, setCategorySel }) {
           onClick={({ target: { value } }) => {
             if (categorySel === value) {
               return setCategorySel('all');
-            } 
-              return setCategorySel(value);            
+            }
+            return setCategorySel(value);
           }}
         >
           {category}
