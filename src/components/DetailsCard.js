@@ -7,7 +7,6 @@ import Carrosel from './Carrosel';
 
 import { handleDrinksData } from '../services/APIs/DRINKS_API';
 import { handleFoodsData } from '../services/APIs/FOODS_API';
-import './DetailsCard.css';
 
 function DetailsCard({ eat, type }) {
   const [recomends, setRecomends] = useState(null);
