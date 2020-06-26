@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import Header from '../../components/Header';
 
 import { Card } from '../../components';
 
@@ -23,7 +24,7 @@ function FoodsPage() {
 
   return (
     <div>
-      <h1>Comidas</h1>
+      <div>{Header('Comidas', true)}</div>
       {foods.slice(0, 12).map(({ id, name, srcImage }, index) => (
         <Link to={`/comidas/${id}`}>
           <Card key={id} name={name} index={index} srcImage={srcImage} />
