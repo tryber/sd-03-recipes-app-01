@@ -72,32 +72,6 @@ function DetailsCard({ eat, type }) {
             />
           ))
         }
-        <button
-          className="prev"
-          onClick={() => setSlideIndex(slideIndex === 1 ? 3 : slideIndex - 1)}
-        >
-          &#10094;
-        </button>
-        <button
-          className="next"
-          onClick={() => setSlideIndex(slideIndex === 3 ? 1 : slideIndex + 1)}
-        >
-          &#10095;
-        </button>
-        <div className="dots-containers" style={{ textAlign: 'center' }}>
-          <span
-            className={`dot ${slideIndex === 1 ? 'active' : ''}`}
-            onClick={() => setSlideIndex(1)}
-          />
-          <span
-            className={`dot ${slideIndex === 2 ? 'active' : ''}`}
-            onClick={() => setSlideIndex(2)}
-          />
-          <span
-            className={`dot ${slideIndex === 3 ? 'active' : ''}`}
-            onClick={() => setSlideIndex(3)}
-          />
-        </div>
       </div>
     </div>
   );

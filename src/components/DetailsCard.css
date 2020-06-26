@@ -57,6 +57,7 @@ body { background-color: whitesmoke; }
 .dots-containers {
   bottom: 0;
   left: 50%;
+  text-align: center;
   transform: translateX(-50%);
   position: absolute;
 }
