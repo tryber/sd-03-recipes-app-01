@@ -2,11 +2,10 @@
   border-radius: 10%;
   border: 2px solid black;
   display: inline-block;
-  margin: 0.5em;
   margin-left: 1em;
+  margin: 0.5em;
   overflow: hidden;
   position: relative;
-  box-shadow: black 2px;
 }
 
 .card-invisible {
@@ -22,9 +21,7 @@
   background-color: #ddd;
   font-size: 1.5em;
   margin-bottom: 10px;
-  margin: 0;
   position: absolute;
   text-align: center;
-  top: 0;
   width: 100%;
 }
