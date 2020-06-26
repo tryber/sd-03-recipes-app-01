@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { Card, Footer, Loading } from '../../components';
 import Header from '../../components/Header';
-
-import { Card } from '../../components';
-
 import { FoodsContext } from '../../contexts/FoodsContext';
 import { fetchFoods, handleFoodsData } from '../../services/APIs/FOODS_API';
 
@@ -20,7 +18,7 @@ function FoodsPage() {
   }, [setFoods, setLoading]);
 
   if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
-  if (loading) return <h1>Loading...</h1>;
+  if (loading) return <Loading />;
 
   return (
     <div>
@@ -30,6 +28,7 @@ function FoodsPage() {
           <Card key={id} name={name} index={index} srcImage={srcImage} />
         </Link>
       ))}
+      <Footer />
     </div>
   );
 }
