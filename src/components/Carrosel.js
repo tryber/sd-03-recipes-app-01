@@ -34,7 +34,7 @@ function Carrosel({ cards }) {
   );
 }
 
-Carrosel.defaultProps = {
+Carrosel.propTypes = {
   cards: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired, // number as string
