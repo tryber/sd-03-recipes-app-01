@@ -2,9 +2,9 @@
   border-radius: 10%;
   border: 2px solid black;
   display: inline-block;  
+  margin: 1em 1em auto auto;
   overflow: hidden;
   position: relative;
-  margin: 1em 1em auto auto;
 }
 
 .card-invisible {
