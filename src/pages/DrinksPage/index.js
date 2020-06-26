@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Card } from '../../components';
+
+import { Card, Footer, Loading } from '../../components';
 
 import { DrinksContext } from '../../contexts/DrinksContext';
 import { fetchDrinks, handleDrinksData } from '../../services/APIs/DRINKS_API';
@@ -19,7 +20,7 @@ function DrinksPage() {
   }, [setDrinks, setLoading]);
 
   if (error.length > 0) return <h1 data-testid="error-drinks-page">Something Went Wrong</h1>;
-  if (loading) return <h1>Loading...</h1>;
+  if (loading) return <Loading />;
 
   return (
     <div>
@@ -29,6 +30,7 @@ function DrinksPage() {
           <Card name={name} index={index} srcImage={srcImage} />
         </Link>
       ))}
+      <Footer />
     </div>
   );
 }

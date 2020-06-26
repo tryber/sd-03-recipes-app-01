@@ -1,12 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 
 import Card from './Card';
-
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-import shareIcon from '../images/shareIcon.svg';
+import Carrosel from './Carrosel';
 
 import { handleDrinksData } from '../services/APIs/DRINKS_API';
 import { handleFoodsData } from '../services/APIs/FOODS_API';
@@ -16,9 +13,6 @@ function DetailsCard({ eat, type }) {
   const [recomends, setRecomends] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [slideIndex, setSlideIndex] = useState(1);
-  const [favorite, setFavorite] = useState(false);
-  const [copy, setCopy] = useState(false);
 
   useEffect(() => {
     let url = '';
@@ -37,26 +31,7 @@ function DetailsCard({ eat, type }) {
       .catch((err) => { console.log(err); setError(err); });
   }, [type]);
 
-  const {
-    id,
-    name,
-    srcImage,
-    video,
-    category,
-    ingredients,
-    instructions,
-    isAlcoholic,
-    source,
-  } = eat;
-
-  useEffect(() => {
-    if (copy) {
-      navigator.clipboard.writeText(source)
-        .then(() => console.log('copy succes'))
-        .then(() => setCopy(false))
-        .catch((err) => console.log('Não foi possível copiar', err));
-    }
-  }, [copy]);
+  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
 
   return (
     <div>
@@ -67,17 +42,6 @@ function DetailsCard({ eat, type }) {
         srcImage={srcImage}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
-      <div>
-        {favorite
-          ? <img src={blackHeartIcon} onClick={() => setFavorite(false)} />
-          : <img src={whiteHeartIcon} onClick={() => setFavorite(true)} />
-        }
-          <span>
-            <span className="tooltiptext">Copiar</span>
-            <img className="tooltip" src={shareIcon} onClick={() => setCopy(true)} />
-          </span>
-        {source ? <a href={source}>Link para a receita</a> : `dosen1t have link to source`}
-      </div>
       <p data-testid="recipe-category">Category: {category}</p>
       {(typeof isAlcoholic === 'boolean') && <p>{isAlcoholic ? 'Alcoholic' : 'No Alcoholic'}</p>}
       <ul>
@@ -91,29 +55,7 @@ function DetailsCard({ eat, type }) {
       {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
       {error.length > 0 && <h3>Aconteceu algo errado em detalhes de comida</h3>}
       {!error && loading && <h3>Carrgando detalhes de comida...</h3>}
-      <div className="scroll" onScroll={(e) => console.log(e)}>
-        {!error && !loading && recomends && recomends.map(({ id, name: n, srcImage: src }, i) => (
-          <Card
-            index={i}
-            key={id}
-            name={n}
-            show={(slideIndex * 2) - 2 <= i && i <= (slideIndex * 2) - 1}
-            srcImage={src}
-            testid={{ title: `${i}-recomendation-title`, img: `${i}-recomendation-card` }}
-          />
-        ))}
-        <a className="prev" onClick={() => setSlideIndex(slideIndex === 1 ? 3 : slideIndex - 1)}>
-          &#10094;
-        </a>
-        <a className="next" onClick={() => setSlideIndex(slideIndex === 3 ? 1 : slideIndex + 1)}>
-          &#10095;
-        </a>
-        <div className="dots-containers" style={{ textAlign: 'center' }}>
-          <span className={'dot' + (slideIndex === 1 ? ' active' : '')} onClick={() => setSlideIndex(1)} />
-          <span className={'dot' + (slideIndex === 2 ? ' active' : '')} onClick={() => setSlideIndex(2)} />
-          <span className={'dot' + (slideIndex === 3 ? ' active' : '')} onClick={() => setSlideIndex(3)} />
-        </div>
-      </div>
+      {!error && !loading && recomends && <Carrosel cards={recomends} />}
     </div>
   );
 }
@@ -124,7 +66,7 @@ DetailsCard.propTypes = {
     name: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     instructions: PropTypes.string.isRequired,
-    origin: PropTypes.string,
+    origin: PropTypes.string.isRequired,
     srcImage: PropTypes.string.isRequired,
     video: PropTypes.string.isRequired,
     source: PropTypes.string.isRequired,
@@ -137,9 +79,5 @@ DetailsCard.propTypes = {
   }).isRequired,
   type: PropTypes.oneOf(['food', 'drink']).isRequired,
 };
-
-DetailsCard.defaultProps = {
-  eat: { isAlcoholic: null, origin: '', video: '' },
-}
 
 export default DetailsCard;
