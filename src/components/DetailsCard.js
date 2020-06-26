@@ -51,7 +51,7 @@ function DetailsCard({ eat, type }) {
       <p data-testid="instructions">{instructions}</p>
       {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
       {error.length > 0 && <h3>Aconteceu algo errado em detalhes de comida</h3>}
-      {!error && loading && <h3>Carrgando detalhes de comida...</h3>}
+      {!error && loading && <h3>Carregando detalhes de comida...</h3>}
       {!error && !loading && recomends && recomends.map(({ name: n, srcImage: src }, i) => (
         <Card
           key={name}
