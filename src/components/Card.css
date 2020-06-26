@@ -1,7 +1,8 @@
 .card {
   border: 2px solid black;
   border-radius: 10%;
-  display: inline-block;  
+  display: inline-block;
+  justify-content: space-around;
   margin: 1em 1em auto auto;
   overflow: hidden;
   position: relative;
