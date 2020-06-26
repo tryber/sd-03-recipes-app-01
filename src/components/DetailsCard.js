@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 
 import Card from './Card';
+import Carrosel from './Carrosel';
 
 import { handleDrinksData } from '../services/APIs/DRINKS_API';
 import { handleFoodsData } from '../services/APIs/FOODS_API';
@@ -12,11 +13,6 @@ function DetailsCard({ eat, type }) {
   const [recomends, setRecomends] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [slideIndex, setSlideIndex] = useState(1);
-
-  useEffect(() => {
-
-  }, [slideIndex]);
 
   useEffect(() => {
     let url = '';
@@ -59,20 +55,7 @@ function DetailsCard({ eat, type }) {
       {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
       {error.length > 0 && <h3>Aconteceu algo errado em detalhes de comida</h3>}
       {!error && loading && <h3>Carrgando detalhes de comida...</h3>}
-      <div className="scroll" onScroll={(e) => console.log(e)}>
-        {!error && !loading && recomends && recomends.map(
-          ({ id: ide, name: n, srcImage: src }, i) => (
-            <Card
-              index={i}
-              key={ide}
-              name={n}
-              show={(slideIndex * 2) - 2 <= i && i <= (slideIndex * 2) - 1}
-              srcImage={src}
-              testid={{ title: `${i}-recomendation-title`, img: `${i}-recomendation-card` }}
-            />
-          ))
-        }
-      </div>
+      {!error && !loading && recomends && <Carrosel cards={recomends} />}
     </div>
   );
 }

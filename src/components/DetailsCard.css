@@ -25,6 +25,7 @@ body { background-color: whitesmoke; }
   border-radius: 0 3px 3px 0;
   color: #333;
   cursor: pointer;
+  display: inline-block;
   font-size: 18px;
   font-weight: 700;
   margin-top: -22px;
