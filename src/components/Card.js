@@ -8,7 +8,9 @@ function Card({ srcImage, name, index, testid, show }) {
       className={'card' + (show ? '' : ' card-invisible')}
       data-testid={testid.title || `${index}-recipe-card`}
     >
-      <h3 data-testid={`${index}-card-name`}>{name}</h3>
+      <h3 className="card-title" data-testid={`${index}-card-name`}>
+        {name}
+      </h3>
       <img
         alt="food"
         className="card-img"

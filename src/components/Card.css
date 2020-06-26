@@ -6,8 +6,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 20px;
+  margin: 0 1vw 20px;
+  overflow: hidden;
   padding: 8px 12px;
+  position: relative;
   width: 40%;
 }
 
@@ -21,5 +23,12 @@
 }
 
 .card-title {
-  background-color: #777;
+  background-color: #DDD;
+  font-size: 2rem;
+  margin: 0;
+  margin-bottom: 10px;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 100%;
 }
