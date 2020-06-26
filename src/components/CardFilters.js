@@ -12,7 +12,9 @@ function CardFilters({ categories, categorySel, setCategorySel }) {
           type="button"
           data-testid={`${category}-category-filter`}
           value={category}
-          onClick={({ target: { value } }) => categorySel === value ? setCategorySel('all') : setCategorySel(value)
+          onClick={({ target: { value } }) => {
+            if (categorySel === value) return setCategorySel('all')
+            return setCategorySel(value)}
           }
         >
           {category}
