@@ -4,16 +4,16 @@ import PropTypes from 'prop-types';
 function CardFilters({ categories, categorySel, setCategorySel }) {
   return (
     <div>
-      <button type='button' value='all' onClick={({ target: { value } }) => setCategorySel(value)}>
+      <button type="button" value="all" onClick={({ target: { value } }) => setCategorySel(value)}>
         All
       </button>
       {categories.slice(0, 5).map(({ category }) => (
         <button
-          type='button'
+          type="button"
           data-testid={`${category}-category-filter`}
           value={category}
           onClick={({ target: { value } }) => {
-            categorySel === value ? setCategorySel('all') : setCategorySel(value);
+            return categorySel === value ? setCategorySel('all') : setCategorySel(value);
           }}
         >
           {category}
@@ -25,6 +25,7 @@ function CardFilters({ categories, categorySel, setCategorySel }) {
 
 CardFilters.propTypes = {
   categories: PropTypes.instanceOf(Array).isRequired,
+  categorySel: PropTypes.string.isRequired,
   setCategorySel: PropTypes.func.isRequired,
 };
 
