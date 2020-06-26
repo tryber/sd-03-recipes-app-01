@@ -62,9 +62,10 @@ const Header = ({ titleTag, isSearchablePage }) => {
         <Link to="/perfil">
           <img data-testid="profile-top-btn" src={profileIcon} alt="Ícone de perfil" />
         </Link>
-        <h2>{titleTag}</h2>
+        <h2 data-testid="page-title">{titleTag}</h2>
         { isSearchablePage ? (
           <button
+            data-testid="search-top-btn"
             className="searchButton"
             onClick={() => setDisplaySearch(!displaySearch)}
           />
