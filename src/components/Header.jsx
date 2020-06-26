@@ -8,6 +8,7 @@ const searchBar = (searchTerm, setSearchTerm, radioFilter, setRadioFilter) =>
     <div>
       <div>
         <input
+          data-testid="search-input"
           placeholder="Buscar Receita"
           onChange={(evt) => setSearchTerm(evt.target.value)}
         />
@@ -15,14 +16,34 @@ const searchBar = (searchTerm, setSearchTerm, radioFilter, setRadioFilter) =>
       <div className="radioSearchButtons">
         <form onChange={(evt) => setRadioFilter(evt.target.value)}>
           <label htmlFor="ingredient">Ingrediente</label>
-          <input type="radio" name="searchTerm" id="ingredient" value="ingredient" />
+          <input type="radio"
+            data-testid="ingredient-search-radio"
+            name="searchTerm"
+            id="ingredient"
+            value="ingredient"
+          />
           <label htmlFor="name">Nome</label>
-          <input type="radio" name="searchTerm" id="name" value="name" />
+          <input type="radio"
+            data-testid="name-search-radio"
+            name="searchTerm"
+            id="name"
+            value="name"
+          />
           <label htmlFor="firstLetter">Primeira Letra</label>
-          <input type="radio" name="searchTerm" id="firstLetter" value="firstLetter" />
+          <input type="radio"
+            data-testid="first-letter-search-radio"
+            name="searchTerm"
+            id="firstLetter"
+            value="firstLetter"
+          />
         </form>
       </div>
-      <button onClick={() => alert(`Busca por ${searchTerm} e ${radioFilter}`)}>Buscar</button>
+      <button
+        data-testid="exec-search-btn"
+        onClick={() => alert(`Busca por ${searchTerm} e ${radioFilter}`)}
+      >
+        Buscar
+      </button>
     </div>
   );
 
@@ -35,7 +56,7 @@ const Header = (titleTag, isSearchablePage) => {
     <div className="topBar">
       <div className="headerBar">
         <Link to="/perfil">
-          <img src={profileIcon} alt="Ícone de perfil" />
+          <img data-testid="profile-top-btn" src={profileIcon} alt="Ícone de perfil" />
         </Link>
         <h2>{titleTag}</h2>
         { isSearchablePage ? (
