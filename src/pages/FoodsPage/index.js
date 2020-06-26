@@ -22,7 +22,7 @@ function FoodsPage() {
 
   return (
     <div>
-      <Header titleTag='Comidas' isSearchablePage={true} />
+      <Header titleTag="Comidas" isSearchablePage />
       {foods.slice(0, 12).map(({ id, name, srcImage }, index) => (
         <Link key={id} to={`/comidas/${id}`}>
           <Card name={name} index={index} srcImage={srcImage} />
