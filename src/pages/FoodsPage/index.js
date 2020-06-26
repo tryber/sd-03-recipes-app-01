@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardFilters, Footer, Loading } from '../../components';
-import Header from '../../components/Header';
+import { Card, CardFilters, Header, Footer, Loading } from '../../components';
 import { FoodsContext } from '../../contexts/FoodsContext';
 import {
   fetchFoodsApi,
