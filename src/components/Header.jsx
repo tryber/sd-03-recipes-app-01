@@ -50,7 +50,7 @@ const searchBar = (searchTerm, setSearchTerm, radioFilter, setRadioFilter) =>
     </div>
   );
 
-const Header = (titleTag, isSearchablePage) => {
+const Header = ({ titleTag, isSearchablePage }) => {
   const [displaySearch, setDisplaySearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [radioFilter, setRadioFilter] = useState('');
