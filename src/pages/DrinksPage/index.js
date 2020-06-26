@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 import { Card, Footer, Loading } from '../../components';
+import Header from '../../components/Header';
 
 import { DrinksContext } from '../../contexts/DrinksContext';
 import { fetchDrinks, handleDrinksData } from '../../services/APIs/DRINKS_API';
@@ -24,7 +25,7 @@ function DrinksPage() {
 
   return (
     <div>
-      <h1>Bebidas</h1>
+      <Header titleTag='Bebidas' isSearchablePage={true} />
       {drinks.slice(0, 12).map(({ id, name, srcImage }, index) => (
         <Link key={id} to={`/bebidas/${id}`}>
           <Card name={name} index={index} srcImage={srcImage} />
