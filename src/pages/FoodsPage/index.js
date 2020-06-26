@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Card, CardFilters } from '../../components';
+import { Link } from 'react-router-dom';
+import { Card } from '../../components';
 
 import { FoodsContext } from '../../contexts/FoodsContext';
 import { fetchFoodsApi, fetchCategoriesApi, handleFoodsData, handleCategoriesData } from '../../services/APIs/FOODS_API';
@@ -14,7 +16,7 @@ function FoodsPage() {
     fetchFoodsApi()
       .then(({ meals }) => setFoods(meals.map((food) => handleFoodsData(food))))
       .then(() => setLoading(false))
-      .catch((err) => setError(err));
+      .catch((err) => { console.log(err); setError(err); });
   }, [setFoods, setLoading]);
 
   useEffect(() => {
@@ -32,7 +34,9 @@ function FoodsPage() {
       <h1>Comidas</h1>
       <CardFilters categories={categories} />
       {foods.slice(0, 12).map(({ id, name, srcImage }, index) => (
-        <Card key={id} name={name} index={index} srcImage={srcImage} />
+        <Link to={`/comidas/${id}`}>
+          <Card key={id} name={name} index={index} srcImage={srcImage} />
+        </Link>
       ))}
     </div>
   );
