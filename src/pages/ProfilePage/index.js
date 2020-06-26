@@ -5,7 +5,7 @@ import Header from '../../components/Header';
 function ProfilePage() {
   return (
     <div>
-      <Header titleTag='Perfil' isSearchablePage={false} />
+      <Header titleTag="Perfil" isSearchablePage={false} />
       <h1>This is ProfilePage</h1>
       <Footer />
     </div>
