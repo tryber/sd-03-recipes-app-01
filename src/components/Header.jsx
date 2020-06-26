@@ -51,9 +51,9 @@ const searchBar = (searchTerm, setSearchTerm, radioFilter, setRadioFilter) =>
   );
 
 const Header = (titleTag, isSearchablePage) => {
-  const [displaySearch, setDisplaySearch] = useState(false);
+/*   const [radioFilter, setRadioFilter] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [radioFilter, setRadioFilter] = useState('');
+  const [displaySearch, setDisplaySearch] = useState(false); */
 
   return (
     <div className="topBar">
@@ -62,18 +62,18 @@ const Header = (titleTag, isSearchablePage) => {
           <img data-testid="profile-top-btn" src={profileIcon} alt="Ícone de perfil" />
         </Link>
         <h2>{titleTag}</h2>
-        { isSearchablePage ? (
+{/*         { isSearchablePage ? (
           <button
             className="searchButton"
             onClick={() => setDisplaySearch(!displaySearch)}
           />
         ) : <div />
-        }
+        } */}
       </div>
       <div className="searchBar"> {
-        displaySearch ?
+/*         displaySearch ?
         searchBar(searchTerm, setSearchTerm, radioFilter, setRadioFilter) :
-        null
+        null */
       }
       </div>
     </div>
