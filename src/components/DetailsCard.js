@@ -4,6 +4,7 @@ import ReactPlayer from 'react-player';
 
 import Card from './Card';
 import Carrosel from './Carrosel';
+import ActionsBar from './ActionsBar';
 
 import { handleDrinksData } from '../services/APIs/DRINKS_API';
 import { handleFoodsData } from '../services/APIs/FOODS_API';
@@ -41,6 +42,7 @@ function DetailsCard({ eat, type }) {
         srcImage={srcImage}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
+      <ActionsBar />
       <p data-testid="recipe-category">Category: {category}</p>
       {(typeof isAlcoholic === 'boolean') && <p>{isAlcoholic ? 'Alcoholic' : 'No Alcoholic'}</p>}
       <ul>
