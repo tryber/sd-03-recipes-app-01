@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 
 import Card from './Card';
 import Carrosel from './Carrosel';
+import { sendToFavoriteStorage, rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
 import ActionsBar from './ActionsBar';
 
 import { handleDrinksData } from '../services/APIs/DRINKS_API';
@@ -31,7 +32,22 @@ function DetailsCard({ eat, type }) {
       .catch((err) => { console.log(err); setError(err); });
   }, [type]);
 
-  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
+  const {
+    id,
+    name,
+    srcImage,
+    video,
+    category,
+    ingredients,
+    instructions,
+    isAlcoholic,
+    source,
+  } = eat;
+
+  const handleFavoriteStorage = (isToSend) => {
+    if (isToSend) return sendToFavoriteStorage(eat);
+    return rmFromFavoriteStorage(id);
+  };
 
   return (
     <div>
@@ -42,7 +58,7 @@ function DetailsCard({ eat, type }) {
         srcImage={srcImage}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
-      <ActionsBar />
+      <ActionsBar textToCopy={source} handleFavorite={handleFavoriteStorage} />
       <p data-testid="recipe-category">Category: {category}</p>
       {(typeof isAlcoholic === 'boolean') && <p>{isAlcoholic ? 'Alcoholic' : 'No Alcoholic'}</p>}
       <ul>

@@ -1,19 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 import './ActionsBar.css';
 
-function ActionsBar() {
+function ActionsBar({ textToCopy, handleFavorite }) {
   const [isFavorite, setIsFavorite] = useState(false);
+  const [coping, setCoping] = useState(false);
+
+  const inverteIsFavorite = useCallback(() => { setIsFavorite((isFav) => !isFav) }, [isFavorite]);
+  const enableCopy = useCallback(() => { setCoping(true) }, []);
+
+  useEffect(() => {
+    if (coping) {
+      navigator.clipboard.writeText(textToCopy)
+        .then(() => console.log('succes copy'))
+        .catch((err) => console.log(err));
+
+      setCoping(false);
+    }
+  }, [coping, setCoping]);
+
+  useEffect(() => { handleFavorite(isFavorite); }, [isFavorite]);
 
   return (
-    <button className="hidden-button" onClick={() => setIsFavorite(!isFavorite)}>
-      {isFavorite
-        ? <img src={blackHeart} alt="is amazing favorite" />
-        : <img src={whiteHeart} alt="is not favorite" />
-      }
-    </button>
+    <div>
+      <button className="hidden-button" onClick={inverteIsFavorite}>
+        {isFavorite
+          ? <img src={blackHeart} alt="is amazing favorite" />
+          : <img src={whiteHeart} alt="is not favorite" />
+        }
+      </button>
+      <div>
+        <button className="tooltip hidden-button" onClick={enableCopy}>
+          <img src={shareIcon} alt="click here to copy the link" />
+          <span className="tooltiptext">Copy the link</span>
+        </button>
+      </div>
+    </div>
   );
 }
 

@@ -26,6 +26,8 @@ export const handleFoodsData = ({
   strMealThumb,
   strYoutube,
   strSource,
+  srtArea,
+  dateModified,
   ...food
 }) => {
   const obj = {
@@ -37,6 +39,8 @@ export const handleFoodsData = ({
     srcImage: strMealThumb,
     video: strYoutube,
     source: strSource,
+    area: srtArea,
+    doneDate: dateModified,
   };
 
   const ingredientBase = /^strIngredient(\d*)$/;
