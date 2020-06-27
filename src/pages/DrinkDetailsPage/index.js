@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
 import { DetailsCard } from '../../components';
-
 import { fetchDetailsDrink, handleDrinksData } from '../../services/APIs/DRINKS_API';
 
 function DrinkDetailsPage({ id }) {

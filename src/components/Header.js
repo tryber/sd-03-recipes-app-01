@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import './Header.css';
@@ -50,7 +51,7 @@ const searchBar = (searchTerm, setSearchTerm, radioFilter, setRadioFilter) =>
     </div>
   );
 
-const Header = (titleTag, isSearchablePage) => {
+const Header = ({ titleTag, isSearchablePage }) => {
   const [displaySearch, setDisplaySearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [radioFilter, setRadioFilter] = useState('');
@@ -78,6 +79,11 @@ const Header = (titleTag, isSearchablePage) => {
       </div>
     </div>
   );
+};
+
+Header.propTypes = {
+  titleTag: PropTypes.string.isRequired,
+  isSearchablePage: PropTypes.bool.isRequired,
 };
 
 export default Header;
