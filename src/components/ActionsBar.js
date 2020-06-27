@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
+import { takeFavStorage } from '../services/APIs/APIlocalStorage';
+
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import './ActionsBar.css';
 
 function ActionsBar({ textToCopy, handleFavorite }) {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(takeFavStorage() || false);
   const [coping, setCoping] = useState(false);
 
   const inverteIsFavorite = useCallback(() => { setIsFavorite((isFav) => !isFav) }, [isFavorite]);
