@@ -12,14 +12,13 @@ function ActionsBar({ textToCopy, handleFavorite, isFavInit = false }) {
 
   const inverteIsFavorite = useCallback(() => { setIsFav(isFav); }, [isFav]);
   const enableCopy = useCallback(() => { setCoping(true); }, []);
+  const disableCopy = useCallback(() => { setCoping(false); }, []);
 
   useEffect(() => {
     if (coping) {
       navigator.clipboard.writeText(textToCopy)
         .then(() => console.log('succes copy'))
         .catch((err) => console.log(err));
-
-      setCoping(false);
     }
   }, [coping, setCoping, textToCopy]);
 
@@ -33,12 +32,10 @@ function ActionsBar({ textToCopy, handleFavorite, isFavInit = false }) {
           : <img src={whiteHeart} alt="is not favorite" />
         }
       </button>
-      <div>
-        <button className="tooltip hidden-button" onClick={enableCopy}>
-          <img src={shareIcon} alt="click here to copy the link" />
-          <span className="tooltiptext">Copy the link</span>
-        </button>
-      </div>
+      <button className="tooltip hidden-button" onClick={enableCopy} onMouseOut={disableCopy}>
+        <img src={shareIcon} alt="click here to copy the link" />
+        <span className="tooltiptext">{coping ? 'Copiado!' : 'Copiar link'}</span>
+      </button>
     </div>
   );
 }
