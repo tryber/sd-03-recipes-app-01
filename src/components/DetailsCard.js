@@ -42,7 +42,6 @@ function DetailsCard({ eat, type }) {
     ingredients,
     instructions,
     isAlcoholic,
-    source,
   } = eat;
 
   const handleFavoriteStorage = (isToSend) => {
@@ -60,7 +59,6 @@ function DetailsCard({ eat, type }) {
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
       <ActionsBar
-        textToCopy={source}
         handleFavorite={handleFavoriteStorage}
         isFavInit={takeFavStorage().some((favorite) => favorite.id === id)}
       />

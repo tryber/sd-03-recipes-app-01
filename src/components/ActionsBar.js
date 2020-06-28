@@ -6,7 +6,7 @@ import blackHeart from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import './ActionsBar.css';
 
-function ActionsBar({ textToCopy, handleFavorite, isFavInit = false }) {
+function ActionsBar({ handleFavorite, isFavInit = false }) {
   const [isFav, setIsFav] = useState(isFavInit);
   const [coping, setCoping] = useState(false);
 
@@ -16,11 +16,11 @@ function ActionsBar({ textToCopy, handleFavorite, isFavInit = false }) {
 
   useEffect(() => {
     if (coping) {
-      navigator.clipboard.writeText(textToCopy)
+      navigator.clipboard.writeText(window.location.href)
         .then(() => console.log('succes copy'))
         .catch((err) => console.log(err));
     }
-  }, [coping, setCoping, textToCopy]);
+  }, [coping, setCoping]);
 
   useEffect(() => { handleFavorite(isFav); }, [isFav, handleFavorite]);
 
@@ -32,26 +32,18 @@ function ActionsBar({ textToCopy, handleFavorite, isFavInit = false }) {
           : <img data-testid="favorite-btn" src={whiteHeart} alt="is not favorite" />
         }
       </button>
-      <button
-        className="tooltip hidden-button"
-        disabled={Boolean(textToCopy)}
-        onClick={enableCopy} onMouseOut={disableCopy}
-      >
+      <button className="tooltip hidden-button" onClick={enableCopy} onMouseOut={disableCopy}>
         {coping
           ? <p>Link copiado!</p>
           : <img data-testid="share-btn" src={shareIcon} alt="click to copy the link" />
         }
-        {textToCopy
-          ? <span className="tooltiptext">{coping ? 'Copiar Link' : 'Link Copiado'}</span>
-          : <span className="tooltiptext">There is no Link</span>
-        }
+        <span className="tooltiptext">{coping ? 'Link Copiado' : 'Copiar Link'}</span>
       </button>
     </div>
   );
 }
 
 ActionsBar.propTypes = {
-  textToCopy: PropTypes.string.isRequired,
   handleFavorite: PropTypes.func.isRequired,
   isFavInit: PropTypes.bool.isRequired,
 };
