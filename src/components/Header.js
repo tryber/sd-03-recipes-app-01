@@ -5,45 +5,43 @@ import { FoodsContext } from '../contexts/FoodsContext';
 import profileIcon from '../images/profileIcon.svg';
 import './Header.css';
 
-const radioButtons = (setRadioFilter) => {
-  return (
-    <div className="radioSearchButtons">
-      <form onChange={(evt) => setRadioFilter(evt.target.value)}>
-        <label htmlFor="ingredient">Ingrediente</label>
-        <input
-          type="radio"
-          data-testid="ingredient-search-radio"
-          name="searchTerm"
-          id="ingredient"
-          value="ingredient"
-        />
-        <label htmlFor="name">Nome</label>
-        <input
-          type="radio"
-          data-testid="name-search-radio"
-          name="searchTerm"
-          id="name"
-          value="name"
-        />
-        <label htmlFor="firstLetter">Primeira Letra</label>
-        <input
-          type="radio"
-          data-testid="first-letter-search-radio"
-          name="searchTerm"
-          id="firstLetter"
-          value="firstLetter"
-        />
-      </form>
-    </div>
-  )
-}
+const radioButtons = (setRadioFilter) => (
+  <div className="radioSearchButtons">
+    <form onChange={(evt) => setRadioFilter(evt.target.value)}>
+      <label htmlFor="ingredient">Ingrediente</label>
+      <input
+        type="radio"
+        data-testid="ingredient-search-radio"
+        name="searchTerm"
+        id="ingredient"
+        value="ingredient"
+      />
+      <label htmlFor="name">Nome</label>
+      <input
+        type="radio"
+        data-testid="name-search-radio"
+        name="searchTerm"
+        id="name"
+        value="name"
+      />
+      <label htmlFor="firstLetter">Primeira Letra</label>
+      <input
+        type="radio"
+        data-testid="first-letter-search-radio"
+        name="searchTerm"
+        id="firstLetter"
+        value="firstLetter"
+      />
+    </form>
+  </div>
+);
 
 const foodSearch = (radioFilter, searchTerm) => {
   switch (radioFilter) {
     case 'ingredient':
-      return(`i=${searchTerm}`);
+      return (`i=${searchTerm}`);
     case 'name':
-      return(`s=${searchTerm}`);
+      return (`s=${searchTerm}`);
     case 'firstLetter':
       if (searchTerm.length > 1) {
         alert('Sua busca deve conter somente 1 (um) caracter');
@@ -52,41 +50,43 @@ const foodSearch = (radioFilter, searchTerm) => {
         return `f=${searchTerm}`;
       }
     default:
-      break;
+      return '';
   }
-}
+};
 
 const searchBar = (
   searchTerm,
   setSearchTerm,
   radioFilter,
   setRadioFilter,
+  searchFilter,
   setSearchFilter,
   ) => (
-  <div>
     <div>
-      <input
-        data-testid="search-input"
-        placeholder="Buscar Receita"
-        onChange={(evt) => setSearchTerm(evt.target.value)}
-      />
+      <div>
+        <input
+          data-testid="search-input"
+          placeholder="Buscar Receita"
+          onChange={(evt) => setSearchTerm(evt.target.value)}
+        />
+      </div>
+      {radioButtons(setRadioFilter)}
+      {console.log(searchFilter)}
+      <button
+        data-testid="exec-search-btn"
+        disabled={!radioFilter}
+        onClick={() => setSearchFilter(foodSearch(radioFilter, searchTerm))}
+      >
+        Buscar comida
+      </button>
     </div>
-    {radioButtons(setRadioFilter)}
-    <button
-      data-testid="exec-search-btn"
-      disabled={!radioFilter}
-      onClick={() => setSearchFilter(foodSearch(radioFilter, searchTerm))}
-    >
-      Buscar comida
-    </button>
-  </div>
 );
 
 const Header = ({ titleTag, isSearchablePage }) => {
   const [displaySearch, setDisplaySearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [radioFilter, setRadioFilter] = useState('');
-  const [{searchFilter}, {setSearchFilter}] = useContext(FoodsContext);
+  const [{ searchFilter }, { setSearchFilter }] = useContext(FoodsContext);
 
   return (
     <div className="topBar">
@@ -106,7 +106,14 @@ const Header = ({ titleTag, isSearchablePage }) => {
       </div>
       <div className="searchBar"> {
         displaySearch ?
-        searchBar(searchTerm, setSearchTerm, radioFilter, setRadioFilter, setSearchFilter) :
+        searchBar(
+          searchTerm,
+          setSearchTerm,
+          radioFilter,
+          setRadioFilter,
+          searchFilter,
+          setSearchFilter,
+          ) :
         null
       }
       </div>
