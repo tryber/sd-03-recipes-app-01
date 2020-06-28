@@ -35,7 +35,7 @@ function ActionsBar({ textToCopy, handleFavorite, isFavInit = false }) {
       <button
         className="tooltip hidden-button"
         data-testid="share-btn"
-        disabled
+        disabled={Boolean(textToCopy)}
         onClick={enableCopy} onMouseOut={disableCopy}
       >
         <img src={shareIcon} alt="click here to copy the link" />
