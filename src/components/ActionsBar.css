@@ -27,10 +27,10 @@
   visibility: visible;
 }
 
-.tooltip:hover .tooltiptext , :after {
-  border: 5px solid #999;
+.tooltip:hover .tooltiptext::after {
+  border: 5px solid;
   border-color: #999 transparent transparent;
-  content: ' ';
+  content: '';
   left: 50%;
   margin-left: -5px;
   position: absolute;

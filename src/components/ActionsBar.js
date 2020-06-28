@@ -33,13 +33,16 @@ function ActionsBar({ textToCopy, handleFavorite, isFavInit = false }) {
         }
       </button>
       <button
-        data-testid="share-btn"
+        className="tooltip hidden-button"
         disabled={Boolean(textToCopy)}
         onClick={enableCopy} onMouseOut={disableCopy}
       >
-        <img className="tooltip hidden-button" src={shareIcon} alt="click to copy the link" />
+        {coping
+          ? <p>Link copiado!</p>
+          : <img data-testid="share-btn" src={shareIcon} alt="click to copy the link" />
+        }
         {textToCopy
-          ? <span className="tooltiptext">{coping ? 'Copiar Link' : 'Copiar'}</span>
+          ? <span className="tooltiptext">{coping ? 'Copiar Link' : 'Link Copiado'}</span>
           : <span className="tooltiptext">There is no Link</span>
         }
       </button>
