@@ -26,19 +26,18 @@ function ActionsBar({ textToCopy, handleFavorite, isFavInit = false }) {
 
   return (
     <div>
-      <button data-testid="favorite-btn" className="hidden-button" onClick={inverteIsFavorite}>
+      <button className="hidden-button" onClick={inverteIsFavorite}>
         {isFav
-          ? <img src={blackHeart} alt="is amazing favorite" />
-          : <img src={whiteHeart} alt="is not favorite" />
+          ? <img data-testid="favorite-btn" src={blackHeart} alt="is amazing favorite" />
+          : <img data-testid="favorite-btn" src={whiteHeart} alt="is not favorite" />
         }
       </button>
       <button
-        className="tooltip hidden-button"
         data-testid="share-btn"
         disabled={Boolean(textToCopy)}
         onClick={enableCopy} onMouseOut={disableCopy}
       >
-        <img src={shareIcon} alt="click here to copy the link" />
+        <img className="tooltip hidden-button" src={shareIcon} alt="click to copy the link" />
         {textToCopy
           ? <span className="tooltiptext">{coping ? 'Copiar Link' : 'Copiar'}</span>
           : <span className="tooltiptext">There is no Link</span>
