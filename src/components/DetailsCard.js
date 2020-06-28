@@ -64,7 +64,7 @@ function DetailsCard({ eat, type }) {
         handleFavorite={handleFavoriteStorage}
         isFavInit={takeFavStorage().some((favorite) => favorite.id === id)}
       />
-      {isAlcoholic && <p data-testid="recipe-category">{isAlcoholic}</p>}
+      <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
           <li data-testid={`${index}-ingredient-name-and-measure`} key={ingredient}>
