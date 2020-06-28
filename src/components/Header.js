@@ -50,8 +50,9 @@ const foodSearch = (radioFilter, searchTerm) => {
         return `f=${searchTerm}`;
       }
     default:
-      return '';
+      break;
   }
+  return 's=';
 };
 
 const searchBar = (
