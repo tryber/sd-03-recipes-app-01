@@ -27,9 +27,9 @@
   visibility: visible;
 }
 
-.tooltip:hover .tooltiptext::after {
+.tooltip:hover .tooltiptext , :after {
   border: 5px solid #999;
-  border-color: #999 transparent transparent transparent;
+  border-color: #999 transparent transparent;
   content: ' ';
   left: 50%;
   margin-left: -5px;
