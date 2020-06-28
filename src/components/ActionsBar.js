@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
@@ -9,8 +10,8 @@ function ActionsBar({ textToCopy, handleFavorite, isFavInit = false }) {
   const [isFav, setIsFav] = useState(isFavInit);
   const [coping, setCoping] = useState(false);
 
-  const inverteIsFavorite = useCallback(() => { setIsFav((isFav) => !isFav); }, [isFav]);
-  const enableCopy = useCallback(() => { setCoping(true) }, []);
+  const inverteIsFavorite = useCallback(() => { setIsFav(isFav); }, [isFav]);
+  const enableCopy = useCallback(() => { setCoping(true); }, []);
 
   useEffect(() => {
     if (coping) {
@@ -20,9 +21,9 @@ function ActionsBar({ textToCopy, handleFavorite, isFavInit = false }) {
 
       setCoping(false);
     }
-  }, [coping, setCoping]);
+  }, [coping, setCoping, textToCopy]);
 
-  useEffect(() => { handleFavorite(isFav); }, [isFav]);
+  useEffect(() => { handleFavorite(isFav); }, [isFav, handleFavorite]);
 
   return (
     <div>
