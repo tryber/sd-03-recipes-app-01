@@ -50,8 +50,6 @@ function DetailsCard({ eat, type }) {
     return rmFromFavoriteStorage(id);
   };
 
-  const isFavorite = takeFavStorage().some((favorite) => favorite.id === id) || false;
-
   return (
     <div>
       <Card
@@ -64,10 +62,10 @@ function DetailsCard({ eat, type }) {
       <ActionsBar
         textToCopy={source}
         handleFavorite={handleFavoriteStorage}
-        isFavInit={isFavorite}
+        isFavInit={takeFavStorage().some((favorite) => favorite.id === id)}
       />
       <p data-testid="recipe-category">Category: {category}</p>
-      {(typeof isAlcoholic === 'boolean') && <p>{isAlcoholic ? 'Alcoholic' : 'No Alcoholic'}</p>}
+      {isAlcoholic && <p>{isAlcoholic}</p>}
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
           <li data-testid={`${index}-ingredient-name-and-measure`} key={ingredient}>

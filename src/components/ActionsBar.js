@@ -10,7 +10,7 @@ function ActionsBar({ textToCopy, handleFavorite, isFavInit = false }) {
   const [isFav, setIsFav] = useState(isFavInit);
   const [coping, setCoping] = useState(false);
 
-  const inverteIsFavorite = useCallback(() => { setIsFav(isFav); }, [isFav]);
+  const inverteIsFavorite = useCallback(() => { setIsFav(!isFav); }, [isFav]);
   const enableCopy = useCallback(() => { setCoping(true); }, []);
   const disableCopy = useCallback(() => { setCoping(false); }, []);
 
@@ -26,15 +26,23 @@ function ActionsBar({ textToCopy, handleFavorite, isFavInit = false }) {
 
   return (
     <div>
-      <button className="hidden-button" onClick={inverteIsFavorite}>
+      <button data-testid="favorite-btn" className="hidden-button" onClick={inverteIsFavorite}>
         {isFav
           ? <img src={blackHeart} alt="is amazing favorite" />
           : <img src={whiteHeart} alt="is not favorite" />
         }
       </button>
-      <button className="tooltip hidden-button" onClick={enableCopy} onMouseOut={disableCopy}>
+      <button
+        className="tooltip hidden-button"
+        data-testid="share-btn"
+        disabled
+        onClick={enableCopy} onMouseOut={disableCopy}
+      >
         <img src={shareIcon} alt="click here to copy the link" />
-        <span className="tooltiptext">{coping ? 'Copiado!' : 'Copiar link'}</span>
+        {textToCopy
+          ? <span className="tooltiptext">{coping ? 'Copiar Link' : 'Copiar'}</span>
+          : <span className="tooltiptext">There is no Link</span>
+        }
       </button>
     </div>
   );
