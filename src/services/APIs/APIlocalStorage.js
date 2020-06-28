@@ -2,14 +2,20 @@ export const takeFavStorage = () => JSON.parse(localStorage.getItem('favoriteRec
 
 export const sendToFavoriteStorage = ({
   id,
-  type,
-  area = '',
+  origin: area = '',
   category,
-  alcoholicOrNot,
+  isAlcoholic: alcoholicOrNot,
   name,
-  image,
+  srcImage: image,
   doneDate,
-}) => {
+}, type) => {
+  console.log(id,
+    type,
+    area = '',
+    category,
+    name,
+    image,
+    doneDate,)
   const thisFood = { id, type, area, category, alcoholicOrNot, name, image, doneDate };
   const favoriteList = takeFavStorage();
   localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteList, thisFood]));

@@ -45,7 +45,7 @@ function DetailsCard({ eat, type }) {
   } = eat;
 
   const handleFavoriteStorage = (isToSend) => {
-    if (isToSend) return sendToFavoriteStorage(eat);
+    if (isToSend) return sendToFavoriteStorage(eat, type);
     return rmFromFavoriteStorage(id);
   };
 
