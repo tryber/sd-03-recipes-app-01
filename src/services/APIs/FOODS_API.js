@@ -1,5 +1,5 @@
-export async function fetchFoodsApi() {
-  const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+export async function fetchFoodsApi(query) {
+  const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?${query}`);
   const json = await response.json();
   return response.ok ? Promise.resolve(json) : Promise.reject(json);
 }

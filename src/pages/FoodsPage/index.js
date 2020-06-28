@@ -14,17 +14,20 @@ function FoodsPage() {
   const [error, setError] = useState('');
   const [categories, setCategories] = useState([]);
   const [categorySel, setCategorySel] = useState('all');
-  const [{ foods }, { setFoods }] = useContext(FoodsContext);
+  const [
+    { foods, searchFilter },
+    { setFoods },
+  ] = useContext(FoodsContext);
 
   useEffect(() => {
-    fetchFoodsApi()
+    fetchFoodsApi(searchFilter)
       .then(({ meals }) => setFoods(meals.map((food) => handleFoodsData(food))))
       .then(() => setLoading(false))
       .catch((err) => {
         console.log(err);
         setError(err);
       });
-  }, [setFoods, setLoading]);
+  }, [setFoods, setLoading, searchFilter]);
 
   useEffect(() => {
     fetchCategoriesApi()
