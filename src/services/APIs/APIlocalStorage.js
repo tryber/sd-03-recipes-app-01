@@ -8,7 +8,15 @@ export const sendToFavoriteStorage = ({
   name,
   srcImage: image,
 }, type) => {
-  const thisFood = { id, type, area: area || '', category, alcoholicOrNot, name, image };
+  const thisFood = {
+    id,
+    type,
+    area: area || '',
+    category,
+    alcoholicOrNot: alcoholicOrNot || '',
+    name,
+    image
+  };
   const favoriteList = takeFavStorage();
   localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteList, thisFood]));
 };

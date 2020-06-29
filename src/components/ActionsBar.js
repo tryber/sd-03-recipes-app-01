@@ -37,7 +37,7 @@ function ActionsBar({ handleFavorite, isFavInit = false }) {
           ? <p>Link copiado!</p>
           : <img data-testid="share-btn" src={shareIcon} alt="click to copy the link" />
         }
-        <span className="tooltiptext">{coping ? 'Link Copiado' : 'Copiar Link'}</span>
+        {coping || <span className="tooltiptext">Copiar Link</span>}
       </button>
     </div>
   );

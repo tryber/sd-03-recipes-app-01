@@ -21,9 +21,7 @@ export const handleFoodsData = ({
   strArea,
   strMealThumb,
   strYoutube,
-  strSource,
   srtArea,
-  dateModified,
   ...food
 }) => {
   const obj = {
@@ -34,8 +32,6 @@ export const handleFoodsData = ({
     origin: strArea,
     srcImage: strMealThumb,
     video: strYoutube,
-    source: strSource,
-    doneDate: dateModified,
   };
   const ingredientBase = /^strIngredient(\d*)$/;
   obj.ingredients = Object.entries(food).reduce((ing, [key, value]) => {

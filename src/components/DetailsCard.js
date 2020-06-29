@@ -70,7 +70,7 @@ function DetailsCard({ eat, type }) {
           </li>
         ))}
       </ul>
-      <p data-testid="instructions">{instructions}</p>
+      <p data-testid="instructions">{instructions.replace(/\r\n/g, ' ')}</p>
       {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
       {error.length > 0 && <h3>Aconteceu algo errado em detalhes de comida</h3>}
       {!error && loading && <h3>Carrgando detalhes de comida...</h3>}
