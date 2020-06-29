@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Card, CardFilters, Header, Footer, Loading } from '../../components';
 import { FoodsContext } from '../../contexts/FoodsContext';
 import {
@@ -36,17 +36,22 @@ function FoodsPage() {
       .catch((err) => setError(err));
   }, [setLoading]);
 
-  if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
   if (loading) return <Loading />;
+  if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
+  if (error.length !== 0 && loading === false) {
+    alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    setError('');
+  }
+  if (foods.length === 1) return <Redirect to={`/comidas/${foods[0].id}`} />
 
   const filterCategory = () => {
     if (categorySel !== 'all') return foods.filter(({ category }) => category === categorySel);
-    return foods;
+    if (foods) return foods;
   };
 
   return (
     <div>
-      <Header titleTag="Comidas" isSearchablePage="true" />
+      <Header titleTag="Comidas" isSearchablePage />
       <CardFilters categories={categories} setCategorySel={(value) => setCategorySel(value)} />
       {filterCategory()
         .slice(0, 12)
