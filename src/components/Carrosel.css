@@ -61,11 +61,10 @@
 }
 
 .buttonIniciar {
+  background-color: #6ce34f;
   border: black solid 2px;
-  background-color: #6CE34F;
   display: flex;
   font-size: 25px;
-  font-weight: 5px;
   height: 50px;
   padding-left: 50px;
   text-align: center;

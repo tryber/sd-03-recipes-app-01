@@ -34,7 +34,7 @@ function DetailsCard({ eat, type }) {
   const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
 
   function getIngredients() {
-    const  ignt= JSON.parse(localStorage.getItem('inProggressRecipes')) || {};
+    const ignt = JSON.parse(localStorage.getItem('inProggressRecipes')) || {};
     localStorage.setItem('inProggressRecipes', JSON.stringify({ ...ignt, [id]: [ingredients] }));
   }
 
@@ -63,7 +63,7 @@ function DetailsCard({ eat, type }) {
       {!error && !loading && recomends && <Carrosel cards={recomends} />}
       <Link to={`/comidas/${id}/in-progress`}>
         <button
-        data-testid="start-recipe-btn"
+          data-testid="start-recipe-btn"
           className="buttonIniciar"
           onClick={() => getIngredients()}
         >Iniciar Receita</button>
