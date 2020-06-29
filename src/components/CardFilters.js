@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function CardFilters({ categories, setCategorySel }) {
+function CardFilters({ categories, categorySel, setCategorySel }) {
   return (
     <div>
       <button type="button" value="all" onClick={({ target: { value } }) => setCategorySel(value)}>
@@ -12,7 +12,12 @@ function CardFilters({ categories, setCategorySel }) {
           type="button"
           data-testid={`${category}-category-filter`}
           value={category}
-          onClick={({ target: { value } }) => setCategorySel(value)}
+          onClick={({ target: { value } }) => {
+            if (categorySel === value) {
+              return setCategorySel('all');
+            }
+            return setCategorySel(value);
+          }}
         >
           {category}
         </button>
@@ -23,6 +28,7 @@ function CardFilters({ categories, setCategorySel }) {
 
 CardFilters.propTypes = {
   categories: PropTypes.instanceOf(Array).isRequired,
+  categorySel: PropTypes.string.isRequired,
   setCategorySel: PropTypes.func.isRequired,
 };
 
