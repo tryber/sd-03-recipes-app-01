@@ -14,10 +14,10 @@ function CardFilters({ categories, setCategorySel }) {
           value={category}
           onClick={({ target: { value } }) => setCategorySel(value)}
         >
-      {category}
+          {category}
         </button>
-  ))
-}
+      ))
+      }
     </div >
   );
 }

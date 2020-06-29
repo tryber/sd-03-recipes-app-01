@@ -82,7 +82,7 @@ function DetailsCard({ eat, type }) {
       {!error && loading && <h3>Carrgando detalhes de comida...</h3>}
       {!error && !loading && recomends && <Carrosel cards={recomends} />}
       <Link to={`/comidas/${id}/in-progress`}>
-        <button 
+        <button
           data-testid="start-recipe-btn"
           className="buttonIniciar"
           onClick={() => getIngredients()}
