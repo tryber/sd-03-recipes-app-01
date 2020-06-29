@@ -2,4 +2,5 @@
   background-color: #c4c4c4;
   display: flex;
   justify-content: space-around;
+  position: fixed;
 }
