@@ -4,6 +4,9 @@ import ReactPlayer from 'react-player';
 
 import Card from './Card';
 import Carrosel from './Carrosel';
+import ActionsBar from './ActionsBar';
+import { sendToFavoriteStorage, rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
+import { takeFavStorage } from '../services/APIs/APIlocalStorage';
 
 import { handleDrinksData } from '../services/APIs/DRINKS_API';
 import { handleFoodsData } from '../services/APIs/FOODS_API';
@@ -30,7 +33,21 @@ function DetailsCard({ eat, type }) {
       .catch((err) => { console.log(err); setError(err); });
   }, [type]);
 
-  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
+  const {
+    id,
+    name,
+    srcImage,
+    video,
+    category,
+    ingredients,
+    instructions,
+    isAlcoholic,
+  } = eat;
+
+  const handleFavoriteStorage = (isToSend) => {
+    if (isToSend) return sendToFavoriteStorage(eat, type);
+    return rmFromFavoriteStorage(id);
+  };
 
   return (
     <div>
@@ -41,8 +58,11 @@ function DetailsCard({ eat, type }) {
         srcImage={srcImage}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
-      <p data-testid="recipe-category">Category: {category}</p>
-      {(typeof isAlcoholic === 'boolean') && <p>{isAlcoholic ? 'Alcoholic' : 'No Alcoholic'}</p>}
+      <ActionsBar
+        handleFavorite={handleFavoriteStorage}
+        isFavInit={takeFavStorage().some((favorite) => favorite.id === id)}
+      />
+      <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
           <li data-testid={`${index}-ingredient-name-and-measure`} key={ingredient}>
