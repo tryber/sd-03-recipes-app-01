@@ -13,7 +13,6 @@ export const fetchDetailsFood = (id) => (
   )
 );
 
-// missing strDrinkAlternate, dateModified
 export const handleFoodsData = ({
   idMeal,
   strMeal,
@@ -23,6 +22,8 @@ export const handleFoodsData = ({
   strMealThumb,
   strYoutube,
   strSource,
+  srtArea,
+  dateModified,
   ...food
 }) => {
   const obj = {
@@ -34,8 +35,8 @@ export const handleFoodsData = ({
     srcImage: strMealThumb,
     video: strYoutube,
     source: strSource,
+    doneDate: dateModified,
   };
-
   const ingredientBase = /^strIngredient(\d*)$/;
   obj.ingredients = Object.entries(food).reduce((ing, [key, value]) => {
     const [, id] = key.match(ingredientBase) || [];
