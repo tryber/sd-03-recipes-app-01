@@ -9,15 +9,11 @@ import {
   handleCategoriesData,
 } from '../../services/APIs/FOODS_API';
 
-const manageState = (loading, foods, error, setError) => {
+function manageState(loading, foods, error) {
   if (loading) return <Loading />;
   if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
-  if (error.length !== 0 && loading === false) {
-    alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    setError('');
-  }
   if (foods.length === 1) return <Redirect to={`/comidas/${foods[0].id}`} />;
-}
+};
 
 function FoodsPage() {
   const [loading, setLoading] = useState(true);
@@ -34,7 +30,8 @@ function FoodsPage() {
       .then(({ meals }) => setFoods(meals.map((food) => handleFoodsData(food))))
       .then(() => setLoading(false))
       .catch((err) => {
-        console.log(err);
+        TypeError ?
+        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.') :
         setError(err);
       });
   }, [setFoods, setLoading, searchFilter]);
@@ -51,7 +48,7 @@ function FoodsPage() {
     return foods;
   };
 
-  manageState(loading, foods, error, setError);
+  manageState(loading, foods, error);
 
   return (
     <div>
