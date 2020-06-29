@@ -63,6 +63,7 @@ function DetailsCard({ eat, type }) {
       {!error && !loading && recomends && <Carrosel cards={recomends} />}
       <Link to={`/comidas/${id}/in-progress`}>
         <button
+        data-testid="start-recipe-btn"
           className="buttonIniciar"
           onClick={() => getIngredients()}
         >Iniciar Receita</button>
