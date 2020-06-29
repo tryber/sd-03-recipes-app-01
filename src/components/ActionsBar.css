@@ -1,0 +1,38 @@
+.hidden-button , .hidden-button:focus {
+  background-color: unset;
+  border: none;
+  outline: 0;
+}
+
+.tooltip {
+  display: inline-block;
+  position: relative;
+}
+
+.tooltiptext {
+  background-color: #999;
+  border-radius: 10px;
+  font-size: 1em;
+  left: -50%;
+  padding: 20% 5%;
+  position: absolute;
+  text-align: center;
+  top: -110%;
+  visibility: hidden;
+  width: 250%;
+  z-index: 10;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip:hover .tooltiptext:after {
+  border: 5px solid;
+  border-color: #999 transparent transparent;
+  content: '';
+  left: 50%;
+  margin-left: -5px;
+  position: absolute;
+  top: 100%;
+}
