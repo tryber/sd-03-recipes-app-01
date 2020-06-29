@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
+import { Link } from 'react-router-dom';
 
 import Card from './Card';
 import Carrosel from './Carrosel';
@@ -32,6 +33,11 @@ function DetailsCard({ eat, type }) {
 
   const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
 
+  function getIngredients() {
+    const  ignt= JSON.parse(localStorage.getItem('inProggressRecipes')) || {};
+    localStorage.setItem('inProggressRecipes', JSON.stringify({ ...ignt, [id]: [ingredients] }));
+  }
+
   return (
     <div>
       <Card
@@ -55,6 +61,12 @@ function DetailsCard({ eat, type }) {
       {error.length > 0 && <h3>Aconteceu algo errado em detalhes de comida</h3>}
       {!error && loading && <h3>Carrgando detalhes de comida...</h3>}
       {!error && !loading && recomends && <Carrosel cards={recomends} />}
+      <Link to={`/comidas/${id}/in-progress`}>
+        <button
+          className="buttonIniciar"
+          onClick={() => getIngredients()}
+        >Iniciar Receita</button>
+      </Link>
     </div>
   );
 }
