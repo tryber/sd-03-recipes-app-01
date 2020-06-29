@@ -9,6 +9,16 @@ import {
   handleCategoriesData,
 } from '../../services/APIs/FOODS_API';
 
+const manageState = (loading, foods, error, setError) => {
+  if (loading) return <Loading />;
+  if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
+  if (error.length !== 0 && loading === false) {
+    alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    setError('');
+  }
+  if (foods.length === 1) return <Redirect to={`/comidas/${foods[0].id}`} />;
+}
+
 function FoodsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -36,18 +46,12 @@ function FoodsPage() {
       .catch((err) => setError(err));
   }, [setLoading]);
 
-  if (loading) return <Loading />;
-  if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
-  if (error.length !== 0 && loading === false) {
-    alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    setError('');
-  }
-  if (foods.length === 1) return <Redirect to={`/comidas/${foods[0].id}`} />
-
   const filterCategory = () => {
     if (categorySel !== 'all') return foods.filter(({ category }) => category === categorySel);
-    if (foods) return foods;
+    return foods;
   };
+
+  manageState(loading, foods, error, setError);
 
   return (
     <div>

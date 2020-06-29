@@ -17,7 +17,7 @@ const Header = ({ titleTag, isSearchablePage }) => {
         <h2 data-testid="page-title">{titleTag}</h2>
         { isSearchablePage ? (
           <button
-          className="searchButton"
+            className="searchButton"
             data-testid="search-top-btn"
             onClick={() => setDisplaySearch(!displaySearch)}
           />

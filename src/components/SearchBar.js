@@ -55,7 +55,7 @@ const foodSearch = (radioFilter, searchTerm) => {
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
   const [radioFilter, setRadioFilter] = useState('');
-  const [{ searchFilter }, { setSearchFilter }] = useContext(FoodsContext);
+  const {setSearchFilter} = useContext(FoodsContext)[1];
 
   return (
     <div>
@@ -67,7 +67,6 @@ function SearchBar() {
         />
       </div>
       {radioButtons(setRadioFilter)}
-      {console.log(searchFilter)}
       <button
         data-testid="exec-search-btn"
         disabled={!radioFilter}
@@ -77,6 +76,6 @@ function SearchBar() {
       </button>
     </div>
   );
-};
+}
 
 export default SearchBar;
