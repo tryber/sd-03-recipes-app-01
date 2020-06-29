@@ -4,7 +4,7 @@ export const translateType = (type) => {
   switch (type) {
     case 'comida':
     case 'bebida':
-       return type;
+      return type;
     case 'food': return 'comida';
     case 'drink': return 'bebida';
     default: return 'type is not valid';
