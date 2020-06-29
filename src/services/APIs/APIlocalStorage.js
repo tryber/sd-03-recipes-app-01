@@ -15,7 +15,7 @@ export const sendToFavoriteStorage = ({
     category,
     alcoholicOrNot: alcoholicOrNot || '',
     name,
-    image
+    image,
   };
   const favoriteList = takeFavStorage();
   localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteList, thisFood]));

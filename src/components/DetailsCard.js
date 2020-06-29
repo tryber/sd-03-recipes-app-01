@@ -9,7 +9,7 @@ import { sendToFavoriteStorage, rmFromFavoriteStorage } from '../services/APIs/A
 import { takeFavStorage } from '../services/APIs/APIlocalStorage';
 
 import { handleDrinksData } from '../services/APIs/DRINKS_API';
-import { handleFoodsData } from '../services/APIs/FOODS_API';
+import { handleFoodsData, fetchRecomendations } from '../services/APIs/FOODS_API';
 
 function DetailsCard({ eat, type }) {
   const [recomends, setRecomends] = useState(null);
@@ -21,7 +21,7 @@ function DetailsCard({ eat, type }) {
     if (type === 'food') url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
     if (type === 'drink') url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 
-    fetch(url).then((res) => res.json())
+    fetchRecomendations(url)
       .then((obj) => {
         let arr = [];
         Object.entries(obj).forEach(([key, value]) => {
@@ -60,7 +60,7 @@ function DetailsCard({ eat, type }) {
       />
       <ActionsBar
         handleFavorite={handleFavoriteStorage}
-        isFavInit={takeFavStorage().some((favorite) => favorite.id === id)}
+        isFavInit={takeFavStorage().some((favorite) => Number(favorite.id) === Number(id))}
       />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
@@ -72,7 +72,7 @@ function DetailsCard({ eat, type }) {
       </ul>
       <p data-testid="instructions">{instructions.replace(/\r\n/g, ' ')}</p>
       {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
-      {error.length > 0 && <h3>Aconteceu algo errado em detalhes de comida</h3>}
+      {error && <h3 data-testid="error-details">Aconteceu algo errado em recomendações</h3>}
       {!error && loading && <h3>Carrgando detalhes de comida...</h3>}
       {!error && !loading && recomends && <Carrosel cards={recomends} />}
     </div>

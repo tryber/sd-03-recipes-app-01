@@ -1,12 +1,13 @@
 import React from 'react';
-import { render, cleanup, waitForDomChange, fireEvent, getByText } from '@testing-library/react';
+import { render, cleanup, waitForDomChange, fireEvent } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from "history";
 
 class LocalStorage {
-  constructor() { this.store = {}; };
+  constructor(obj = {}) { this.store = obj; };
   setItem = (key, value) => { this.store[key] = value.toString(); };
   getItem = (key) => this.store[key];
+  clear = () => { this.store = {} };
 }
 
 class Clipboard {
@@ -55,6 +56,9 @@ jest.spyOn(window, 'fetch').mockImplementation((url) => Promise.resolve({
 }));
 
 describe('Details Page of Drink', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
   afterEach(cleanup);
 
   test('should have all the data-testids', async () => {
@@ -163,8 +167,7 @@ describe('DetailsFoodPage', () => {
     expect(favoriteBtn).toHaveAttribute('src', srcWhiteFavoriteBtn);
 
     fireEvent.click(favoriteBtn);
-
-    expect(localStorage.getItem('favoriteRecipes')).toEqual(JSON.stringify([{
+    const mockedObj = JSON.stringify([{
       id: '52977',
       type: 'food',
       area: 'Turkish',
@@ -172,7 +175,9 @@ describe('DetailsFoodPage', () => {
       alcoholicOrNot: '',
       name: 'Corba',
       image: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg'
-    }]));
+    }]);
+
+    expect(localStorage.getItem('favoriteRecipes')).toEqual(mockedObj);
     expect(favoriteBtn).toHaveAttribute('src', srcBlackFavoriteBtn);
 
     fireEvent.click(favoriteBtn);
@@ -187,6 +192,16 @@ describe('DetailsFoodPage', () => {
     expect(getByText('Link copiado!')).toBeInTheDocument();
   });
 
+  test('should begin favorited', async () => {
+    localStorage.setItem('favoriteRecipes', JSON.stringify([{ id: '52977' }]));
+
+    const { getByTestId } = renderWithRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
+    await waitForDomChange();
+
+    const favoriteBtn = getByTestId('favorite-btn');
+    expect(favoriteBtn).toHaveAttribute('src', srcBlackFavoriteBtn);
+  });
+
   test('the Carrosel', async () => {
     const { getByTestId } = renderWithRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
     await waitForDomChange();
@@ -195,7 +210,7 @@ describe('DetailsFoodPage', () => {
     const SecondDot = dotsContainer.children[1];
     const ThirdDot = dotsContainer.children[2];
 
-    const firstPhotos = [
+    const photos = [
       getByTestId('0-recomendation-title'),
       getByTestId('1-recomendation-title'),
       getByTestId('2-recomendation-title'),
@@ -208,17 +223,81 @@ describe('DetailsFoodPage', () => {
 
     fireEvent.click(firstDot);
 
-    expect(firstPhotos[0]).not.toHaveClass('card-invisible');
-    expect(firstPhotos[1]).not.toHaveClass('card-invisible');
-    expect(firstPhotos[2]).toHaveClass('card-invisible');
-    expect(firstPhotos[3]).toHaveClass('card-invisible');
-    expect(firstPhotos[4]).toHaveClass('card-invisible');
-    expect(firstPhotos[5]).toHaveClass('card-invisible');
-
+    expect(photos[0]).not.toHaveClass('card-invisible');
+    expect(photos[2]).toHaveClass('card-invisible');
+    expect(photos[5]).toHaveClass('card-invisible');
 
     fireEvent.click(SecondDot);
 
+    expect(photos[1]).toHaveClass('card-invisible');
+    expect(photos[2]).not.toHaveClass('card-invisible');
+    expect(photos[4]).toHaveClass('card-invisible');
 
     fireEvent.click(ThirdDot);
+
+    expect(photos[0]).toHaveClass('card-invisible');
+    expect(photos[2]).toHaveClass('card-invisible');
+    expect(photos[4]).not.toHaveClass('card-invisible');
+  });
+
+  test('prev and next arrows of Carrosel', async () => {
+    const { getByText, getByTestId } = renderWithRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
+    
+    await waitForDomChange();
+
+    const photos = [
+      getByTestId('0-recomendation-title'),
+      getByTestId('1-recomendation-title'),
+      getByTestId('2-recomendation-title'),
+      getByTestId('3-recomendation-title'),
+      getByTestId('4-recomendation-title'),
+      getByTestId('5-recomendation-title'),
+    ];
+
+    const prev = getByText('❮');
+    const next = getByText('❯');
+    
+    expect(prev).toHaveClass('prev');
+    expect(next).toHaveClass('next');
+
+    expect(photos[0]).not.toHaveClass('card-invisible');
+    expect(photos[2]).toHaveClass('card-invisible');
+    expect(photos[5]).toHaveClass('card-invisible');
+
+    fireEvent.click(prev);
+
+    expect(photos[0]).toHaveClass('card-invisible');
+    expect(photos[2]).toHaveClass('card-invisible');
+    expect(photos[4]).not.toHaveClass('card-invisible');
+
+    fireEvent.click(prev);
+
+    expect(photos[1]).toHaveClass('card-invisible');
+    expect(photos[2]).not.toHaveClass('card-invisible');
+    expect(photos[4]).toHaveClass('card-invisible');
+
+    fireEvent.click(next);
+
+    expect(photos[0]).toHaveClass('card-invisible');
+    expect(photos[2]).toHaveClass('card-invisible');
+    expect(photos[4]).not.toHaveClass('card-invisible');
+
+    fireEvent.click(next);
+
+    expect(photos[0]).not.toHaveClass('card-invisible');
+    expect(photos[2]).toHaveClass('card-invisible');
+    expect(photos[5]).toHaveClass('card-invisible');
+  });
+
+  test('should handle error', async () => {
+    global.fetch
+      .mockReturnValueOnce(Promise.resolve({ ok: 200, json: () => Promise.resolve({ meals }) }))
+      .mockReturnValue(Promise.resolve({ ok: null, json: () => 'Deu erradamente certo em detalhes testes' }));
+    const { getByText, getByTestId } = renderWithRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
+
+    await waitForDomChange();
+
+    expect(getByTestId('error-details')).toBeInTheDocument();
+    expect(getByTestId('error-details')).toHaveTextContent('Aconteceu algo errado em recomendações');
   });
 });
