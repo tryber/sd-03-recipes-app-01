@@ -39,15 +39,15 @@ const radioButtons = (setRadioFilter) => (
 const foodSearch = (radioFilter, searchTerm) => {
   switch (radioFilter) {
     case 'ingredient':
-      return (`i=${searchTerm}`);
+      return (`filter.php?i=${searchTerm}`);
     case 'name':
-      return (`s=${searchTerm}`);
+      return (`search.php?s=${searchTerm}`);
     case 'firstLetter':
       if (searchTerm.length > 1) {
         alert('Sua busca deve conter somente 1 (um) caracter');
         break;
       } else {
-        return `f=${searchTerm}`;
+        return `search.php?f=${searchTerm}`;
       }
     default:
       break;
