@@ -9,7 +9,7 @@ function renderWithRoute(
   { route = '/', history = createMemoryHistory({ initialEntries: [route] }) } = {},
 ) {
   return {
-    ...render(<Router history={history}>{login}</ Router>),
+    ...render(<Router history={history}>{login}</Router>),
     history,
   }
 }
