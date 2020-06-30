@@ -16,6 +16,11 @@ const manageState = (loading, drinks, error) => {
   return false;
 };
 
+const filterCategory = (drinks, categorySel) => {
+  if (categorySel !== 'all') return drinks.filter(({ category }) => category === categorySel);
+  return drinks;
+};
+
 function DrinksPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -35,21 +40,13 @@ function DrinksPage() {
 
   useEffect(() => {
     fetchCategoriesApi()
-      .then(({ drinks }) => setCategories(drinks.map((category) => handleCategoriesData(category))))
+      .then(({ drks }) => setCategories(drks.map((category) => handleCategoriesData(category))))
       .then(() => setLoading(false))
       .catch((err) => {
         console.log(err);
         setError(err);
       });
   }, [setLoading]);
-
-  const filterCategory = () => {
-    if (categorySel !== "all") return drinks.filter(({ category }) => category === categorySel);
-    return drinks;
-  };
-
-  if (error.length > 0) return <h1 data-testid="error-drinks-page">Something Went Wrong</h1>;
-  if (loading) return <Loading />;
 
   return (
     manageState(loading, drinks, error) || (
@@ -60,9 +57,7 @@ function DrinksPage() {
           setCategorySel={(value) => setCategorySel(value)}
           categorySel={categorySel}
         />
-        {filterCategory()
-          .slice(0, 12)
-          .map(({ id, name, srcImage }, index) => (
+        {filterCategory(drinks, categorySel).slice(0, 12).map(({ id, name, srcImage }, index) => (
             <Link key={id} to={`/bebidas/${id}`}>
               <Card name={name} index={index} srcImage={srcImage} />
             </Link>

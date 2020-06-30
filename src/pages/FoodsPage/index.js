@@ -16,14 +16,14 @@ const manageState = (loading, foods, error) => {
   return false;
 };
 
-const filterCategory = (foods) => {
+const filterCategory = (foods, categorySel) => {
   if (categorySel !== 'all') return foods.filter(({ category }) => category === categorySel);
   return foods;
 };
 
 function FoodsPage() {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [categories, setCategories] = useState([]);
   const [categorySel, setCategorySel] = useState('all');
   const [{ foods, searchFilter }, { setFoods }] = useContext(FoodsContext);
@@ -57,7 +57,7 @@ function FoodsPage() {
           setCategorySel={(value) => setCategorySel(value)}
           categorySel={categorySel}
         />
-        {filterCategory(foods)
+        {filterCategory(foods, categorySel)
           .slice(0, 12)
           .map(({ id, name, srcImage }, index) => (
             <Link to={`/comidas/${id}`}>
