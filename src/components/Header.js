@@ -63,7 +63,7 @@ const Header = ({ titleTag, isSearchablePage }) => {
           <img data-testid="profile-top-btn" src={profileIcon} alt="Ícone de perfil" />
         </Link>
         <h2>{titleTag}</h2>
-        { isSearchablePage ? (
+        {isSearchablePage ? (
           <button
             className="searchButton"
             onClick={() => setDisplaySearch(!displaySearch)}
@@ -73,8 +73,8 @@ const Header = ({ titleTag, isSearchablePage }) => {
       </div>
       <div className="searchBar"> {
         displaySearch ?
-        searchBar(searchTerm, setSearchTerm, radioFilter, setRadioFilter) :
-        null
+          searchBar(searchTerm, setSearchTerm, radioFilter, setRadioFilter) :
+          null
       }
       </div>
     </div>

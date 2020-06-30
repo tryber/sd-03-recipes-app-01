@@ -21,8 +21,9 @@ function CardFilters({ categories, categorySel, setCategorySel }) {
         >
           {category}
         </button>
-      ))}
-    </div>
+      ))
+      }
+    </div >
   );
 }
 
