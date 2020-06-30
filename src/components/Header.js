@@ -25,7 +25,7 @@ const Header = ({ titleTag, isSearchablePage }) => {
         }
       </div>
       <div className="searchBar"> {
-        displaySearch ? <SearchBar /> : null
+        displaySearch ? <SearchBar titleTag={titleTag} /> : null
       }
       </div>
     </div>

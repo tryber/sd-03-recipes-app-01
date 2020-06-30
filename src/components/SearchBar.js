@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { FoodsContext } from '../contexts/FoodsContext';
+import { DrinksContext } from '../contexts/DrinksContext';
 import './Header.css';
 
 const radioButtons = (setRadioFilter) => (
@@ -55,7 +56,7 @@ const foodSearch = (radioFilter, searchTerm) => {
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
   const [radioFilter, setRadioFilter] = useState('');
-  const { setSearchFilter } = useContext(FoodsContext)[1];
+  const { setSearchFilter } = useContext(FoodsContext)[1];  
 
   return (
     <div>
