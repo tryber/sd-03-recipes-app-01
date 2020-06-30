@@ -8,6 +8,11 @@ import './Footer.css';
 function Footer() {
   return (
     <div data-testid="footer" className="footer">
+<<<<<<< HEAD
+=======
+      <Link to="/bebidas" data-testid="drinks-bottom-btn">
+        <img src={drinkIcon} alt="drink-icon" width="75px"  />
+>>>>>>> 62327eb568a052d4e420f186e54514953611f38b
       <Link to="/bebidas">
         <img data-testid="drinks-bottom-btn" src={drinkIcon} alt="drink-icon" />
       </Link>
