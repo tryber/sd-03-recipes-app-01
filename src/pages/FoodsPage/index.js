@@ -37,7 +37,7 @@ function FoodsPage() {
     fetchCategoriesApi()
       .then(({ meals }) => setCategories(meals.map((category) => handleCategoriesData(category))))
       .then(() => setLoading(false))
-      .catch((err) => setError(err));
+      .catch((err) => { console.log(err); setError(err); });
   }, [setLoading]);
 
   const filterCategory = () => {

@@ -1,12 +1,25 @@
 import React from 'react';
 import { render, waitForDomChange, cleanup } from '@testing-library/react';
-
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 import { FoodsPage } from '../pages';
 import Provider from '../contexts/Provider';
 
 import meals from '../../cypress/mocks/meals';
+import mealCategories from '../../cypress/mocks/mealCategories';
 
-const renderWithFoodContext = (children) => render(<Provider>{children}</Provider>);
+const renderWithFoodContext = (children, route = '/') => {
+  const initialEntries = [route];
+  const history = createMemoryHistory({ initialEntries });
+  return {
+    ...render(
+      <Router history={history}>
+        <Provider>{children}</Provider>
+      </Router>
+    ),
+    history,
+  };
+};
 
 const mockedFetch = (url) => Promise.resolve({
   ok: 200,
@@ -14,6 +27,8 @@ const mockedFetch = (url) => Promise.resolve({
     switch (url) {
       case 'https://www.themealdb.com/api/json/v1/1/search.php?s=':
         return Promise.resolve(meals);
+      case 'https://www.themealdb.com/api/json/v1/1/list.php?c=list':
+        return Promise.resolve(mealCategories);
       default: return Promise.reject('test, wrong'); 
     }
   },
@@ -33,7 +48,7 @@ describe('FoodPage', () => {
     expect(getByText('Loading...')).toBeInTheDocument();
 
     await waitForDomChange();
-    expect(global.fetch).toHaveBeenCalledTimes(1)
+    expect(global.fetch).toHaveBeenCalledTimes(2);
 
     expect(getByText('Comidas')).toBeInTheDocument();  
   });

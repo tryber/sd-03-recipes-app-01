@@ -4,6 +4,12 @@ export async function fetchFoodsApi(query) {
   return response.ok ? Promise.resolve(json) : Promise.reject(json);
 }
 
+export async function fetchRecomendations(url) {
+  const response = await fetch(url);
+  const json = await response.json();
+  return response.ok ? Promise.resolve(json) : Promise.reject(json);
+}
+
 export const fetchDetailsFood = (id) => (
   fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
     .then((response) => response.json().then((json) => {
@@ -21,9 +27,7 @@ export const handleFoodsData = ({
   strArea,
   strMealThumb,
   strYoutube,
-  strSource,
   srtArea,
-  dateModified,
   ...food
 }) => {
   const obj = {
@@ -34,8 +38,6 @@ export const handleFoodsData = ({
     origin: strArea,
     srcImage: strMealThumb,
     video: strYoutube,
-    source: strSource,
-    doneDate: dateModified,
   };
   const ingredientBase = /^strIngredient(\d*)$/;
   obj.ingredients = Object.entries(food).reduce((ing, [key, value]) => {
