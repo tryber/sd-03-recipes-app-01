@@ -12,10 +12,10 @@ function Footer() {
         <img data-testid="drinks-bottom-btn" src={drinkIcon} alt="drink-icon" />
       </Link>
       <Link to="/explorar">
-        <img data-testid="explore-bottom-btn" src={exploreIcon} alt="drink-icon" />
+        <img data-testid="explore-bottom-btn" src={exploreIcon} alt="explore-icon" />
       </Link>
       <Link to="/comidas">
-        <img data-testid="food-bottom-btn" src={mealIcon} alt="drink-icon" />
+        <img data-testid="food-bottom-btn" src={mealIcon} alt="food-icon" />
       </Link>
     </div>
   );

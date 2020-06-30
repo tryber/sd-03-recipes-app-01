@@ -1,5 +1,5 @@
 import React from "react";
-import { render, waitForDomChange, waitFor, cleanup, fireEvent } from "@testing-library/react";
+import { render, waitForDomChange, cleanup, fireEvent } from "@testing-library/react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { FoodsPage } from "../pages";
@@ -95,32 +95,88 @@ describe("Testing category filter", () => {
   test("filter should work", async () => {
     const { getByTestId, queryAllByAltText } = renderWithFoodContext(<FoodsPage />);
     await waitForDomChange();
-    const allFilterButton = getByTestId('all-filter');
+    const allFilterButton = getByTestId("all-filter");
     fireEvent.click(allFilterButton);
     const foods = queryAllByAltText("food");
-    const allFoods = meals.meals.slice(0,12)
+    const allFoods = meals.meals.slice(0, 12);
     expect(allFoods).toHaveLength(foods.length);
     mealCategories.meals.slice(0, 5).forEach(({ strCategory }, index) => {
       const filterCategory = getByTestId(`${strCategory}-category-filter`);
       fireEvent.click(filterCategory);
       const filteredMeals = meals.meals.filter((meal) => strCategory === meal.strCategory);
-      const foods = queryAllByAltText("food");      
+      const foods = queryAllByAltText("food");
       expect(filteredMeals).toHaveLength(foods.length);
     });
   });
   test("toggle filter should work", async () => {
     const { getByTestId, queryAllByAltText } = renderWithFoodContext(<FoodsPage />);
-    await waitForDomChange();    
+    await waitForDomChange();
     mealCategories.meals.slice(0, 5).forEach(({ strCategory }) => {
       const filterCategory = getByTestId(`${strCategory}-category-filter`);
-      fireEvent.click(filterCategory);      
+      fireEvent.click(filterCategory);
       let filteredMeals = meals.meals.filter((meal) => strCategory === meal.strCategory);
-      let foods = queryAllByAltText("food");     
+      let foods = queryAllByAltText("food");
       expect(filteredMeals).toHaveLength(foods.length);
       fireEvent.click(filterCategory);
-      filteredMeals =  meals.meals.slice(0,12);
-      foods = queryAllByAltText("food");     
+      filteredMeals = meals.meals.slice(0, 12);
+      foods = queryAllByAltText("food");
       expect(filteredMeals).toHaveLength(foods.length);
     });
+  });
+});
+describe("Testing footer", () => {
+  afterEach(clean);
+  jest.spyOn(global, "fetch").mockImplementation(mockedFetch);
+  test("footer buttons should redirect", async () => {
+    const { getByTestId, getByText, history } = renderWithFoodContext(<FoodsPage />);
+    await waitForDomChange();
+    const footer = getByTestId("footer");
+    expect(footer).toBeInTheDocument();
+    const drinkButton = getByTestId("drinks-bottom-btn");
+    const exploreButton = getByTestId("explore-bottom-btn");
+    const foodButton = getByTestId("food-bottom-btn");
+    let URL = history.location.pathname;
+    expect(URL).toMatch('/');
+    fireEvent.click(drinkButton);   
+    expect(URL).toMatch('/bebidas');   
+    fireEvent.click(exploreButton);
+    expect(URL).toMatch('/explorar'); 
+    fireEvent.click(foodButton);
+    expect(URL).toMatch('/comidas'); 
+  });
+});
+describe("Testing header", () => {
+  afterEach(clean);
+  jest.spyOn(global, "fetch").mockImplementation(mockedFetch);   test("header buttons should redirect", async () => {
+    const { getByTestId, getByText, history } = renderWithFoodContext(<FoodsPage />);
+    await waitForDomChange();
+    const profileIcon = getByTestId("profile-top-btn");
+    expect(profileIcon).toBeInTheDocument();
+    let URL = history.location.pathname;
+    fireEvent.click(profileIcon);   
+    expect(URL).toMatch('/perfil');   
+  });
+
+  test("should show searchbar", async () => {
+    const { getByTestId, getAllByRole } = renderWithFoodContext(<FoodsPage />);
+    await waitForDomChange();
+    const searchIcon = getByTestId("search-top-btn");
+    fireEvent.click(searchIcon);   
+    const searchInput = getByTestId('search-input');
+    const ingredientInput = getByTestId('ingredient-search-radio')
+    fireEvent.change(searchInput, {
+      target: {
+        value: a
+      },
+    }); 
+    const findButton = getByTestId('exec-search-btn');
+    const firstLetterBtn = getByTestId('first-letter-search-radio')
+    expect(findButton).toHaveAttribute('disabled')
+    fireEvent.click(ingredientInput);
+    expect(findButton).not.toHaveAttribute('disabled')
+    fireEvent.click(firstLetterBtn);
+    fireEvent.click(findButton);
+    const foods = queryAllByAltText('food')
+    expect(foods).toHaveLength(2);
   });
 });

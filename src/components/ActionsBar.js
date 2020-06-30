@@ -16,7 +16,7 @@ function ActionsBar({ handleFavorite, isFavInit = false }) {
 
   useEffect(() => {
     if (coping) {
-      navigator.clipboard.writeText(window.location.href)
+      navigator.clipboard.writeText('teste')
         .then(() => console.log('succes copy'))
         .catch((err) => console.log(err));
     }
