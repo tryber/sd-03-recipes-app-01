@@ -16,7 +16,7 @@ const manageState = (loading, drinks, error) => {
 function DrinksPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [{ drinks, drinkFilter }, { setDrinks }] = useContext(DrinksContext);
+  const [{ drinks, drinkFilter }, { setDrinks, setDrinkFilter }] = useContext(DrinksContext);
 
   useEffect(() => {
     fetchDrinks(drinkFilter)
@@ -31,7 +31,10 @@ function DrinksPage() {
   return (
     manageState(loading, drinks, error) ||
     <div>
-      <Header titleTag="Bebidas" isSearchablePage />
+      <Header
+        titleTag="Bebidas"
+        filterMode={setDrinkFilter}
+      />
       {drinks.slice(0, 12).map(({ id, name, srcImage }, index) => (
         <Link key={id} to={`/bebidas/${id}`}>
           <Card name={name} index={index} srcImage={srcImage} />
