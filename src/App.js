@@ -34,6 +34,8 @@ function App() {
             <Route exact path="/" component={LoginPage} />
             <Route exact path="/comidas" component={FoodsPage} />
             <Route exact path="/bebidas" component={DrinksPage} />
+            <Route exact path="/comidas/:id/in-progress" component={FoodProcessPage} />
+            <Route exact path="/bebidas/:id/in-progress" component={DrinkProcessPage} />
             <Route
               exact
               path="/comidas/:id"
@@ -44,8 +46,6 @@ function App() {
               path="/bebidas/:id"
               render={({ match }) => <DrinkDetailsPage id={Number(match.params.id)} />}
             />
-            <Route exact path="/comidas/:id/in-progess" component={FoodProcessPage} />
-            <Route exact path="/bebidas/:id/in-progress" component={DrinkProcessPage} />
             <Route exact path="/explorar" component={ExploreMainPage} />
             <Route exact path="/explorar/comidas" component={ExploreFoodPage} />
             <Route exact path="/explorar/bebidas" component={ExploreDrinkPage} />

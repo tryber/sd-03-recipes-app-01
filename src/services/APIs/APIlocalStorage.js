@@ -18,3 +18,11 @@ export const rmFromFavoriteStorage = (id) => {
   const oficialFavoriteList = favorite.filter((fav) => fav.id !== id);
   localStorage.setItem('favoriteRecipes', JSON.stringify(oficialFavoriteList));
 };
+
+export const getIngredients = () => {
+  return JSON.parse(localStorage.getItem('inProggressRecipes')) || {};
+};
+
+export const doneRecipes = () => {
+  return JSON.parse(localStorage.getItem('doneRecipes')) || [];
+};
