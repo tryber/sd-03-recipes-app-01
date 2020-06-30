@@ -1,5 +1,5 @@
-export const fetchDrinks = () => (
-  fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=').then(
+export const fetchDrinks = (query) => (
+  fetch(`https://www.thecocktaildb.com/api/json/v1/1/${query}`).then(
     (response) => response.json().then((json) => {
       if (response.ok) return Promise.resolve(json);
       return Promise.reject(json);
