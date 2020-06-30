@@ -5,7 +5,7 @@ import { Footer } from '../../components';
 function ExploreMainPage() {
   return (
     <div>
-      <Header titleTag="Explorar" isSearchablePage={false} />
+      <Header titleTag="Explorar" />
       <h1>This is ExploreMainPage</h1>
       <Footer />
     </div>

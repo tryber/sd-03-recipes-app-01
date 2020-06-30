@@ -10,12 +10,14 @@ function Footer() {
     <div data-testid="footer" className="footer">
       <Link to="/bebidas" data-testid="drinks-bottom-btn">
         <img src={drinkIcon} alt="drink-icon" width="75px"  />
+      <Link to="/bebidas">
+        <img data-testid="drinks-bottom-btn" src={drinkIcon} alt="drink-icon" />
       </Link>
-      <Link to="/explorar" data-testid="explore-bottom-btn">
-        <img src={exploreIcon} alt="drink-icon" width="75px" />
+      <Link to="/explorar">
+        <img data-testid="explore-bottom-btn" src={exploreIcon} alt="drink-icon" />
       </Link>
-      <Link to="/comidas" data-testid="food-bottom-btn">
-        <img src={mealIcon} alt="drink-icon" width="75px" />
+      <Link to="/comidas">
+        <img data-testid="food-bottom-btn" src={mealIcon} alt="drink-icon" />
       </Link>
     </div>
   );
