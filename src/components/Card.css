@@ -1,16 +1,10 @@
 .card {
-  align-items: center;
   border: 2px solid black;
   border-radius: 10%;
-  box-shadow: 20px 20px 1px #777;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 0 1vw 20px;
+  display: inline-block;
+  margin: 1em 1em auto auto;
   overflow: hidden;
-  padding: 8px 12px;
   position: relative;
-  width: 40%;
 }
 
 .card-invisible {
@@ -24,11 +18,9 @@
 
 .card-title {
   background-color: #ddd;
-  font-size: 2rem;
-  margin: 0;
+  font-size: 1.5em;
   margin-bottom: 10px;
   position: absolute;
   text-align: center;
-  top: 0;
   width: 100%;
 }

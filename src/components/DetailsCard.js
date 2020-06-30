@@ -1,20 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, useContext } from 'react';
+import PropTypes, { number } from 'prop-types';
 import ReactPlayer from 'react-player';
+import { Link } from 'react-router-dom';
 
 import Card from './Card';
 import Carrosel from './Carrosel';
 import ActionsBar from './ActionsBar';
 import { sendToFavoriteStorage, rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
 import { takeFavStorage } from '../services/APIs/APIlocalStorage';
+import { FoodsContext } from '../contexts/FoodsContext';
+import * as getAllApi from '../services/APIs/APIlocalStorage';
 
 import { handleDrinksData } from '../services/APIs/DRINKS_API';
 import { handleFoodsData, fetchRecomendations } from '../services/APIs/FOODS_API';
+
+function ButtonFunc(props) {
+  const { eat, type } = props;
+  const { ingredients, id } = eat;
+  const [, { setFoodInproggress }] = useContext(FoodsContext);
+  const getIngre = getAllApi.getIngredients()[id];
+
+  function getIngredients() {
+    const ignt = JSON.parse(localStorage.getItem('inProggressRecipes')) || {};
+    localStorage.setItem('inProggressRecipes', JSON.stringify({
+      ...ignt,
+      [id]: ingredients
+        .reduce((acc, elIngredients) => {
+          const obj = { ...acc, [elIngredients.ingredient]: false };
+          return obj;
+        }, {}),
+    }));
+    setFoodInproggress(eat);
+  }
+
+  return (
+    <Link to={`${type === 'food' ? '/comidas' : '/bebidas'}/${id}/in-progress`}>
+      <button
+        data-testid="start-recipe-btn"
+        className="buttonIniciar"
+        onClick={() => getIngredients()}
+      >{getIngre ? 'Continuar Receita' : 'Iniciar Receita'}</button>
+    </Link>);
+}
 
 function DetailsCard({ eat, type }) {
   const [recomends, setRecomends] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const ifDone = getAllApi.doneRecipes().some((element) => element.id === Number(eat.id));
+  console.log(number);
 
   useEffect(() => {
     let url = '';
@@ -75,9 +109,17 @@ function DetailsCard({ eat, type }) {
       {error && <h3 data-testid="error-details">Aconteceu algo errado em recomendações</h3>}
       {!error && loading && <h3>Carrgando detalhes de comida...</h3>}
       {!error && !loading && recomends && <Carrosel cards={recomends} />}
+      {ifDone ||
+        <ButtonFunc eat={eat} type={type} />
+      }
     </div>
   );
 }
+
+ButtonFunc.propTypes = {
+  eat: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+};
 
 DetailsCard.propTypes = {
   eat: PropTypes.shape({
