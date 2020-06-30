@@ -1,59 +1,59 @@
-import React from 'react';
-import { render, waitForDomChange, cleanup } from '@testing-library/react';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
-import { FoodsPage } from '../pages';
-import Provider from '../contexts/Provider';
+import React from "react";
+import { render, waitForDomChange, waitFor, cleanup, fireEvent } from "@testing-library/react";
+import { Router } from "react-router-dom";
+import { createMemoryHistory } from "history";
+import { FoodsPage } from "../pages";
+import Provider from "../contexts/Provider";
+import meals from "../../cypress/mocks/meals";
+import mealCategories from "../../cypress/mocks/mealCategories";
 
-import meals from '../../cypress/mocks/meals';
-import mealCategories from '../../cypress/mocks/mealCategories';
-
-const renderWithFoodContext = (children, route = '/') => {
+const renderWithFoodContext = (children, route = "/") => {
   const initialEntries = [route];
   const history = createMemoryHistory({ initialEntries });
   return {
     ...render(
       <Router history={history}>
         <Provider>{children}</Provider>
-      </Router>
+      </Router>,
     ),
     history,
   };
 };
 
-const mockedFetch = (url) => Promise.resolve({
-  ok: 200,
-  json: () => {
-    switch (url) {
-      case 'https://www.themealdb.com/api/json/v1/1/search.php?s=':
-        return Promise.resolve(meals);
-      case 'https://www.themealdb.com/api/json/v1/1/list.php?c=list':
-        return Promise.resolve(mealCategories);
-      default: return Promise.reject('test, wrong'); 
-    }
-  },
-});
+const mockedFetch = (url) =>
+  Promise.resolve({
+    ok: 200,
+    json: () => {
+      switch (url) {
+        case "https://www.themealdb.com/api/json/v1/1/search.php?s=":
+          return Promise.resolve(meals);
+        case "https://www.themealdb.com/api/json/v1/1/list.php?c=list":
+          return Promise.resolve(mealCategories);
+        default:
+          return Promise.reject("test, wrong");
+      }
+    },
+  });
 
 const clean = () => {
   cleanup();
 };
 
-describe('FoodPage', () => {
+describe("Should fetch APIs", () => {
   afterEach(clean);
-  jest.spyOn(global, 'fetch').mockImplementation(mockedFetch);
-
-  test('should open whth a requisition and a message of loading', async () => {
+  jest.spyOn(global, "fetch").mockImplementation(mockedFetch);
+  test("should open whth a requisition and a message of loading", async () => {
     const { getByText } = renderWithFoodContext(<FoodsPage />);
-    
-    expect(getByText('Loading...')).toBeInTheDocument();
+
+    expect(getByText("Loading...")).toBeInTheDocument();
 
     await waitForDomChange();
     expect(global.fetch).toHaveBeenCalledTimes(2);
 
-    expect(getByText('Comidas')).toBeInTheDocument();  
+    expect(getByText("Comidas")).toBeInTheDocument();
   });
 
-  test('should render 12 Cards with image', async () => {
+  test("should render 12 Cards with image", async () => {
     const { getByTestId } = renderWithFoodContext(<FoodsPage />);
 
     await waitForDomChange();
@@ -64,18 +64,63 @@ describe('FoodPage', () => {
       const cardName = getByTestId(`${index}-card-name`);
       expect(cardName).toHaveTextContent(food.strMeal);
       const cardImage = getByTestId(`${index}-card-img`);
-      expect(cardImage).toHaveAttribute('src', food.strMealThumb);
+      expect(cardImage).toHaveAttribute("src", food.strMealThumb);
     });
   });
 
-  test('should handle error', async () => {
+  test("should handle error", async () => {
     global.fetch.mockReturnValueOnce(
-      Promise.resolve({ ok: 0, json: () => Promise.resolve('Opss') }),
+      Promise.resolve({ ok: 0, json: () => Promise.resolve("Opss") }),
     );
     const { getByTestId } = renderWithFoodContext(<FoodsPage />);
 
     await waitForDomChange();
 
-    expect(getByTestId('error-foods-page')).toHaveTextContent('Something Went Wrong');
+    expect(getByTestId("error-foods-page")).toHaveTextContent("Something Went Wrong");
+  });
+});
+
+describe("Testing category filter", () => {
+  afterEach(clean);
+  jest.spyOn(global, "fetch").mockImplementation(mockedFetch);
+  test("should display filter categories", async () => {
+    const { getByTestId } = renderWithFoodContext(<FoodsPage />);
+    await waitForDomChange();
+    mealCategories.meals.slice(0, 5).forEach(({ strCategory }) => {
+      const filterCategory = getByTestId(`${strCategory}-category-filter`);
+      expect(filterCategory).toBeInTheDocument();
+    });
+  });
+
+  test("filter should work", async () => {
+    const { getByTestId, queryAllByAltText } = renderWithFoodContext(<FoodsPage />);
+    await waitForDomChange();
+    const allFilterButton = getByTestId('all-filter');
+    fireEvent.click(allFilterButton);
+    const foods = queryAllByAltText("food");
+    const allFoods = meals.meals.slice(0,12)
+    expect(allFoods).toHaveLength(foods.length);
+    mealCategories.meals.slice(0, 5).forEach(({ strCategory }, index) => {
+      const filterCategory = getByTestId(`${strCategory}-category-filter`);
+      fireEvent.click(filterCategory);
+      const filteredMeals = meals.meals.filter((meal) => strCategory === meal.strCategory);
+      const foods = queryAllByAltText("food");      
+      expect(filteredMeals).toHaveLength(foods.length);
+    });
+  });
+  test("toggle filter should work", async () => {
+    const { getByTestId, queryAllByAltText } = renderWithFoodContext(<FoodsPage />);
+    await waitForDomChange();    
+    mealCategories.meals.slice(0, 5).forEach(({ strCategory }) => {
+      const filterCategory = getByTestId(`${strCategory}-category-filter`);
+      fireEvent.click(filterCategory);      
+      let filteredMeals = meals.meals.filter((meal) => strCategory === meal.strCategory);
+      let foods = queryAllByAltText("food");     
+      expect(filteredMeals).toHaveLength(foods.length);
+      fireEvent.click(filterCategory);
+      filteredMeals =  meals.meals.slice(0,12);
+      foods = queryAllByAltText("food");     
+      expect(filteredMeals).toHaveLength(foods.length);
+    });
   });
 });

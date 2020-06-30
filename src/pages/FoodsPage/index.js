@@ -13,7 +13,7 @@ const manageState = (loading, foods, error) => {
   if (loading) return <Loading />;
   if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
   if (foods.length === 1) return <Redirect to={`/comidas/${foods[0].id}`} />;
-  return true;
+  return false;
 };
 
 function FoodsPage() {
@@ -44,10 +44,9 @@ function FoodsPage() {
     if (categorySel !== 'all') return foods.filter(({ category }) => category === categorySel);
     return foods;
   };
-
-  manageState(loading, foods, error);
-
+  
   return (
+    manageState(loading, foods, error) ||
     <div>
       <Header titleTag="Comidas" isSearchablePage />
       <CardFilters

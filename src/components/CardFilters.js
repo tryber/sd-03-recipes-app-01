@@ -1,10 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 function CardFilters({ categories, categorySel, setCategorySel }) {
   return (
     <div>
-      <button type="button" value="all" onClick={({ target: { value } }) => setCategorySel(value)}>
+      <button
+        type="button"
+        value="all"
+        data-testid="all-filter"
+        onClick={({ target: { value } }) => setCategorySel(value)}
+      >
         All
       </button>
       {categories.slice(0, 5).map(({ category }) => (
@@ -14,16 +19,15 @@ function CardFilters({ categories, categorySel, setCategorySel }) {
           value={category}
           onClick={({ target: { value } }) => {
             if (categorySel === value) {
-              return setCategorySel('all');
+              return setCategorySel("all");
             }
             return setCategorySel(value);
           }}
         >
           {category}
         </button>
-      ))
-      }
-    </div >
+      ))}
+    </div>
   );
 }
 
