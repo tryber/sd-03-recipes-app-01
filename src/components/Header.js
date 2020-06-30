@@ -37,7 +37,6 @@ const Header = ({ titleTag, filterMode }) => {
 
 Header.propTypes = {
   titleTag: PropTypes.string.isRequired,
-  isSearchablePage: PropTypes.bool.isRequired,
 };
 
 export default Header;

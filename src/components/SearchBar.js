@@ -52,7 +52,7 @@ const setURL = (radioFilter, searchTerm) => {
   return 's=';
 };
 
-function SearchBar({setFilter}) {
+function SearchBar({ setFilter }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [radioFilter, setRadioFilter] = useState('');
 
@@ -69,7 +69,8 @@ function SearchBar({setFilter}) {
       <button
         data-testid="exec-search-btn"
         disabled={!radioFilter}
-        onClick={() => setFilter(setURL(radioFilter, searchTerm))}>
+        onClick={() => setFilter(setURL(radioFilter, searchTerm))}
+      >
         Buscar
       </button>
     </div>
@@ -77,7 +78,7 @@ function SearchBar({setFilter}) {
 }
 
 SearchBar.propTypes = {
-  searchType: PropTypes.string.isRequired,
+  setFilter: PropTypes.string.isRequired,
 };
 
 export default SearchBar;

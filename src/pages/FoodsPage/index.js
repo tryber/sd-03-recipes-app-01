@@ -48,10 +48,7 @@ function FoodsPage() {
   return (
     manageState(loading, foods, error) ||
     <div>
-      <Header
-        titleTag="Comidas"
-        filterMode={setFoodFilter}
-      />
+      <Header titleTag="Comidas" filterMode={setFoodFilter} />
       <CardFilters
         categories={categories}
         setCategorySel={(value) => setCategorySel(value)}
