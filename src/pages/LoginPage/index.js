@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './Login.css';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -16,9 +17,10 @@ function LoginPage() {
   };
 
   return (
-    <div>
+    <div className='backGround'>
       <h1>Login</h1>
       <input
+        className="Buttons"
         placeholder="Email"
         data-testid="email-input"
         onChange={(event) => setEmail(event.target.value)}
@@ -26,6 +28,7 @@ function LoginPage() {
         required
       />
       <input
+        className="Buttons"
         data-testid="password-input"
         onChange={(event) => setPassword(event.target.value)}
         placeholder="Senha"
@@ -34,6 +37,7 @@ function LoginPage() {
       />
       <Link to="./comidas">
         <button
+          className="Buttons"
           type="button"
           disabled={!emailPassword()}
           data-testid="login-submit-btn"

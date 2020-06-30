@@ -1,0 +1,12 @@
+.backGround{
+  background-color:rgb(142, 245, 142);;
+  border: solid 2px black;
+  bottom: 0;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  padding:2%;
+  width: 50%;
+ }
+
+ .Buttons{
+   width: 20%;
+ }

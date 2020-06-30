@@ -9,7 +9,7 @@ function Footer() {
   return (
     <div data-testid="footer" className="footer">
       <Link to="/bebidas" data-testid="drinks-bottom-btn">
-        <img src={drinkIcon} alt="drink-icon" width="75px" />
+        <img src={drinkIcon} alt="drink-icon" width="75px"  />
       </Link>
       <Link to="/explorar" data-testid="explore-bottom-btn">
         <img src={exploreIcon} alt="drink-icon" width="75px" />
