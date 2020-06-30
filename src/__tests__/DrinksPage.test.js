@@ -1,21 +1,34 @@
 import React from 'react';
 import { render, waitForDomChange, cleanup } from '@testing-library/react';
+import { Router } from 'react-router-dom';
+
+import { createMemoryHistory } from 'history';
+// import drinkCategories from '../../cypress/mocks/drinkCategories';
 
 import { DrinksPage } from '../pages';
 import Provider from '../contexts/Provider';
 
 import drinks from '../../cypress/mocks/drinks';
 
-const renderWithContext = (children) => render(<Provider>{children}</Provider>);
+const renderWithContext = (children, route = '/') => {
+  const history = createMemoryHistory({ initialEntries: [route] });
+  return {
+    ...render(
+      <Router history={history}>
+        <Provider>{children}</Provider>
+      </Router>
+    ),
+    history
+  };
+};
 
 const mockedFetch = (url) => Promise.resolve({
   ok: 200,
   json: () => {
     switch (url) {
-      case 'https://www.themealdb.com/api/json/v1/1/search.php?s=':
-        return Promise.resolve(meals);
       case 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=':
         return Promise.resolve(drinks);
+        // return Promise.resolve(drinkCategories);
       default: return Promise.reject('test, wrong'); 
     }
   },
@@ -59,7 +72,7 @@ describe('DrinksPage', () => {
     global.fetch.mockReturnValueOnce(
       Promise.resolve({ ok: 0, json: () => Promise.resolve('Opss') }),
     );
-    const { getByTestId } =renderWithContext(<DrinksPage />);
+    const { getByTestId } = renderWithContext(<DrinksPage />);
 
     await waitForDomChange();
 
