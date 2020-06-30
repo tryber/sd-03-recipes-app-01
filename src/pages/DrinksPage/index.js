@@ -30,7 +30,7 @@ function DrinksPage() {
 
   useEffect(() => {
     fetchDrinksApi(searchFilter)
-      .then(({ drinks }) => setDrinks(drinks.map((drink) => handleDrinksData(drink))))
+      .then(({ drks }) => setDrinks(drks.map((drink) => handleDrinksData(drink))))
       .then(() => setLoading(false))
       .catch((err) => {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
@@ -58,9 +58,9 @@ function DrinksPage() {
           categorySel={categorySel}
         />
         {filterCategory(drinks, categorySel).slice(0, 12).map(({ id, name, srcImage }, index) => (
-            <Link key={id} to={`/bebidas/${id}`}>
+           <Link key={id} to={`/bebidas/${id}`}>
               <Card name={name} index={index} srcImage={srcImage} />
-            </Link>
+           </Link>
           ))}
         <Footer />
       </div>
