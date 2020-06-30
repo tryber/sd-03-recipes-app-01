@@ -21,10 +21,7 @@ function FoodsPage() {
   const [error, setError] = useState('');
   const [categories, setCategories] = useState([]);
   const [categorySel, setCategorySel] = useState('all');
-  const [
-    { foods, searchFilter },
-    { setFoods },
-  ] = useContext(FoodsContext);
+  const [{ foods, searchFilter }, { setFoods }] = useContext(FoodsContext);
 
   useEffect(() => {
     fetchFoodsApi(searchFilter)
