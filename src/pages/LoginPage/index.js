@@ -16,7 +16,7 @@ function LoginPage() {
   };
 
   return (
-    <div className='backGround'>
+    <div>
       <h1>Login</h1>
       <input
         className="Buttons"
