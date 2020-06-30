@@ -9,6 +9,7 @@ function CardFilters({ categories, categorySel, setCategorySel }) {
       </button>
       {categories.slice(0, 5).map(({ category }) => (
         <button
+          key={category}
           type="button"
           data-testid={`${category}-category-filter`}
           value={category}
