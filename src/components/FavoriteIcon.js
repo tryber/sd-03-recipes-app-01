@@ -5,12 +5,12 @@ import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 import './FavoriteIcon.css';
 
-function FavoriteIcon({ handleFavoriteChange, isFavoriteInit = false }) {
-  const [isFavorite, setIsFav] = useState(isFavoriteInit);
+function FavoriteIcon({ handleFavoriteChange, isFavoriteInit }) {
+  const [isFavorite, setIsFavorite] = useState(isFavoriteInit);
 
   const inverteIsFavorite = useCallback(() => {
-    setIsFav((fav) => !fav);
-  }, [isFavorite]);
+    setIsFavorite(!isFavorite);
+  }, [isFavorite, setIsFavorite]);
 
   useEffect(() => { handleFavoriteChange(isFavorite); }, [isFavorite, handleFavoriteChange]);
 

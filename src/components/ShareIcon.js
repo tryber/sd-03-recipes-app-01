@@ -15,7 +15,7 @@ function ShareIcon({ textToCopy }) {
         .then(() => console.log('succes copy'))
         .catch((err) => console.log(err));
     }
-  }, [coping, setCoping]);
+  }, [coping, setCoping, textToCopy]);
 
   return (
     <button
