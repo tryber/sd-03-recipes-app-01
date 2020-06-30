@@ -53,7 +53,11 @@ function FoodsPage() {
   return (
     <div>
       <Header titleTag="Comidas" isSearchablePage />
-      <CardFilters categories={categories} setCategorySel={(value) => setCategorySel(value)} />
+      <CardFilters
+        categories={categories}
+        setCategorySel={(value) => setCategorySel(value)}
+        categorySel={categorySel}
+      />
       {filterCategory()
         .slice(0, 12)
         .map(({ id, name, srcImage }, index) => (
