@@ -38,10 +38,7 @@ export const rmFromFavoriteStorage = (id) => {
   localStorage.setItem('favoriteRecipes', JSON.stringify(oficialFavoriteList));
 };
 
-export const getIngredients = () => {
-  return JSON.parse(localStorage.getItem('inProggressRecipes')) || {};
-};
+export const getIngredients = () => JSON.parse(localStorage.getItem('inProggressRecipes')) || {};
+;
 
-export const doneRecipes = () => {
-  return JSON.parse(localStorage.getItem('doneRecipes')) || [];
-};
+export const doneRecipes = () => JSON.parse(localStorage.getItem('doneRecipes')) || [];

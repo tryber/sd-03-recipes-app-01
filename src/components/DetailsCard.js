@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import PropTypes, { number } from 'prop-types';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 
@@ -58,13 +57,14 @@ function DetailsCard({ eat, type }) {
   function getIngredients() {
     const ignt = JSON.parse(localStorage.getItem('inProggressRecipes')) || {};
     localStorage.setItem('inProggressRecipes', JSON.stringify({
-      ...ignt, [id]: ingredients
+      ...ignt,
+      [id]: ingredients
         .reduce((acc, elIngredients) => {
           const obj = { ...acc, [elIngredients.ingredient]: false };
           return obj;
-        }, {})
+        }, {}),
     }));
-    setFoodInproggress(eat)
+    setFoodInproggress(eat);
   }
 
   return (

@@ -11,8 +11,6 @@ function ListaIng() {
     id,
     name,
     srcImage,
-    category,
-    isAlcoholic,
     ingredients,
   } = foodInproggress;
 
@@ -26,8 +24,8 @@ function ListaIng() {
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
       <ul>{ingredients.map((el, index) => (
-        <label key={el.ingredient}>
-          <input data-testid={`${index}-ingredient-step`} type="checkbox" />
+        <label htmlFor={el.ingredient} key={el.ingredient}>
+          <input data-testid={`${index}-ingredient-step`} type="checkbox" id={el.ingredient} />
           {el.ingredient}
         </label>
       ))}
