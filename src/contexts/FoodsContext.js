@@ -9,15 +9,18 @@ export const FoodsContext = createContext();
 export function FoodsProvider({ children }) {
   const [foods, setFoods] = useState([]);
   const [searchFilter, setSearchFilter] = useState('search.php?s=');
-
+  const [foodInproggress, setFoodInproggress] = useState({});
+  
   const state = {
     foods,
     searchFilter,
-  };
+    foodInproggress,
+  }
 
   const setState = {
     setFoods,
     setSearchFilter,
+    setFoodInproggress,
   };
 
   return (

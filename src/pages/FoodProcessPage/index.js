@@ -1,9 +1,10 @@
 import React from 'react';
+import ListaIng from '../../components/CheckBox';
 
 function FoodProcessPage() {
   return (
     <div>
-      <h1>This is FoodProcessPage</h1>
+      <ListaIng />
     </div>
   );
 }
