@@ -14,14 +14,41 @@ import * as getAllApi from '../services/APIs/APIlocalStorage';
 import { handleDrinksData } from '../services/APIs/DRINKS_API';
 import { handleFoodsData } from '../services/APIs/FOODS_API';
 
+function ButtonFunc(props) {
+  const { eat, type } = props;
+  const { ingredients, id } = eat;
+  const [, { setFoodInproggress }] = useContext(FoodsContext);
+  const getIngre = getAllApi.getIngredients()[id];
+
+  function getIngredients() {
+    const ignt = JSON.parse(localStorage.getItem('inProggressRecipes')) || {};
+    localStorage.setItem('inProggressRecipes', JSON.stringify({
+      ...ignt,
+      [id]: ingredients
+        .reduce((acc, elIngredients) => {
+          const obj = { ...acc, [elIngredients.ingredient]: false };
+          return obj;
+        }, {}),
+    }));
+    setFoodInproggress(eat);
+  }
+
+  return (
+    <Link to={`${type === 'food' ? '/comidas' : '/bebidas'}/${id}/in-progress`}>
+      <button
+        data-testid="start-recipe-btn"
+        className="buttonIniciar"
+        onClick={() => getIngredients()}
+      >{getIngre ? 'Continuar Receita' : 'Iniciar Receita'}</button>
+    </Link>)
+
+}
+
 function DetailsCard({ eat, type }) {
   const [recomends, setRecomends] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [, { setFoodInproggress }] = useContext(FoodsContext);
-  const getIngre = getAllApi.getIngredients()[eat.id];
   const ifDone = getAllApi.doneRecipes().some((element) => element.id === Number(eat.id));
-
   console.log(number);
 
   useEffect(() => {
@@ -57,19 +84,6 @@ function DetailsCard({ eat, type }) {
     return rmFromFavoriteStorage(id);
   };
 
-  function getIngredients() {
-    const ignt = JSON.parse(localStorage.getItem('inProggressRecipes')) || {};
-    localStorage.setItem('inProggressRecipes', JSON.stringify({
-      ...ignt,
-      [id]: ingredients
-        .reduce((acc, elIngredients) => {
-          const obj = { ...acc, [elIngredients.ingredient]: false };
-          return obj;
-        }, {}),
-    }));
-    setFoodInproggress(eat);
-  }
-
   return (
     <div>
       <Card
@@ -97,13 +111,7 @@ function DetailsCard({ eat, type }) {
       {!error && loading && <h3>Carrgando detalhes de comida...</h3>}
       {!error && !loading && recomends && <Carrosel cards={recomends} />}
       {ifDone ||
-        <Link to={`${type === 'food' ? '/comidas' : '/bebidas'}/${id}/in-progress`}>
-          <button
-            data-testid="start-recipe-btn"
-            className="buttonIniciar"
-            onClick={() => getIngredients()}
-          >{getIngre ? 'Continuar Receita' : 'Iniciar Receita'}</button>
-        </Link>
+        <ButtonFunc eat={eat} type={type} />
       }
     </div>
   );
