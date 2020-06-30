@@ -20,6 +20,14 @@ function DrinksPage() {
       .catch((err) => setError(err));
   }, [setDrinks, setLoading]);
 
+  useEffect(() => {
+    fetchCategoriesApi()
+      .then(({ meals }) => setCategories(meals.map((category) => handleCategoriesData(category))))
+      .then(() => setLoading(false))
+      .catch((err) => { console.log(err); setError(err); });
+  }, [setLoading]);
+
+
   if (error.length > 0) return <h1 data-testid="error-drinks-page">Something Went Wrong</h1>;
   if (loading) return <Loading />;
 
