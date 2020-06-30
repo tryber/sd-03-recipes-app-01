@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { FoodsContext } from '../contexts/FoodsContext';
+import { DrinksContext } from '../contexts/DrinksContext';
 import './Header.css';
 
 const radioButtons = (setRadioFilter) => (
@@ -33,7 +34,7 @@ const radioButtons = (setRadioFilter) => (
   </div>
 );
 
-const foodSearch = (radioFilter, searchTerm) => {
+const setURL = (radioFilter, searchTerm) => {
   switch (radioFilter) {
     case 'ingredient':
       return (`filter.php?i=${searchTerm}`);
@@ -52,10 +53,11 @@ const foodSearch = (radioFilter, searchTerm) => {
   return 's=';
 };
 
-function SearchBar() {
+function SearchBar({searchType}) {
   const [searchTerm, setSearchTerm] = useState('');
   const [radioFilter, setRadioFilter] = useState('');
-  const { setSearchFilter } = useContext(FoodsContext)[1];
+  const { setFoodFilter } = useContext(FoodsContext)[1];
+  const { setDrinkFilter } = useContext(DrinksContext)[1];
 
   return (
     <div>
@@ -67,13 +69,22 @@ function SearchBar() {
         />
       </div>
       {radioButtons(setRadioFilter)}
+      {searchType === 'Comidas' ?
       <button
         data-testid="exec-search-btn"
         disabled={!radioFilter}
-        onClick={() => setSearchFilter(foodSearch(radioFilter, searchTerm))}
+        onClick={() => setFoodFilter(setURL(radioFilter, searchTerm))}
       >
-        Buscar comida
+        Buscar comidas
       </button>
+      : <button
+          data-testid="exec-search-btn"
+          disabled={!radioFilter}
+          onClick={() => setDrinkFilter(setURL(radioFilter, searchTerm))}
+        >
+        Buscar bebidas
+        </button>
+      }
     </div>
   );
 }
