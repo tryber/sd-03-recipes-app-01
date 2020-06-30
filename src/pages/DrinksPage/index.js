@@ -6,7 +6,7 @@ import { Card, Footer, Loading } from '../../components';
 import Header from '../../components/Header';
 
 import { DrinksContext } from '../../contexts/DrinksContext';
-import { fetchDrinks, handleDrinksData } from '../../services/APIs/DRINKS_API';
+import { fetchDrinksAPI, handleDrinksData } from '../../services/APIs/DRINKS_API';
 
 function DrinksPage() {
   const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ function DrinksPage() {
   const [{ drinks }, { setDrinks }] = useContext(DrinksContext);
 
   useEffect(() => {
-    fetchDrinks()
+    fetchDrinksAPI()
       .then(({ drinks: drk }) => setDrinks(drk.map((drink) => handleDrinksData(drink))))
       .then(() => setLoading(false))
       .catch((err) => setError(err));

@@ -1,11 +1,8 @@
-export const fetchDrinks = () => (
-  fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=').then(
-    (response) => response.json().then((json) => {
-      if (response.ok) return Promise.resolve(json);
-      return Promise.reject(json);
-    }),
-  )
-);
+export const fetchDrinksAPI = async (query = 'search.php?s=') => {
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/${query}`);
+  const json = await response.json();
+  return response.ok ? Promise.resolve(json) : Promise.reject(json);
+};
 
 export const fetchDetailsDrink = (id) => (
   fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)

@@ -13,7 +13,7 @@ const manageState = (loading, foods, error) => {
   if (loading) return <Loading />;
   if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
   if (foods.length === 1) return <Redirect to={`/comidas/${foods[0].id}`} />;
-  return true;
+  return false;
 };
 
 function FoodsPage() {
@@ -24,20 +24,31 @@ function FoodsPage() {
   const [{ foods, searchFilter }, { setFoods }] = useContext(FoodsContext);
 
   useEffect(() => {
-    fetchFoodsApi(searchFilter)
-      .then(({ meals }) => setFoods(meals.map((food) => handleFoodsData(food))))
-      .then(() => setLoading(false))
-      .catch((err) => {
+    (async () => {
+      try {
+        const { meals } = await fetchFoodsApi(searchFilter);
+        setFoods(meals.map((food) => handleFoodsData(food)));
+        setLoading(false);
+      } catch (err) {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+        console.log(err);
         setError(err);
-      });
+      }
+    })()
   }, [setFoods, setLoading, searchFilter]);
 
+
   useEffect(() => {
-    fetchCategoriesApi()
-      .then(({ meals }) => setCategories(meals.map((category) => handleCategoriesData(category))))
-      .then(() => setLoading(false))
-      .catch((err) => { console.log(err); setError(err); });
+    (async () => {
+      try {
+        const { meals } = await fetchCategoriesApi();
+        setCategories(meals.map((category) => handleCategoriesData(category)));
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+        setError(err);
+      }
+    })()
   }, [setLoading]);
 
   const filterCategory = () => {
@@ -45,9 +56,8 @@ function FoodsPage() {
     return foods;
   };
 
-  manageState(loading, foods, error);
-
   return (
+    manageState(loading, foods, error) ||
     <div>
       <Header titleTag="Comidas" isSearchablePage />
       <CardFilters
@@ -58,8 +68,8 @@ function FoodsPage() {
       {filterCategory()
         .slice(0, 12)
         .map(({ id, name, srcImage }, index) => (
-          <Link to={`/comidas/${id}`}>
-            <Card key={id} name={name} index={index} srcImage={srcImage} />
+          <Link key={id} to={`/comidas/${id}`}>
+            <Card name={name} index={index} srcImage={srcImage} />
           </Link>
         ))}
       <Footer />
