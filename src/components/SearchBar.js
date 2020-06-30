@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { FoodsContext } from '../contexts/FoodsContext';
-import { DrinksContext } from '../contexts/DrinksContext';
 import './Header.css';
 
 const radioButtons = (setRadioFilter) => (

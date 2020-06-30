@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { Card, CardFilters, Header, Footer, Loading } from "../../components";
-import { FoodsContext } from "../../contexts/FoodsContext";
+import React, { useEffect, useState, useContext } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { Card, CardFilters, Header, Footer, Loading } from '../../components';
+import { FoodsContext } from '../../contexts/FoodsContext';
 import {
   fetchFoodsApi,
   fetchCategoriesApi,
   handleFoodsData,
   handleCategoriesData,
-} from "../../services/APIs/FOODS_API";
+} from '../../services/APIs/FOODS_API';
 
 const manageState = (loading, foods, error) => {
   if (loading) return <Loading />;
@@ -16,11 +16,16 @@ const manageState = (loading, foods, error) => {
   return false;
 };
 
+const filterCategory = (foods) => {
+  if (categorySel !== 'all') return foods.filter(({ category }) => category === categorySel);
+  return foods;
+};
+
 function FoodsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [categories, setCategories] = useState([]);
-  const [categorySel, setCategorySel] = useState("all");
+  const [categorySel, setCategorySel] = useState('all');
   const [{ foods, searchFilter }, { setFoods }] = useContext(FoodsContext);
 
   useEffect(() => {
@@ -28,7 +33,7 @@ function FoodsPage() {
       .then(({ meals }) => setFoods(meals.map((food) => handleFoodsData(food))))
       .then(() => setLoading(false))
       .catch((err) => {
-        alert("Sinto muito, não encontramos nenhuma receita para esses filtros.");
+        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
         setError(err);
       });
   }, [setFoods, setLoading, searchFilter]);
@@ -43,11 +48,6 @@ function FoodsPage() {
       });
   }, [setLoading]);
 
-  const filterCategory = () => {
-    if (categorySel !== "all") return foods.filter(({ category }) => category === categorySel);
-    return foods;
-  };
-
   return (
     manageState(loading, foods, error) || (
       <div>
@@ -57,7 +57,7 @@ function FoodsPage() {
           setCategorySel={(value) => setCategorySel(value)}
           categorySel={categorySel}
         />
-        {filterCategory()
+        {filterCategory(foods)
           .slice(0, 12)
           .map(({ id, name, srcImage }, index) => (
             <Link to={`/comidas/${id}`}>

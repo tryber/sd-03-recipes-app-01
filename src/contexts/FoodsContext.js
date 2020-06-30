@@ -1,16 +1,12 @@
-import React, {
-  createContext,
-  useState,
-} from 'react';
-import PropTypes from 'prop-types';
+import React, { createContext, useState } from "react";
+import PropTypes from "prop-types";
 
 export const FoodsContext = createContext();
 
 export function FoodsProvider({ children }) {
   const [foods, setFoods] = useState([]);
-  const [searchFilter, setSearchFilter] = useState('search.php?s=');
+  const [searchFilter, setSearchFilter] = useState("search.php?s=");
   const [foodInproggress, setFoodInproggress] = useState({});
-  
 
   const state = {
     foods,
@@ -24,11 +20,7 @@ export function FoodsProvider({ children }) {
     setFoodInproggress,
   };
 
-  return (
-    <FoodsContext.Provider value={[state, setState]}>
-      {children}
-    </FoodsContext.Provider>
-  );
+  return <FoodsContext.Provider value={[state, setState]}>{children}</FoodsContext.Provider>;
 }
 
 FoodsProvider.propTypes = {

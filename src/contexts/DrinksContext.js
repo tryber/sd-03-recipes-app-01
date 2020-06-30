@@ -11,7 +11,7 @@ export function DrinksProvider({
 }) {
   const [drinks, setDrinks] = useState([]);
   const [searchFilter, setSearchFilter] = useState('search.php?s=');
-  
+
   const state = {
     drinks,
     searchFilter,

@@ -1,17 +1,16 @@
-export async function fetchDrinksApi(query){
+export async function fetchDrinksApi(query) {
   const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/${query}`);
-  const json = await response.json()
+  const json = await response.json();
   return response.ok ? Promise.resolve(json) : Promise.reject(json);
 }
 
-export const fetchDetailsDrink = (id) => (
-  fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
-    .then((response) => response.json().then((json) => {
+export const fetchDetailsDrink = (id) =>
+  fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`).then((response) =>
+    response.json().then((json) => {
       if (response.ok) return Promise.resolve(json);
       return Promise.reject(json);
     }),
-  )
-);
+  );
 
 export const handleDrinksData = ({
   idDrink,
@@ -38,7 +37,7 @@ export const handleDrinksData = ({
   const ingredientBase = /^strIngredient(\d*)$/;
   obj.ingredients = Object.entries(drink).reduce((ing, [key, value]) => {
     const [, id] = key.match(ingredientBase) || [];
-    if (id && value !== null && value !== '') {
+    if (id && value !== null && value !== "") {
       return [...ing, { ingredient: value, measure: drink[`strMeasure${id}`] || null }];
     }
     return ing;
@@ -47,7 +46,7 @@ export const handleDrinksData = ({
 };
 
 export async function fetchCategoriesApi() {
-  const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+  const response = await fetch("https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list");
   const json = await response.json();
   return response.ok ? Promise.resolve(json) : Promise.reject(json);
 }
