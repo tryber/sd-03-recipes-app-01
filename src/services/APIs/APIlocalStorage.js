@@ -39,6 +39,5 @@ export const rmFromFavoriteStorage = (id) => {
 };
 
 export const getIngredients = () => JSON.parse(localStorage.getItem('inProggressRecipes')) || {};
-;
 
 export const doneRecipes = () => JSON.parse(localStorage.getItem('doneRecipes')) || [];

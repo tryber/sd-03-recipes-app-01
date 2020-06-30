@@ -62,12 +62,12 @@
 
 .buttonIniciar {
   background-color: #6ce34f;
-  border: black solid 2px;
+  bottom: 0;
   display: flex;
-  font-size: 25px;
   height: 50px;
-  padding-left: 50px;
+  left: 50%;
   position: fixed;
+  transform: translateX(-50%);
   text-align: center;
   width: 250px;
 }

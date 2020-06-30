@@ -21,8 +21,9 @@ function DetailsCard({ eat, type }) {
   const [, { setFoodInproggress }] = useContext(FoodsContext);
   const getIngre = getAllApi.getIngredients()[eat.id];
   const ifDone = getAllApi.doneRecipes().some((element) => element.id === Number(eat.id));
+
   console.log(number);
-  
+
   useEffect(() => {
     let url = '';
     if (type === 'food') url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -66,7 +67,7 @@ function DetailsCard({ eat, type }) {
           return obj;
         }, {}),
     }));
-    setFoodInproggress(eat)
+    setFoodInproggress(eat);
   }
 
   return (
