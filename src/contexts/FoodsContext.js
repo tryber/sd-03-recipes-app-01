@@ -8,13 +8,16 @@ export const FoodsContext = createContext();
 
 export function FoodsProvider({ children }) {
   const [foods, setFoods] = useState([]);
+  const [foodInproggress, setFoodInproggress] = useState({});
 
   const state = {
     foods,
+    foodInproggress,
   };
 
   const setState = {
     setFoods,
+    setFoodInproggress,
   };
 
   return (
