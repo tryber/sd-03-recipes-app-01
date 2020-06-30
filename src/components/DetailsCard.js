@@ -40,8 +40,7 @@ function ButtonFunc(props) {
         className="buttonIniciar"
         onClick={() => getIngredients()}
       >{getIngre ? 'Continuar Receita' : 'Iniciar Receita'}</button>
-    </Link>)
-
+    </Link>);
 }
 
 function DetailsCard({ eat, type }) {
@@ -116,6 +115,11 @@ function DetailsCard({ eat, type }) {
     </div>
   );
 }
+
+ButtonFunc.propTypes = {
+  eat: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+};
 
 DetailsCard.propTypes = {
   eat: PropTypes.shape({
