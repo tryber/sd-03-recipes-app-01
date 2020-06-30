@@ -7,21 +7,18 @@ import './Footer.css';
 
 function Footer() {
   return (
-    <div data-testid="footer" className="footer">
-<<<<<<< HEAD
-=======
+    <div data-testid="footer" className="footer" >
       <Link to="/bebidas" data-testid="drinks-bottom-btn">
-        <img src={drinkIcon} alt="drink-icon" width="75px"  />
->>>>>>> 62327eb568a052d4e420f186e54514953611f38b
-      <Link to="/bebidas">
-        <img data-testid="drinks-bottom-btn" src={drinkIcon} alt="drink-icon" />
-      </Link>
-      <Link to="/explorar">
-        <img data-testid="explore-bottom-btn" src={exploreIcon} alt="drink-icon" />
-      </Link>
-      <Link to="/comidas">
-        <img data-testid="food-bottom-btn" src={mealIcon} alt="drink-icon" />
-      </Link>
+        <img src={drinkIcon} alt="drink-icon" width="75px" />
+        <Link to="/bebidas">
+          <img data-testid="drinks-bottom-btn" src={drinkIcon} alt="drink-icon" />
+        </Link>
+        <Link to="/explorar">
+          <img data-testid="explore-bottom-btn" src={exploreIcon} alt="drink-icon" />
+        </Link>
+        <Link to="/comidas">
+          <img data-testid="food-bottom-btn" src={mealIcon} alt="drink-icon" />
+        </Link>
     </div>
   );
 }
