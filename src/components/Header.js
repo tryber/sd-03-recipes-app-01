@@ -36,6 +36,7 @@ const Header = ({ titleTag, filterMode }) => {
 };
 
 Header.propTypes = {
+  filterMode: PropTypes.func.isRequired,
   titleTag: PropTypes.string.isRequired,
 };
 
