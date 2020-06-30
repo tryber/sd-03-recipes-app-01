@@ -30,7 +30,7 @@ function FoodsPage() {
     fetchCategoriesApi()
       .then(({ meals }) => setCategories(meals.map((category) => handleCategoriesData(category))))
       .then(() => setLoading(false))
-      .catch((err) => setError(err));
+      .catch((err) => { console.log(err); setError(err); });
   }, [setLoading]);
 
   if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
