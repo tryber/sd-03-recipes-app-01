@@ -4,8 +4,9 @@ import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { FoodsPage } from "../pages";
 import Provider from "../contexts/Provider";
-import meals from "../../cypress/mocks/meals";
-import mealCategories from "../../cypress/mocks/mealCategories";
+import fetch from '../../cypress/mocks/fetch';
+import meals from '../../cypress/mocks/meals';
+import mealCategories from '../../cypress/mocks/mealCategories';
 
 const renderWithFoodContext = (children, route = "/") => {
   const initialEntries = [route];
@@ -20,20 +21,7 @@ const renderWithFoodContext = (children, route = "/") => {
   };
 };
 
-const mockedFetch = (url) =>
-  Promise.resolve({
-    ok: 200,
-    json: () => {
-      switch (url) {
-        case "https://www.themealdb.com/api/json/v1/1/search.php?s=":
-          return Promise.resolve(meals);
-        case "https://www.themealdb.com/api/json/v1/1/list.php?c=list":
-          return Promise.resolve(mealCategories);
-        default:
-          return Promise.reject("test, wrong");
-      }
-    },
-  });
+const mockedFetch = fetch;
 
 const clean = () => {
   cleanup();
