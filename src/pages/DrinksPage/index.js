@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Card, Footer, Loading } from '../../components';
-import Header from '../../components/Header';
-
+import { Card, CardFilters, Header, Footer, Loading } from '../../components';
 import { DrinksContext } from '../../contexts/DrinksContext';
-import { fetchDrinks, handleDrinksData } from '../../services/APIs/DRINKS_API';
+import {
+  fetchDrinks,
+  handleDrinksData,
+  fetchCategoriesApi,
+  handleCategoriesData,
+} from '../../services/APIs/DRINKS_API';
 
 const manageState = (loading, drinks, error) => {
   if (loading) return <Loading />;
@@ -16,6 +19,7 @@ const manageState = (loading, drinks, error) => {
 function DrinksPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [categories, setCategories] = useState([]);
   const [{ drinks, drinkFilter }, { setDrinks, setDrinkFilter }] = useContext(DrinksContext);
 
   useEffect(() => {
@@ -28,20 +32,36 @@ function DrinksPage() {
       });
   }, [setDrinks, setLoading, drinkFilter]);
 
+  useEffect(() => {
+    fetchCategoriesApi()
+      .then(({ drinks: drks }) =>
+        setCategories(drks.map((category) => handleCategoriesData(category))),
+      )
+      .then(() => setLoading(false))
+      .catch((err) => {
+        console.log(err);
+        setError(err);
+      });
+  }, [setLoading]);
+
   return (
-    manageState(loading, drinks, error) ||
-    <div>
-      <Header
-        titleTag="Bebidas"
-        filterMode={setDrinkFilter}
-      />
-      {drinks.slice(0, 12).map(({ id, name, srcImage }, index) => (
-        <Link key={id} to={`/bebidas/${id}`}>
-          <Card name={name} index={index} srcImage={srcImage} />
-        </Link>
-      ))}
-      <Footer />
-    </div>
+    manageState(loading, drinks, error) || (
+      <div>
+        <Header titleTag="Bebidas" filterMode={setDrinkFilter} />
+        <CardFilters
+          categories={categories}
+          filterMode={setDrinkFilter}
+        />
+        {drinks
+          .slice(0, 12)
+          .map(({ id, name, srcImage }, index) => (
+            <Link key={id} to={`/bebidas/${id}`}>
+              <Card name={name} index={index} srcImage={srcImage} />
+            </Link>
+          ))}
+        <Footer />
+      </div>
+    )
   );
 }
 
