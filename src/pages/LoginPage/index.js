@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './Login.css';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -16,7 +17,8 @@ function LoginPage() {
   };
 
   return (
-    <div>
+    <center>
+    <div className="Login">
       <h1>Login</h1>
       <input
         className="Buttons"
@@ -46,6 +48,7 @@ function LoginPage() {
           </button>
       </Link>
     </div>
+    </center>
   );
 }
 
