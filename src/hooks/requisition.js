@@ -10,7 +10,7 @@ const useRequisition = (requisition) => {
         .then(() => setLoading(false))
         .catch((err) => { console.log(err); setError(err); });
     }
-  }, [loading])
+  }, [loading]);
 
   return [{ loading, error }, { setLoading, setError }];
 };

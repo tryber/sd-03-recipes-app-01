@@ -10,8 +10,8 @@ import useRequisition from '../../hooks/requisition';
 function DrinkDetailsPage({ id }) {
   const [drink, setDrink] = useState(null);
   const fetchDrink = () => fetchDrinkApi(`lookup.php?i=${id}`)
-    .then(({ drinks: drk }) => setDrink(handleDrinksData(drk[0])))
-  const [{ loading, error}] = useRequisition(fetchDrink);
+    .then(({ drinks }) => setDrink(handleDrinksData(drinks[0])));
+  const [{ loading, error }] = useRequisition(fetchDrink);
 
   const [recomends, setRecomends] = useState(null);
   const fetchRecomends = () => fetchFoodsApi()

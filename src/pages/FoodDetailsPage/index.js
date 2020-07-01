@@ -10,12 +10,12 @@ import useRequisition from '../../hooks/requisition';
 function FoodDetailsPage({ id }) {
   const [food, setFood] = useState({});
   const fetchFood = () => fetchFoodsApi(`lookup.php?i=${id}`)
-    .then((obj) => {console.log(obj); setFood(handleFoodsData(obj.meals[0]))});
+    .then(({ meals }) => setFood(handleFoodsData(meals[0])));
   const [{ loading, error }] = useRequisition(fetchFood);
 
   const [recomends, setRecomends] = useState(null);
   const fetchRecomends = () => fetchDrinkApi()
-    .then(({ drinks }) => setRecomends(drinks.slice(0, 6).map((drk) => handleDrinksData(drk))))
+    .then(({ drinks }) => setRecomends(drinks.slice(0, 6).map((drk) => handleDrinksData(drk))));
   const [{ loadingRecom, errorRecom }] = useRequisition(fetchRecomends);
 
   if (error) return <h1>Aconteceu algo errado em detalhes de comida</h1>;

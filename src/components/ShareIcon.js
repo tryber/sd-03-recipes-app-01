@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 import srcShareIcon from '../images/shareIcon.svg';
 import './ShareIcon.css';
