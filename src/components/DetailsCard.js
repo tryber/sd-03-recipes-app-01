@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player/youtube';
 import { Link } from 'react-router-dom';
@@ -18,48 +18,28 @@ import {
 
 import { FoodsContext } from '../contexts/FoodsContext';
 
-import { handleDrinksData, fetchDrinksAPI } from '../services/APIs/DRINKS_API';
+import { handleDrinksData, fetchDrinks } from '../services/APIs/DRINKS_API';
 import { handleFoodsData, fetchFoodsApi } from '../services/APIs/FOODS_API';
 
-function ButtonFunc(props) {
-  const { eat, type } = props;
-  const { ingredients, id } = eat;
-  const [, { setFoodInproggress }] = useContext(FoodsContext);
-  const getIngre = getInProgress()[id];
-
-  function getIngredients() {
-    const ignt = JSON.parse(localStorage.getItem('inProggressRecipes')) || {};
-    localStorage.setItem('inProggressRecipes', JSON.stringify({
-      ...ignt,
-      [id]: ingredients
-        .reduce((acc, elIngredients) => {
-          const obj = { ...acc, [elIngredients.ingredient]: false };
-          return obj;
-        }, {}),
-    }));
-    setFoodInproggress(eat);
+function StoreRecipe(id, ingredients, storedRecipes, type) {
+  const newStorage = {
+    ...storedRecipes[type === 'food' ? 'meals' : 'cocktails'],
+    [id]: ingredients.reduce((acc, { ingredient }) => ({ ...acc, [ingredient]: false }), {}),
   }
-
-  return (
-    <Link to={`${type === 'food' ? '/comidas' : '/bebidas'}/${id}/in-progress`}>
-      <button
-        data-testid="start-recipe-btn"
-        className="buttonIniciar"
-        onClick={() => getIngredients()}
-      >{getIngre ? 'Continuar Receita' : 'Iniciar Receita'}</button>
-    </Link>
-  );
+  localStorage.setItem('inProggressRecipes', JSON.stringify(newStorage));
 }
 
 function DetailsCard({ eat, type }) {
   const [recomends, setRecomends] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const getIngre = getInProgress(type);
+  const [, { setFoodInproggress }] = useContext(FoodsContext);
   const ifDone = doneRecipes().some((element) => element.id === Number(eat.id));
 
   useEffect(() => {
     if (type === 'food') {
-      fetchDrinksAPI()
+      fetchDrinks()
         .then((obj) => obj.drinks.slice(0, 6).map((drk) => handleDrinksData(drk)))
         .then((arr) => setRecomends(arr))
         .then(() => setLoading(false))
@@ -84,10 +64,15 @@ function DetailsCard({ eat, type }) {
     isAlcoholic,
   } = eat;
 
-  const handleFavoriteStorage = (isToSend) => {
+  const handleFavoriteStorage = useCallback((isToSend) => {
     if (isToSend) return sendToFavoriteStorage(eat, type);
-    return rmFromFavoriteStorage(id);
-  };
+    return rmFromFavoriteStorage(eat.id);
+  }, [eat, type]);
+
+  const startRecipe = useCallback(() => {
+    setFoodInproggress(eat);
+    StoreRecipe(eat.id, eat.ingredients, getIngre, type);
+  }, [eat, type]);
 
   return (
     <div>
@@ -117,35 +102,41 @@ function DetailsCard({ eat, type }) {
       {!error && loading && <h3>Carrgando detalhes de comida...</h3>}
       {!error && !loading && recomends && <Carrosel cards={recomends} />}
       {ifDone ||
-        <ButtonFunc eat={eat} type={type} />
+        <Link to={`${type === 'food' ? '/comidas' : '/bebidas'}/${id}/in-progress`}>
+          <button
+            data-testid="start-recipe-btn"
+            className="buttonIniciar"
+            onClick={startRecipe}
+          >{getIngre[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
+        </Link>
       }
     </div>
   );
 }
 
-ButtonFunc.propTypes = {
-  eat: PropTypes.shape({
-    id: PropTypes.string.isRequired, // number as string
-    name: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
-    instructions: PropTypes.string.isRequired,
-    origin: PropTypes.string.isRequired,
-    srcImage: PropTypes.string.isRequired,
-    video: PropTypes.string.isRequired,
-    source: PropTypes.string,
-    ingredients: PropTypes.arrayOf(
-      PropTypes.objectOf(
-        PropTypes.string.isRequired,
-      ).isRequired,
-    ).isRequired,
-    isAlcoholic: PropTypes.bool,
-  }).isRequired,
-  type: PropTypes.oneOf(['food', 'drink']).isRequired,
-};
+// ButtonFunc.propTypes = {
+//   eat: PropTypes.shape({
+//     id: PropTypes.string.isRequired, // number as string
+//     name: PropTypes.string.isRequired,
+//     category: PropTypes.string.isRequired,
+//     instructions: PropTypes.string.isRequired,
+//     origin: PropTypes.string.isRequired,
+//     srcImage: PropTypes.string.isRequired,
+//     video: PropTypes.string.isRequired,
+//     source: PropTypes.string,
+//     ingredients: PropTypes.arrayOf(
+//       PropTypes.objectOf(
+//         PropTypes.string.isRequired,
+//       ).isRequired,
+//     ).isRequired,
+//     isAlcoholic: PropTypes.bool,
+//   }).isRequired,
+//   type: PropTypes.oneOf(['food', 'drink']).isRequired,
+// };
 
-ButtonFunc.defaultProps = {
-  eat: { source: null, isAlcoholic: null },
-};
+// ButtonFunc.defaultProps = {
+//   eat: { source: null, isAlcoholic: null },
+// };
 
 DetailsCard.propTypes = {
   eat: PropTypes.shape({
