@@ -1,5 +1,5 @@
 import React from "react";
-import { render, waitForDomChange, cleanup, fireEvent } from "@testing-library/react";
+import { render, waitForDomChange, waitFor, cleanup, fireEvent } from "@testing-library/react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { FoodsPage } from "../pages";
@@ -95,7 +95,7 @@ describe("Testing category filter", () => {
   test("filter should work", async () => {
     const { getByTestId, queryAllByAltText } = renderWithFoodContext(<FoodsPage />);
     await waitForDomChange();
-    const allFilterButton = getByTestId("all-filter");
+    const allFilterButton = getByTestId("All-category-filter");
     fireEvent.click(allFilterButton);
     const foods = queryAllByAltText("food");
     const allFoods = meals.meals.slice(0, 12);
@@ -128,16 +128,16 @@ describe("Testing footer", () => {
   afterEach(clean);
   jest.spyOn(global, "fetch").mockImplementation(mockedFetch);
   test("footer buttons should redirect", async () => {
-    const { getByTestId, getByText, history } = renderWithFoodContext(<FoodsPage />);
+    const { getByTestId } = renderWithFoodContext(<FoodsPage />);
     await waitForDomChange();
     const footer = getByTestId("footer");
     expect(footer).toBeInTheDocument();
-    const drinkButton = getByTestId("drinks-bottom-btn");
-    const exploreButton = getByTestId("explore-bottom-btn");
-    const foodButton = getByTestId("food-bottom-btn");     
-    expect(drinkButton.href).toBe('/bebidas');     
-    expect(exploreButton.href).toBe('/explorar');     
-    expect(foodButton.href).toBe('/comidas'); 
+    const drinkButton = getByTestId("drinks-link-btn");
+    const exploreButton = getByTestId("explore-link-btn");
+    const foodButton = getByTestId("food-link-btn");     
+    expect(drinkButton.href).toBe('http://localhost/bebidas');     
+    expect(exploreButton.href).toBe('http://localhost/explorar');     
+    expect(foodButton.href).toBe('http://localhost/comidas'); 
   });
 });
 describe("Testing header", () => {
@@ -145,12 +145,12 @@ describe("Testing header", () => {
   jest.spyOn(global, "fetch").mockImplementation(mockedFetch);   test("header buttons should redirect", async () => {
     const { getByTestId, getByText, history } = renderWithFoodContext(<FoodsPage />);
     await waitForDomChange();
-    const profileIcon = getByTestId("profile-top-btn");     
-    expect(profileIcon.href).toBe('/perfil');   
+    const profileIcon = getByTestId("profile-link-btn");     
+    expect(profileIcon.href).toBe('http://localhost/perfil');   
   });
 
   test("should show searchbar", async () => {
-    const { getByTestId, getAllByRole } = renderWithFoodContext(<FoodsPage />);
+    const { getByTestId,queryAllByAltText } = renderWithFoodContext(<FoodsPage />);
     await waitForDomChange();
     const searchIcon = getByTestId("search-top-btn");
     fireEvent.click(searchIcon);   
@@ -158,7 +158,7 @@ describe("Testing header", () => {
     const ingredientInput = getByTestId('ingredient-search-radio')
     fireEvent.change(searchInput, {
       target: {
-        value: a
+        value: 'a'
       },
     }); 
     const findButton = getByTestId('exec-search-btn');
@@ -168,6 +168,7 @@ describe("Testing header", () => {
     expect(findButton).not.toHaveAttribute('disabled')
     fireEvent.click(firstLetterBtn);
     fireEvent.click(findButton);
+    await waitForDomChange();
     const foods = queryAllByAltText('food')
     expect(foods).toHaveLength(2);
   });

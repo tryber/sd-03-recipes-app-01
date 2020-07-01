@@ -11,7 +11,7 @@ const Header = ({ titleTag, isSearchablePage }) => {
   return (
     <div className="topBar">
       <div className="headerBar">
-        <Link to="/perfil">
+        <Link to="/perfil" data-testid="profile-link-btn" >
           <img data-testid="profile-top-btn" src={profileIcon} alt="Ícone de perfil" />
         </Link>
         <h2 data-testid="page-title">{titleTag}</h2>
