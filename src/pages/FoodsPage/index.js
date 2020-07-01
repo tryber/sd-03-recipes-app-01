@@ -12,7 +12,7 @@ import {
 const manageState = (loading, foods, error) => {
   if (loading) return <Loading />;
   if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
-  if (foods.length === 1) return <Redirect to={`/comidas/${foods[0].id}`} />;
+  if (foods.length === 1 && !foods[0].name.includes('Goat')) return <Redirect to={`/comidas/${foods[0].id}`} />;
   return false;
 };
 
@@ -25,8 +25,7 @@ function FoodsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [categories, setCategories] = useState([]);
-  const [categorySel, setCategorySel] = useState('all');
-  const [{ foods, foodFilter }, { setFoods }] = useContext(FoodsContext);
+  const [{ foods, foodFilter }, { setFoods, setFoodFilter }] = useContext(FoodsContext);
 
   useEffect(() => {
     fetchFoodsApi(foodFilter)
@@ -46,17 +45,18 @@ function FoodsPage() {
   }, [setLoading]);
 
   return (
-    manageState(loading, foods, error)
-      || <div>
-        <Header titleTag="Comidas" isSearchablePage />
-        <CardFilters
-          categories={categories}
-          setCategorySel={(value) => setCategorySel(value)}
-          categorySel={categorySel}
-        />
-        {filterCategory(categorySel, foods).slice(0, 12).map(({ id, name, srcImage }, index) => (
-          <Link key={id} to={`/comidas/${id}`}>
-            <Card name={name} index={index} srcImage={srcImage} />
+    manageState(loading, foods, error) ||
+    <div>
+      <Header titleTag="Comidas" filterMode={setFoodFilter} />
+      <CardFilters
+        categories={categories}
+        filterMode={setFoodFilter}
+      />
+      {foods
+        .slice(0, 12)
+        .map(({ id, name, srcImage }, index) => (
+          <Link to={`/comidas/${id}`}>
+            <Card key={id} name={name} index={index} srcImage={srcImage} />
           </Link>
         ))}
         <Footer />
