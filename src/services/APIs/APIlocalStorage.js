@@ -39,12 +39,12 @@ export const rmFromFavoriteStorage = (id) => {
 };
 
 export const getInProgress = (type) => {
-  const obj = { meals: {}, drinks: {} };
+  const obj = { meals: {}, cocktails: {} };
   const inProggress = JSON.parse(localStorage.getItem('inProgressRecipes')) || obj;
   switch (type) {
     case 'food': return inProggress.meals;
-    case 'drinks': return inProggress.cocktails;
-    default: return obj;
+    case 'drink': return inProggress.cocktails;
+    default: return inProggress;
   }
 };
 
