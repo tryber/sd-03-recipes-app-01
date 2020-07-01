@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { Card, CardFilters, Header, Footer, Loading } from "../../components";
-import { DrinksContext } from "../../contexts/DrinksContext";
+import React, { useEffect, useState, useContext } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { Card, CardFilters, Header, Footer, Loading } from '../../components';
+import { DrinksContext } from '../../contexts/DrinksContext';
 import {
   fetchDrinks,
   handleDrinksData,
   fetchCategoriesApi,
   handleCategoriesData,
-} from "../../services/APIs/DRINKS_API";
+} from '../../services/APIs/DRINKS_API';
 
 const manageState = (loading, drinks, error) => {
   if (loading) return <Loading />;
@@ -16,11 +16,16 @@ const manageState = (loading, drinks, error) => {
   return false;
 };
 
+const filterCategory = (drinks, categorySel) => {
+  if (categorySel !== 'all') return drinks.filter(({ category }) => category === categorySel);
+  return drinks;
+};
+
 function DrinksPage() {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [categories, setCategories] = useState([]);
-  const [categorySel, setCategorySel] = useState("all");
+  const [categorySel, setCategorySel] = useState('all');
   const [{ drinks, drinkFilter }, { setDrinks, setDrinkFilter }] = useContext(DrinksContext);
 
   useEffect(() => {
@@ -28,7 +33,7 @@ function DrinksPage() {
       .then(({ drinks: drk }) => setDrinks(drk.map((drink) => handleDrinksData(drink))))
       .then(() => setLoading(false))
       .catch((err) => {
-        alert("Sinto muito, não encontramos nenhuma receita para esses filtros.");
+        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
         setError(err);
       });
   }, [setDrinks, setLoading, drinkFilter]);
@@ -45,12 +50,7 @@ function DrinksPage() {
       });
   }, [setLoading]);
 
-  const filterCategory = () => {
-    if (categorySel !== "all") return drinks.filter(({ category }) => category === categorySel);
-    return drinks;
-  };
-
-  return (
+    return (
     manageState(loading, drinks, error) || (
       <div>
         <Header titleTag="Bebidas" filterMode={setDrinkFilter} />
@@ -59,7 +59,7 @@ function DrinksPage() {
           setCategorySel={(value) => setCategorySel(value)}
           categorySel={categorySel}
         />
-        {filterCategory()
+        {filterCategory(drinks, categorySel)
           .slice(0, 12)
           .map(({ id, name, srcImage }, index) => (
             <Link key={id} to={`/bebidas/${id}`}>

@@ -16,6 +16,11 @@ const manageState = (loading, foods, error) => {
   return false;
 };
 
+const filterCategory = (foods, categorySel) => {
+  if (categorySel !== 'all') return foods.filter(({ category }) => category === categorySel);
+  return foods;
+};
+
 function FoodsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -40,11 +45,6 @@ function FoodsPage() {
       .catch((err) => { console.log(err); setError(err); });
   }, [setLoading]);
 
-  const filterCategory = () => {
-    if (categorySel !== 'all') return foods.filter(({ category }) => category === categorySel);
-    return foods;
-  };
-
   return (
     manageState(loading, foods, error) ||
     <div>
@@ -54,7 +54,7 @@ function FoodsPage() {
         setCategorySel={(value) => setCategorySel(value)}
         categorySel={categorySel}
       />
-      {filterCategory()
+      {filterCategory(foods, categorySel)
         .slice(0, 12)
         .map(({ id, name, srcImage }, index) => (
           <Link to={`/comidas/${id}`}>
