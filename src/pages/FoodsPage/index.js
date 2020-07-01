@@ -11,7 +11,7 @@ import {
 
 const manageState = (loading, foods, error) => {
   if (loading) return <Loading />;
-  if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>; 
+  if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
   if (foods.length === 1 && !foods[0].name.includes('Goat')) return <Redirect to={`/comidas/${foods[0].id}`} />;
   return false;
 };
