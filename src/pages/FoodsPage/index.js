@@ -16,16 +16,10 @@ const manageState = (loading, foods, error) => {
   return false;
 };
 
-const filterCategory = (foods, categorySel) => {
-  if (categorySel !== 'all') return foods.filter(({ category }) => category === categorySel);
-  return foods;
-};
-
 function FoodsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [categories, setCategories] = useState([]);
-  const [categorySel, setCategorySel] = useState('all');
+  const [categories, setCategories] = useState([]); 
   const [{ foods, foodFilter }, { setFoods, setFoodFilter }] = useContext(FoodsContext);
 
   useEffect(() => {
@@ -51,10 +45,9 @@ function FoodsPage() {
       <Header titleTag="Comidas" filterMode={setFoodFilter} />
       <CardFilters
         categories={categories}
-        setCategorySel={(value) => setCategorySel(value)}
-        categorySel={categorySel}
+        filterMode={setFoodFilter}
       />
-      {filterCategory(foods, categorySel)
+      {foods
         .slice(0, 12)
         .map(({ id, name, srcImage }, index) => (
           <Link to={`/comidas/${id}`}>

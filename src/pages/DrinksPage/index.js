@@ -16,16 +16,10 @@ const manageState = (loading, drinks, error) => {
   return false;
 };
 
-const filterCategory = (drinks, categorySel) => {
-  if (categorySel !== 'all') return drinks.filter(({ category }) => category === categorySel);
-  return drinks;
-};
-
 function DrinksPage() {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState('');  
   const [categories, setCategories] = useState([]);
-  const [categorySel, setCategorySel] = useState('all');
   const [{ drinks, drinkFilter }, { setDrinks, setDrinkFilter }] = useContext(DrinksContext);
 
   useEffect(() => {
@@ -56,10 +50,9 @@ function DrinksPage() {
         <Header titleTag="Bebidas" filterMode={setDrinkFilter} />
         <CardFilters
           categories={categories}
-          setCategorySel={(value) => setCategorySel(value)}
-          categorySel={categorySel}
+          filterMode={setDrinkFilter}
         />
-        {filterCategory(drinks, categorySel)
+        {drinks
           .slice(0, 12)
           .map(({ id, name, srcImage }, index) => (
             <Link key={id} to={`/bebidas/${id}`}>

@@ -1,14 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 
-function CardFilters({ categories, categorySel, setCategorySel }) {
+const setURL = (category) => {
+  switch (category) {
+    case "all":
+      return 'search.php?s=';
+    default:
+      return `filter.php?c=${category}`;
+  }
+};
+
+function CardFilters({ categories, filterMode }) {
+  const [categorySel, setCategorySel] = useState("all");
   return (
     <div>
       <button
         type="button"
         value="all"
         data-testid="All-category-filter"
-        onClick={({ target: { value } }) => setCategorySel(value)}
+        onClick={({ target: { value } }) => {
+          filterMode(setURL(value));
+          setCategorySel("all");
+        }}
       >
         All
       </button>
@@ -19,9 +32,11 @@ function CardFilters({ categories, categorySel, setCategorySel }) {
           value={category}
           onClick={({ target: { value } }) => {
             if (categorySel === value) {
-              return setCategorySel('all');
+              setCategorySel("all");
+              return filterMode(setURL("all"));
             }
-            return setCategorySel(value);
+            setCategorySel(value);
+            return filterMode(setURL(value));
           }}
         >
           {category}
@@ -33,8 +48,6 @@ function CardFilters({ categories, categorySel, setCategorySel }) {
 
 CardFilters.propTypes = {
   categories: PropTypes.instanceOf(Array).isRequired,
-  categorySel: PropTypes.string.isRequired,
-  setCategorySel: PropTypes.func.isRequired,
 };
 
 export default CardFilters;
