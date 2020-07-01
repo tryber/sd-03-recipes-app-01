@@ -69,7 +69,7 @@ function DrinksPage() {
         <Footer />
       </div>
     )
-    );
+  );
 }
 
 export default DrinksPage;
