@@ -7,7 +7,7 @@ function CardFilters({ categories, categorySel, setCategorySel }) {
       <button
         type="button"
         value="all"
-        data-testid="all-category-filter"
+        data-testid="All-category-filter"
         onClick={({ target: { value } }) => setCategorySel(value)}
       >
         All
