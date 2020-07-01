@@ -341,15 +341,21 @@ No `localStorage` do navegador:
 }]
 ```
 
-* a chave `inProggressRecipes` deve conter a seguinte estrutura:
+* a chave `inProgressRecipes` deve conter a seguinte estrutura:
 ```
 {
-    id-da-receita: [lista-de-ingredientes-utilizados],
-    ...
+    cocktails: {
+        id-da-bebida: [lista-de-ingredientes-utilizados],
+        ...
+    },
+    meals: {
+        id-da-comida: [lista-de-ingredientes-utilizados],
+        ...
+    }
 }
 ```
 
-    **Observação:** Cada ID representa o ID de uma receita e cada item da lista de ingredientes da respectiva receita deve ser representado apenas pelo número do ingrediente no formato numérico.
+    **Observação:** `id-da-bebida` e `id-da-comida` representam o ID de uma bebida e comida, respectivamente, e cada item da lista de ingredientes da respectiva receita deve ser representado apenas pelo número do ingrediente no formato numérico.
 
 ### Ícones
 
@@ -724,7 +730,7 @@ As telas sofrem variações dependendo do tipo da receita (se é comida ou bebid
 - Verifica se ao marcar clicar em um checkbox de um ingrediente de uma comida, o nome aparecerá riscado, mostrando que esse passo foi finalizado;
 - Verifica se ao marcar clicar em um checkbox de um ingrediente de uma bebida, o nome aparecerá riscado, mostrando que esse passo foi finalizado.
 
-### 51 - O estado do progresso deve ser mantido caso a pessoa atualize a pagina ou volte para a mesma receita. O progresso das receitas devem ser salvos em `localStorage` na chave` inProgressRecipes` no formato `{ id-da-receita: [lista-de-ingredientes-utilizados], ... }`;
+### 51 - O estado do progresso deve ser mantido caso a pessoa atualize a pagina ou volte para a mesma receita. O progresso das receitas devem ser salvos em `localStorage` na chave` inProgressRecipes` no formato especificado na seção [`localStorage`](#localStorage);
 
 ##### As seguintes verificações serão feitas:
 
