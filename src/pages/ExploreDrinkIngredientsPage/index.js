@@ -5,7 +5,7 @@ import { Footer } from '../../components';
 function ExploreDrinkIngredientsPage() {
   return (
     <div>
-      <Header titleTag="Explorar Ingredientes" isSearchablePage={false} />
+      <Header titleTag="Explorar Ingredientes" />
       <h1>This is ExploreDrinkIngredientsPage</h1>
       <Footer />
     </div>

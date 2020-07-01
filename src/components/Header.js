@@ -1,60 +1,12 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
+import SearchBar from './SearchBar';
 import './Header.css';
 
-const searchBar = (searchTerm, setSearchTerm, radioFilter, setRadioFilter) =>
-  (
-    <div>
-      <div>
-        <input
-          data-testid="search-input"
-          placeholder="Buscar Receita"
-          onChange={(evt) => setSearchTerm(evt.target.value)}
-        />
-      </div>
-      <div className="radioSearchButtons">
-        <form onChange={(evt) => setRadioFilter(evt.target.value)}>
-          <label htmlFor="ingredient">Ingrediente</label>
-          <input
-            type="radio"
-            data-testid="ingredient-search-radio"
-            name="searchTerm"
-            id="ingredient"
-            value="ingredient"
-          />
-          <label htmlFor="name">Nome</label>
-          <input
-            type="radio"
-            data-testid="name-search-radio"
-            name="searchTerm"
-            id="name"
-            value="name"
-          />
-          <label htmlFor="firstLetter">Primeira Letra</label>
-          <input
-            type="radio"
-            data-testid="first-letter-search-radio"
-            name="searchTerm"
-            id="firstLetter"
-            value="firstLetter"
-          />
-        </form>
-      </div>
-      <button
-        data-testid="exec-search-btn"
-        onClick={() => alert(`Busca por ${searchTerm} e ${radioFilter}`)}
-      >
-        Buscar
-      </button>
-    </div>
-  );
-
-const Header = ({ titleTag, isSearchablePage }) => {
+const Header = ({ titleTag, filterMode }) => {
   const [displaySearch, setDisplaySearch] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [radioFilter, setRadioFilter] = useState('');
 
   return (
     <div className="topBar">
@@ -62,10 +14,11 @@ const Header = ({ titleTag, isSearchablePage }) => {
         <Link to="/perfil">
           <img data-testid="profile-top-btn" src={profileIcon} alt="Ícone de perfil" />
         </Link>
-        <h2>{titleTag}</h2>
-        {isSearchablePage ? (
+        <h2 data-testid="page-title">{titleTag}</h2>
+        { filterMode ? (
           <button
             className="searchButton"
+            data-testid="search-top-btn"
             onClick={() => setDisplaySearch(!displaySearch)}
           />
         ) : <div />
@@ -73,8 +26,9 @@ const Header = ({ titleTag, isSearchablePage }) => {
       </div>
       <div className="searchBar"> {
         displaySearch ?
-          searchBar(searchTerm, setSearchTerm, radioFilter, setRadioFilter) :
-          null
+          <SearchBar
+            setFilter={filterMode}
+          /> : null
       }
       </div>
     </div>
@@ -82,8 +36,8 @@ const Header = ({ titleTag, isSearchablePage }) => {
 };
 
 Header.propTypes = {
+  filterMode: PropTypes.func.isRequired,
   titleTag: PropTypes.string.isRequired,
-  isSearchablePage: PropTypes.bool.isRequired,
 };
 
 export default Header;

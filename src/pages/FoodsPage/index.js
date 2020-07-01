@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Card, CardFilters, Header, Footer, Loading } from '../../components';
 import { FoodsContext } from '../../contexts/FoodsContext';
 import {
@@ -9,32 +9,36 @@ import {
   handleCategoriesData,
 } from '../../services/APIs/FOODS_API';
 
+const manageState = (loading, foods, error) => {
+  if (loading) return <Loading />;
+  if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
+  if (foods.length === 1) return <Redirect to={`/comidas/${foods[0].id}`} />;
+  return false;
+};
+
 function FoodsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [categories, setCategories] = useState([]);
   const [categorySel, setCategorySel] = useState('all');
-  const [{ foods }, { setFoods }] = useContext(FoodsContext);
+  const [{ foods, foodFilter }, { setFoods, setFoodFilter }] = useContext(FoodsContext);
 
   useEffect(() => {
-    fetchFoodsApi()
+    fetchFoodsApi(foodFilter)
       .then(({ meals }) => setFoods(meals.map((food) => handleFoodsData(food))))
       .then(() => setLoading(false))
       .catch((err) => {
-        console.log(err);
+        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
         setError(err);
       });
-  }, [setFoods, setLoading]);
+  }, [setFoods, setLoading, foodFilter]);
 
   useEffect(() => {
     fetchCategoriesApi()
       .then(({ meals }) => setCategories(meals.map((category) => handleCategoriesData(category))))
       .then(() => setLoading(false))
-      .catch((err) => setError(err));
+      .catch((err) => { console.log(err); setError(err); });
   }, [setLoading]);
-
-  if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
-  if (loading) return <Loading />;
 
   const filterCategory = () => {
     if (categorySel !== 'all') return foods.filter(({ category }) => category === categorySel);
@@ -42,8 +46,9 @@ function FoodsPage() {
   };
 
   return (
+    manageState(loading, foods, error) ||
     <div>
-      <Header titleTag="Comidas" isSearchablePage="true" />
+      <Header titleTag="Comidas" filterMode={setFoodFilter} />
       <CardFilters
         categories={categories}
         setCategorySel={(value) => setCategorySel(value)}

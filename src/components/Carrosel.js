@@ -19,7 +19,7 @@ function Carrosel({ cards }) {
           testid={{ title: `${ind}-recomendation-title`, img: `${ind}-recomendation-card` }}
         />
       ))}
-      <div className="dots-containers">
+      <div className="dots-containers" data-testid="dot-containers">
         <button className={`dot ${index === 1 ? 'active' : ''}`} onClick={() => setIndex(1)} />
         <button className={`dot ${index === 2 ? 'active' : ''}`} onClick={() => setIndex(2)} />
         <button className={`dot ${index === 3 ? 'active' : ''}`} onClick={() => setIndex(3)} />
