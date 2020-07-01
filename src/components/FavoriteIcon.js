@@ -15,7 +15,7 @@ function FavoriteIcon({ handleFavoriteChange, isFavoriteInit }) {
   useEffect(() => { handleFavoriteChange(isFavorite); }, [isFavorite, handleFavoriteChange]);
 
   const src = isFavorite ? blackHeart : whiteHeart;
-  const alt = `is ${isFavorite ? '': 'not'} favorited`;
+  const alt = `is ${isFavorite ? '' : 'not'} favorited`;
 
   return (
     <button className="hidden-button" onClick={inverteIsFavorite}>

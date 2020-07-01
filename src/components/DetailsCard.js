@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/youtube';
 import { Link } from 'react-router-dom';
 
 import Card from './Card';

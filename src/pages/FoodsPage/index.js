@@ -16,6 +16,11 @@ const manageState = (loading, foods, error) => {
   return false;
 };
 
+const filterCategory = (categorySel, foods) => {
+  if (categorySel === 'all') return foods;
+  return foods.filter(({ category }) => category === categorySel);
+};
+
 function FoodsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -24,54 +29,36 @@ function FoodsPage() {
   const [{ foods, searchFilter }, { setFoods }] = useContext(FoodsContext);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { meals } = await fetchFoodsApi(searchFilter);
-        setFoods(meals.map((food) => handleFoodsData(food)));
-        setLoading(false);
-      } catch (err) {
+    fetchFoodsApi(searchFilter)
+      .then(({ meals }) => meals.map((food) => handleFoodsData(food)))
+      .then((arr) => { setFoods(arr); setLoading(false); })
+      .catch((err) => {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-        console.log(err);
         setError(err);
-      }
-    })()
+      });
   }, [setFoods, setLoading, searchFilter]);
 
-
   useEffect(() => {
-    (async () => {
-      try {
-        const { meals } = await fetchCategoriesApi();
-        setCategories(meals.map((category) => handleCategoriesData(category)));
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
-        setError(err);
-      }
-    })()
-  }, [setLoading]);
-
-  const filterCategory = () => {
-    if (categorySel !== 'all') return foods.filter(({ category }) => category === categorySel);
-    return foods;
-  };
+    fetchCategoriesApi()
+      .then(({ meals }) => meals.map((category) => handleCategoriesData(category)))
+      .then((arr) => { setCategories(arr); setLoading(false); })
+      .catch((err) => { console.log(err); setError(err); });
+    }, [setLoading]);
 
   return (
-    manageState(loading, foods, error) ||
-    <div>
+    manageState(loading, foods, error)
+     || <div>
       <Header titleTag="Comidas" isSearchablePage />
       <CardFilters
         categories={categories}
         setCategorySel={(value) => setCategorySel(value)}
         categorySel={categorySel}
       />
-      {filterCategory()
-        .slice(0, 12)
-        .map(({ id, name, srcImage }, index) => (
-          <Link key={id} to={`/comidas/${id}`}>
-            <Card name={name} index={index} srcImage={srcImage} />
-          </Link>
-        ))}
+      {filterCategory(categorySel, foods).slice(0, 12).map(({ id, name, srcImage }, index) => (
+        <Link key={id} to={`/comidas/${id}`}>
+          <Card name={name} index={index} srcImage={srcImage} />
+        </Link>
+      ))}
       <Footer />
     </div>
   );
