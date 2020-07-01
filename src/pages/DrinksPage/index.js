@@ -50,7 +50,7 @@ function DrinksPage() {
       });
   }, [setLoading]);
 
-    return (
+  return (
     manageState(loading, drinks, error) || (
       <div>
         <Header titleTag="Bebidas" filterMode={setDrinkFilter} />
@@ -69,7 +69,7 @@ function DrinksPage() {
         <Footer />
       </div>
     )
-  );
+    );
 }
 
 export default DrinksPage;
