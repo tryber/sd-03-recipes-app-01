@@ -8,14 +8,14 @@ import './Footer.css';
 function Footer() {
   return (
     <div data-testid="footer" className="footer">
-      <Link to="/bebidas" data-testid="drinks-bottom-btn">
-        <img src={drinkIcon} alt="drink-icon" width="75px" />
+      <Link to="/bebidas" >
+        <img src={drinkIcon} data-testid="drinks-bottom-btn" alt="drink-icon" width="75px" />
       </Link>
-      <Link to="/explorar" data-testid="explore-bottom-btn">
-        <img src={exploreIcon} alt="drink-icon" width="75px" />
+      <Link to="/explorar">
+        <img src={exploreIcon} data-testid="explore-bottom-btn" alt="drink-icon" width="75px" />
       </Link>
-      <Link to="/comidas" data-testid="food-bottom-btn">
-        <img src={mealIcon} alt="drink-icon" width="75px" />
+      <Link to="/comidas">
+        <img src={mealIcon} data-testid="food-bottom-btn" alt="drink-icon" width="75px" />
       </Link>
     </div>
   );
