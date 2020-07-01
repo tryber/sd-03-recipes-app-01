@@ -134,15 +134,10 @@ describe("Testing footer", () => {
     expect(footer).toBeInTheDocument();
     const drinkButton = getByTestId("drinks-bottom-btn");
     const exploreButton = getByTestId("explore-bottom-btn");
-    const foodButton = getByTestId("food-bottom-btn");
-    let URL = history.location.pathname;
-    expect(URL).toMatch('/');
-    fireEvent.click(drinkButton);   
-    expect(URL).toMatch('/bebidas');   
-    fireEvent.click(exploreButton);
-    expect(URL).toMatch('/explorar'); 
-    fireEvent.click(foodButton);
-    expect(URL).toMatch('/comidas'); 
+    const foodButton = getByTestId("food-bottom-btn");     
+    expect(drinkButton.href).toBe('/bebidas');     
+    expect(exploreButton.href).toBe('/explorar');     
+    expect(foodButton.href).toBe('/comidas'); 
   });
 });
 describe("Testing header", () => {
@@ -150,11 +145,8 @@ describe("Testing header", () => {
   jest.spyOn(global, "fetch").mockImplementation(mockedFetch);   test("header buttons should redirect", async () => {
     const { getByTestId, getByText, history } = renderWithFoodContext(<FoodsPage />);
     await waitForDomChange();
-    const profileIcon = getByTestId("profile-top-btn");
-    expect(profileIcon).toBeInTheDocument();
-    let URL = history.location.pathname;
-    fireEvent.click(profileIcon);   
-    expect(URL).toMatch('/perfil');   
+    const profileIcon = getByTestId("profile-top-btn");     
+    expect(profileIcon.href).toBe('/perfil');   
   });
 
   test("should show searchbar", async () => {
