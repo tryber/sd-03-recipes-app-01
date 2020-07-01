@@ -9,7 +9,7 @@ import {
   takeFavStorage,
 } from '../services/APIs/APIlocalStorage';
 
-function ActionsBar(eat, type) {
+function ActionsBar({ eat, type }) {
   const handleFavoriteStorage = useCallback((isToSend) => {
     if (isToSend) return sendToFavoriteStorage(eat, type);
     return rmFromFavoriteStorage(eat.id);
