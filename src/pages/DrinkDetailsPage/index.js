@@ -6,7 +6,7 @@ import {
   sendToFavoriteStorage,
   rmFromFavoriteStorage,
   takeFavStorage,
-} from '../../services/APIs/APIlocalStorage'
+} from '../../services/APIs/APIlocalStorage';
 import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API';
 
 function DrinkDetailsPage({ id }) {
@@ -43,7 +43,7 @@ function DrinkDetailsPage({ id }) {
       />
       <DetailsCard type="drink" eat={drink} />
     </div>
-    );
+  );
 }
 
 DrinkDetailsPage.propTypes = {

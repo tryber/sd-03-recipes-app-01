@@ -12,11 +12,11 @@ import { FoodsContext } from '../contexts/FoodsContext';
 import { handleDrinksData, fetchDrinkApi } from '../services/APIs/DRINKS_API';
 import { handleFoodsData, fetchFoodsApi } from '../services/APIs/FOODS_API';
 
-function StoreRecipe(id, ingredients, storedRecipes, type) {
+function StoreRecipe(id, ingredients, storedRecipes) {
   const newStorage = {
     ...storedRecipes,
     [id]: ingredients.reduce((acc, { ingredient }) => ({ ...acc, [ingredient]: false }), {}),
-  }
+  };
   localStorage.setItem('inProggressRecipes', JSON.stringify(newStorage));
 }
 
@@ -47,7 +47,7 @@ function DetailsCard({ eat, type }) {
 
   const startRecipe = useCallback(() => {
     setFoodInproggress(eat);
-    StoreRecipe(eat.id, eat.ingredients, type);
+    StoreRecipe(eat.id, eat.ingredients, storedInprogress);
   }, [eat, type]);
 
   return (

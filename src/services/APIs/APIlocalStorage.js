@@ -39,16 +39,17 @@ export const rmFromFavoriteStorage = (id) => {
 };
 
 export const getInProgress = (type) => {
-  const inProggressRecipes = JSON.parse(localStorage.getItem('inProggressRecipes'));
+  const obj = { meals: {}, drinks: {} };
+  const inProggress = JSON.parse(localStorage.getItem('inProgressRecipes')) || obj;
   switch (type) {
-    case 'food': return inProggressRecipes.meals || {};
-    case 'drinks': return inProggressRecipes.cocktails || {};
-    default: return inProggressRecipes || { meals: {}, cocktails: {} };
+    case 'food': return inProggress.meals;
+    case 'drinks': return inProggress.cocktails;
+    default: return obj;
   }
-}
+};
 
 export const doneRecipes = (id) => {
   const stored = JSON.parse(localStorage.getItem('doneRecipes')) || [];
   if (id || id === 0) return stored.find((doneRecipe) => doneRecipe.id === Number(id));
   return stored;
-}
+};

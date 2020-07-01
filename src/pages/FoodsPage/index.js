@@ -26,7 +26,7 @@ function FoodsPage() {
   const [error, setError] = useState('');
   const [categories, setCategories] = useState([]);
   const [categorySel, setCategorySel] = useState('all');
-  const [{ foods, foodFilter }, { setFoods, setFoodFilter }] = useContext(FoodsContext);
+  const [{ foods, foodFilter }, { setFoods }] = useContext(FoodsContext);
 
   useEffect(() => {
     fetchFoodsApi(foodFilter)
@@ -43,24 +43,24 @@ function FoodsPage() {
       .then(({ meals }) => meals.map((category) => handleCategoriesData(category)))
       .then((arr) => { setCategories(arr); setLoading(false); })
       .catch((err) => { console.log(err); setError(err); });
-    }, [setLoading]);
+  }, [setLoading]);
 
   return (
     manageState(loading, foods, error)
-     || <div>
-      <Header titleTag="Comidas" isSearchablePage />
-      <CardFilters
-        categories={categories}
-        setCategorySel={(value) => setCategorySel(value)}
-        categorySel={categorySel}
-      />
-      {filterCategory(categorySel, foods).slice(0, 12).map(({ id, name, srcImage }, index) => (
-        <Link key={id} to={`/comidas/${id}`}>
-          <Card name={name} index={index} srcImage={srcImage} />
-        </Link>
-      ))}
-      <Footer />
-    </div>
+      || <div>
+        <Header titleTag="Comidas" isSearchablePage />
+        <CardFilters
+          categories={categories}
+          setCategorySel={(value) => setCategorySel(value)}
+          categorySel={categorySel}
+        />
+        {filterCategory(categorySel, foods).slice(0, 12).map(({ id, name, srcImage }, index) => (
+          <Link key={id} to={`/comidas/${id}`}>
+            <Card name={name} index={index} srcImage={srcImage} />
+          </Link>
+        ))}
+        <Footer />
+      </div>
   );
 }
 

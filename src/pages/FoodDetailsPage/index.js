@@ -6,7 +6,7 @@ import {
   sendToFavoriteStorage,
   rmFromFavoriteStorage,
   takeFavStorage,
-} from '../../services/APIs/APIlocalStorage'
+} from '../../services/APIs/APIlocalStorage';
 import { fetchFoodsApi, handleFoodsData } from '../../services/APIs/FOODS_API';
 
 function FoodDetailsPage({ id }) {
