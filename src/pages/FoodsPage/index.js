@@ -26,7 +26,7 @@ function FoodsPage() {
   const [error, setError] = useState('');
   const [categories, setCategories] = useState([]);
   const [categorySel, setCategorySel] = useState('all');
-  const [{ foods, searchFilter }, { setFoods }] = useContext(FoodsContext);
+  const [{ foods, searchFilter }, { setFoods, setSearchFilter }] = useContext(FoodsContext);
 
   useEffect(() => {
     fetchFoodsApi(searchFilter)
@@ -51,7 +51,7 @@ function FoodsPage() {
   return (
     manageState(loading, foods, error) || (
       <div>
-        <Header titleTag="Comidas" isSearchablePage />
+        <Header titleTag="Comidas" isSearchablePage setSearchFilter={setSearchFilter} />
         <CardFilters
           categories={categories}
           setCategorySel={(value) => setCategorySel(value)}

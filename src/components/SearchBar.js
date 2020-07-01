@@ -52,10 +52,9 @@ const foodSearch = (radioFilter, searchTerm) => {
   return 's=';
 };
 
-function SearchBar() {
+function SearchBar({setSearchFilter}) {
   const [searchTerm, setSearchTerm] = useState('');
   const [radioFilter, setRadioFilter] = useState('');
-  const { setSearchFilter } = useContext(FoodsContext)[1];
   return (
     <div>
       <div>

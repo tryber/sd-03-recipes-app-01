@@ -26,7 +26,7 @@ function DrinksPage() {
   const [error, setError] = useState('');
   const [categories, setCategories] = useState([]);
   const [categorySel, setCategorySel] = useState('all');
-  const [{ drinks, searchFilter }, { setDrinks }] = useContext(DrinksContext);
+  const [{ drinks, searchFilter }, { setDrinks, setSearchFilter }] = useContext(DrinksContext);
 
   useEffect(() => {
     fetchDrinksApi(searchFilter)
@@ -43,7 +43,7 @@ function DrinksPage() {
       .then(({ drks }) => setCategories(drks.map((category) => handleCategoriesData(category))))
       .then(() => setLoading(false))
       .catch((err) => {
-        console.log(err);
+        console.log('aqui!!!!');
         setError(err);
       });
   }, [setLoading]);
@@ -51,7 +51,7 @@ function DrinksPage() {
   return (
     manageState(loading, drinks, error) || (
       <div>
-        <Header titleTag="Bebidas" isSearchablePage />
+        <Header titleTag="Bebidas" isSearchablePage setSearchFilter={setSearchFilter} />
         <CardFilters
           categories={categories}
           setCategorySel={(value) => setCategorySel(value)}

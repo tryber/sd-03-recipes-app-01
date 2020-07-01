@@ -5,7 +5,7 @@ import profileIcon from '../images/profileIcon.svg';
 import SearchBar from './SearchBar';
 import './Header.css';
 
-const Header = ({ titleTag, isSearchablePage }) => {
+const Header = ({ titleTag, isSearchablePage, setSearchFilter }) => {
   const [displaySearch, setDisplaySearch] = useState(false);
 
   return (
@@ -25,7 +25,7 @@ const Header = ({ titleTag, isSearchablePage }) => {
         }
       </div>
       <div className="searchBar"> {
-        displaySearch ? <SearchBar titleTag={titleTag} /> : null
+        displaySearch ? <SearchBar titleTag={titleTag} setSearchFilter={setSearchFilter} /> : null
       }
       </div>
     </div>
