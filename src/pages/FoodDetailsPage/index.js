@@ -8,7 +8,7 @@ import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API'
 import useRequisition from '../../hooks/requisition';
 
 function FoodDetailsPage({ id }) {
-  const [food, setFood] = useState({});
+  const [food, setFood] = useState(null);
   const fetchFood = () => fetchFoodsApi(`lookup.php?i=${id}`)
     .then(({ meals }) => setFood(handleFoodsData(meals[0])));
   const [{ loading, error }] = useRequisition(fetchFood);
