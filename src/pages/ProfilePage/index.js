@@ -5,10 +5,10 @@ import Header from '../../components/Header';
 
 function ProfilePage() {
   const getLocal = localStorage.getItem('user');
-  
+
   const clearUP = () => {
     localStorage.clear();
-  }
+  };
 
   return (
     <div>
