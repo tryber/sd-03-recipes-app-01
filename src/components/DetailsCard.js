@@ -21,9 +21,10 @@ import { FoodsContext } from '../contexts/FoodsContext';
 import { handleDrinksData, fetchDrinks } from '../services/APIs/DRINKS_API';
 import { handleFoodsData, fetchFoodsApi } from '../services/APIs/FOODS_API';
 
-function StoreRecipe(id, ingredients, storedRecipes, type) {
+function StoreRecipe(id, ingredients, type) {
+  const storedRecipes = getInProgress(type);
   const newStorage = {
-    ...storedRecipes[type === 'food' ? 'meals' : 'cocktails'],
+    ...storedRecipes,
     [id]: ingredients.reduce((acc, { ingredient }) => ({ ...acc, [ingredient]: false }), {}),
   }
   localStorage.setItem('inProggressRecipes', JSON.stringify(newStorage));
@@ -33,9 +34,7 @@ function DetailsCard({ eat, type }) {
   const [recomends, setRecomends] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const getIngre = getInProgress(type);
   const [, { setFoodInproggress }] = useContext(FoodsContext);
-  const ifDone = doneRecipes().some((element) => element.id === Number(eat.id));
 
   useEffect(() => {
     if (type === 'food') {
@@ -53,16 +52,7 @@ function DetailsCard({ eat, type }) {
     }
   }, [type]);
 
-  const {
-    id,
-    name,
-    srcImage,
-    video,
-    category,
-    ingredients,
-    instructions,
-    isAlcoholic,
-  } = eat;
+  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
 
   const handleFavoriteStorage = useCallback((isToSend) => {
     if (isToSend) return sendToFavoriteStorage(eat, type);
@@ -71,7 +61,7 @@ function DetailsCard({ eat, type }) {
 
   const startRecipe = useCallback(() => {
     setFoodInproggress(eat);
-    StoreRecipe(eat.id, eat.ingredients, getIngre, type);
+    StoreRecipe(eat.id, eat.ingredients, type);
   }, [eat, type]);
 
   return (
@@ -98,10 +88,12 @@ function DetailsCard({ eat, type }) {
       </ul>
       <p data-testid="instructions">{instructions.replace(/\r\n/g, ' ')}</p>
       {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
+
       {error && <h3 data-testid="error-details">Aconteceu algo errado em recomendações</h3>}
       {!error && loading && <h3>Carrgando detalhes de comida...</h3>}
       {!error && !loading && recomends && <Carrosel cards={recomends} />}
-      {ifDone ||
+
+      {doneRecipes(id) ||
         <Link to={`${type === 'food' ? '/comidas' : '/bebidas'}/${id}/in-progress`}>
           <button
             data-testid="start-recipe-btn"

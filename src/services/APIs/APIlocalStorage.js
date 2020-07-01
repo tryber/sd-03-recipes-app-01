@@ -47,4 +47,8 @@ export const getInProgress = (type) => {
   }
 }
 
-export const doneRecipes = () => JSON.parse(localStorage.getItem('doneRecipes')) || [];
+export const doneRecipes = (id) => {
+  const stored = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+  if (id || id === 0) return stored.find((doneRecipe) => doneRecipe.id === Number(id));
+  return stored;
+}
