@@ -4,9 +4,11 @@ import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { FoodsPage } from "../pages";
 import Provider from "../contexts/Provider";
-import fetch from '../../cypress/mocks/fetch';
-import meals from '../../cypress/mocks/meals';
-import mealCategories from '../../cypress/mocks/mealCategories';
+import fetch from '../../cypress/unit_tests_mocks/fetch';
+import meals from '../../cypress/unit_tests_mocks/meals';
+import mealCategories from '../../cypress/unit_tests_mocks/mealCategories'
+import mealsByIngredient from '../../cypress/unit_tests_mocks/mealsByIngredient';
+
 
 const renderWithFoodContext = (children, route = "/") => {
   const initialEntries = [route];
@@ -146,7 +148,7 @@ describe("Testing header", () => {
     const ingredientInput = getByTestId('ingredient-search-radio')
     fireEvent.change(searchInput, {
       target: {
-        value: 'a'
+        value: 'Chicken'
       },
     }); 
     const findButton = getByTestId('exec-search-btn');
@@ -155,9 +157,9 @@ describe("Testing header", () => {
     fireEvent.click(ingredientInput);
     expect(findButton).not.toHaveAttribute('disabled')
     fireEvent.click(firstLetterBtn);
-    fireEvent.click(findButton);
-    await waitForDomChange();
+    fireEvent.click(findButton); 
+
     const foods = queryAllByAltText('food')
-    expect(foods).toHaveLength(2);
+    expect(foods).toHaveLength(mealsByIngredient.meals.length);
   });
 });
