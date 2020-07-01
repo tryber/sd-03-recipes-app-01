@@ -4,7 +4,7 @@ import { Card, Footer, Loading } from '../../components';
 import Header from '../../components/Header';
 
 import { DrinksContext } from '../../contexts/DrinksContext';
-import { fetchDrinks, handleDrinksData } from '../../services/APIs/DRINKS_API';
+import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API';
 
 const manageState = (loading, drinks, error) => {
   if (loading) return <Loading />;
@@ -19,7 +19,7 @@ function DrinksPage() {
   const [{ drinks, drinkFilter }, { setDrinks, setDrinkFilter }] = useContext(DrinksContext);
 
   useEffect(() => {
-    fetchDrinks(drinkFilter)
+    fetchDrinkApi(drinkFilter)
       .then(({ drinks: drk }) => setDrinks(drk.map((drink) => handleDrinksData(drink))))
       .then(() => setLoading(false))
       .catch((err) => {

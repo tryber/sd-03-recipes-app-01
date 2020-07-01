@@ -3,26 +3,16 @@ import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player/youtube';
 import { Link } from 'react-router-dom';
 
-import Card from './Card';
 import Carrosel from './Carrosel';
-import FavoriteIcon from './FavoriteIcon';
-import ShareIcon from './ShareIcon';
 
-import {
-  sendToFavoriteStorage,
-  rmFromFavoriteStorage,
-  takeFavStorage,
-  getInProgress,
-  doneRecipes,
-} from '../services/APIs/APIlocalStorage';
+import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
 
 import { FoodsContext } from '../contexts/FoodsContext';
 
-import { handleDrinksData, fetchDrinks } from '../services/APIs/DRINKS_API';
+import { handleDrinksData, fetchDrinkApi } from '../services/APIs/DRINKS_API';
 import { handleFoodsData, fetchFoodsApi } from '../services/APIs/FOODS_API';
 
-function StoreRecipe(id, ingredients, type) {
-  const storedRecipes = getInProgress(type);
+function StoreRecipe(id, ingredients, storedRecipes, type) {
   const newStorage = {
     ...storedRecipes,
     [id]: ingredients.reduce((acc, { ingredient }) => ({ ...acc, [ingredient]: false }), {}),
@@ -34,12 +24,13 @@ function DetailsCard({ eat, type }) {
   const [recomends, setRecomends] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const storedInprogress = getInProgress(type);
   const [, { setFoodInproggress }] = useContext(FoodsContext);
 
   useEffect(() => {
     if (type === 'food') {
-      fetchDrinks()
-        .then((obj) => obj.drinks.slice(0, 6).map((drk) => handleDrinksData(drk)))
+      fetchDrinkApi()
+        .then(({ drinks }) => drinks.slice(0, 6).map((drk) => handleDrinksData(drk)))
         .then((arr) => setRecomends(arr))
         .then(() => setLoading(false))
         .catch((err) => { console.log(err); setError(err); });
@@ -52,12 +43,7 @@ function DetailsCard({ eat, type }) {
     }
   }, [type]);
 
-  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
-
-  const handleFavoriteStorage = useCallback((isToSend) => {
-    if (isToSend) return sendToFavoriteStorage(eat, type);
-    return rmFromFavoriteStorage(eat.id);
-  }, [eat, type]);
+  const { id, video, category, ingredients, instructions, isAlcoholic } = eat;
 
   const startRecipe = useCallback(() => {
     setFoodInproggress(eat);
@@ -66,18 +52,6 @@ function DetailsCard({ eat, type }) {
 
   return (
     <div>
-      <Card
-        key={id}
-        name={name}
-        index={-100}
-        srcImage={srcImage}
-        testid={{ title: 'recipe-title', img: 'recipe-photo' }}
-      />
-      <ShareIcon textToCopy={window.location.href} />
-      <FavoriteIcon
-        handleFavoriteChange={handleFavoriteStorage}
-        isFavoriteInit={takeFavStorage().some((favorite) => Number(favorite.id) === Number(id))}
-      />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
@@ -99,7 +73,7 @@ function DetailsCard({ eat, type }) {
             data-testid="start-recipe-btn"
             className="buttonIniciar"
             onClick={startRecipe}
-          >{getIngre[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
+          >{storedInprogress[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
         </Link>
       }
     </div>
