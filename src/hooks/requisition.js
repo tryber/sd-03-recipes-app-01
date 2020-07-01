@@ -5,12 +5,12 @@ const useRequisition = (requisition) => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (loading) {
+    if (loading && !error) {
       requisition()
         .then(() => setLoading(false))
         .catch((err) => { console.log(err); setError(err); });
     }
-  }, [loading, requisition]);
+  }, [loading, error, requisition]);
 
   return [{ loading, error }, { setLoading, setError }];
 };

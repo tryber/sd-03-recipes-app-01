@@ -15,9 +15,10 @@ function DrinkDetailsPage({ id }) {
   const [{ loading, error }] = useRequisition(fetchDrink);
 
   const [recomends, setRecomends] = useState(null);
-  const fetchRecomends = () => fetchFoodsApi()
-    .then(({ meals }) => setRecomends(meals.slice(0, 6).map((meal) => handleFoodsData(meal))));
-  const [{ loadingRecom, errorRecom }] = useRequisition(fetchRecomends);
+  const fetchRecomends = useCallback(() => (fetchFoodsApi()
+    .then(({ meals }) => setRecomends(meals.slice(0, 6).map((meal) => handleFoodsData(meal))))
+  ), [setRecomends]);
+  const [{ loading: loadingRecom, error: errorRecom }] = useRequisition(fetchRecomends);
 
   if (error) return <h1>Aconteceu algo errado em detalhes de bebidas 1</h1>;
   if (loading) return <h1>Carrgando detalhes de bebidas...</h1>;

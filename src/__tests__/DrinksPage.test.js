@@ -1,12 +1,25 @@
 import React from 'react';
 import { render, waitForDomChange, cleanup } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
 
 import { DrinksPage } from '../pages';
 import Provider from '../contexts/Provider';
 
 import drinks from '../../cypress/mocks/drinks';
 
-const renderWithContext = (children) => render(<Provider>{children}</Provider>);
+const renderWithContext = (children, route = '/') => {
+  const initialEntries = [route];
+  const history = createMemoryHistory({ initialEntries });
+  return {
+    ...render(
+      <Router history={history}>
+        <Provider>{children}</Provider>
+      </Router>
+    ),
+    history,
+  };
+};
 
 const mockedFetch = (url) => Promise.resolve({
   ok: 200,

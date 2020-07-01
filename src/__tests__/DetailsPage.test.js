@@ -23,6 +23,7 @@ import {
   DrinkDetailsPage,
 } from '../pages';
 
+import Provider from '../contexts/Provider';
 import { drinks } from '../../cypress/mocks/drinks';
 import { meals } from '../../cypress/mocks/meals';
 import srcShareBtn from '../images/shareIcon.svg';
@@ -32,7 +33,15 @@ import srcBlackFavoriteBtn from '../images/blackHeartIcon.svg';
 const renderWithRouter = (ui, route = '/') => {
   const historyEntry = { initialEntries: [route] };
   const history = createMemoryHistory(historyEntry);
-  return { ...render(<Router history={history}>{ui}</Router>), history };
+  return {
+    ...render(
+      <Router history={history}>
+        <Provider>
+          {ui}
+        </Provider>
+      </Router>),
+    history,
+  };
 };
 
 jest.spyOn(window, 'fetch').mockImplementation((url) => Promise.resolve({
@@ -50,7 +59,6 @@ jest.spyOn(window, 'fetch').mockImplementation((url) => Promise.resolve({
     if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=') {
       return Promise.resolve({ drinks });
     }
-    console.log('bom dia seus bando de irmao', url);
     return Promise.resolve('url not valid');
   }
 }));
@@ -169,7 +177,7 @@ describe('DetailsFoodPage', () => {
     fireEvent.click(favoriteBtn);
     const mockedObj = JSON.stringify([{
       id: '52977',
-      type: 'food',
+      type: 'comida',
       area: 'Turkish',
       category: 'Side',
       alcoholicOrNot: '',
@@ -292,12 +300,12 @@ describe('DetailsFoodPage', () => {
   test('should handle error', async () => {
     global.fetch
       .mockReturnValueOnce(Promise.resolve({ ok: 200, json: () => Promise.resolve({ meals }) }))
-      .mockReturnValue(Promise.resolve({ ok: null, json: () => 'Deu erradamente certo em detalhes testes' }));
-    const { getByText, getByTestId } = renderWithRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
+      .mockReturnValue(Promise.resolve({ ok: null, json: () => Promise.resolve('Deu erradamente certo em detalhes testes') }));
+    const { getByTestId } = renderWithRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
 
     await waitForDomChange();
 
-    expect(getByTestId('error-details')).toBeInTheDocument();
-    expect(getByTestId('error-details')).toHaveTextContent('Aconteceu algo errado em recomendações');
+    expect(getByTestId('error-recom')).toBeInTheDocument();
+    expect(getByTestId('error-recom')).toHaveTextContent('Aconteceu algo errado em recomendações');
   });
 });
