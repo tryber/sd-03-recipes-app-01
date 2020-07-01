@@ -1,8 +1,11 @@
-export const fetchDrinksAPI = async (query = 'search.php?s=') => {
-  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/${query}`);
-  const json = await response.json();
-  return response.ok ? Promise.resolve(json) : Promise.reject(json);
-};
+export const fetchDrinks = (query) => (
+  fetch(`https://www.thecocktaildb.com/api/json/v1/1/${query}`).then(
+    (response) => response.json().then((json) => {
+      if (response.ok) return Promise.resolve(json);
+      return Promise.reject(json);
+    }),
+  )
+);
 
 export const fetchDetailsDrink = (id) => (
   fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
@@ -13,6 +16,7 @@ export const fetchDetailsDrink = (id) => (
   )
 );
 
+// missing strDrinkAlternate, dateModified
 export const handleDrinksData = ({
   idDrink,
   strDrink,
@@ -21,8 +25,8 @@ export const handleDrinksData = ({
   strArea,
   strDrinkThumb,
   strYoutube,
+  strSource,
   strAlcoholic,
-  srtArea,
   ...drink
 }) => {
   const obj = {
@@ -33,8 +37,10 @@ export const handleDrinksData = ({
     origin: strArea,
     srcImage: strDrinkThumb,
     video: strYoutube,
+    source: strSource,
     isAlcoholic: strAlcoholic,
   };
+
   const ingredientBase = /^strIngredient(\d*)$/;
   obj.ingredients = Object.entries(drink).reduce((ing, [key, value]) => {
     const [, id] = key.match(ingredientBase) || [];

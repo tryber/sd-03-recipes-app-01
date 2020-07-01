@@ -10,13 +10,16 @@ export function DrinksProvider({
   children,
 }) {
   const [drinks, setDrinks] = useState([]);
+  const [drinkFilter, setDrinkFilter] = useState('search.php?s=');
 
   const state = {
     drinks,
+    drinkFilter,
   };
 
   const setState = {
     setDrinks,
+    setDrinkFilter,
   };
 
   return (

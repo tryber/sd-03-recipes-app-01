@@ -5,7 +5,7 @@ import profileIcon from '../images/profileIcon.svg';
 import SearchBar from './SearchBar';
 import './Header.css';
 
-const Header = ({ titleTag, isSearchablePage }) => {
+const Header = ({ titleTag, filterMode }) => {
   const [displaySearch, setDisplaySearch] = useState(false);
 
   return (
@@ -15,7 +15,7 @@ const Header = ({ titleTag, isSearchablePage }) => {
           <img data-testid="profile-top-btn" src={profileIcon} alt="Ícone de perfil" />
         </Link>
         <h2 data-testid="page-title">{titleTag}</h2>
-        { isSearchablePage ? (
+        { filterMode ? (
           <button
             className="searchButton"
             data-testid="search-top-btn"
@@ -25,7 +25,10 @@ const Header = ({ titleTag, isSearchablePage }) => {
         }
       </div>
       <div className="searchBar"> {
-        displaySearch ? <SearchBar /> : null
+        displaySearch ?
+          <SearchBar
+            setFilter={filterMode}
+          /> : null
       }
       </div>
     </div>
@@ -33,8 +36,8 @@ const Header = ({ titleTag, isSearchablePage }) => {
 };
 
 Header.propTypes = {
+  filterMode: PropTypes.func.isRequired,
   titleTag: PropTypes.string.isRequired,
-  isSearchablePage: PropTypes.bool.isRequired,
 };
 
 export default Header;

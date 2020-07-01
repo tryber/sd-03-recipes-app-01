@@ -26,17 +26,17 @@ function FoodsPage() {
   const [error, setError] = useState('');
   const [categories, setCategories] = useState([]);
   const [categorySel, setCategorySel] = useState('all');
-  const [{ foods, searchFilter }, { setFoods }] = useContext(FoodsContext);
+  const [{ foods, foodFilter }, { setFoods, setFoodFilter }] = useContext(FoodsContext);
 
   useEffect(() => {
-    fetchFoodsApi(searchFilter)
-      .then(({ meals }) => meals.map((food) => handleFoodsData(food)))
-      .then((arr) => { setFoods(arr); setLoading(false); })
+    fetchFoodsApi(foodFilter)
+      .then(({ meals }) => setFoods(meals.map((food) => handleFoodsData(food))))
+      .then(() => setLoading(false))
       .catch((err) => {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
         setError(err);
       });
-  }, [setFoods, setLoading, searchFilter]);
+  }, [setFoods, setLoading, foodFilter]);
 
   useEffect(() => {
     fetchCategoriesApi()
