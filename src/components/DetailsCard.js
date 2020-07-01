@@ -3,16 +3,12 @@ import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player/youtube';
 import { Link } from 'react-router-dom';
 
-import ShareIcon from './ShareIcon';
-import FavoriteIcon from './FavoriteIcon';
 import Card from './Card';
 
 import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
-import {
-  sendToFavoriteStorage,
-  rmFromFavoriteStorage,
-  takeFavStorage,
-} from '../services/APIs/APIlocalStorage';
+
+import ActionsBar from './ActionsBar';
+
 import { FoodsContext } from '../contexts/FoodsContext';
 
 function StoreRecipe(id, ingredients, type) {
@@ -32,11 +28,6 @@ function DetailsCard({ eat, type }) {
     StoreRecipe(eat.id, eat.ingredients, type);
   }, [eat, type]);
 
-  const handleFavoriteStorage = useCallback((isToSend) => {
-    if (isToSend) return sendToFavoriteStorage(eat, type);
-    return rmFromFavoriteStorage(id);
-  }, [type]);
-
   return (
     <div>
       <Card
@@ -45,11 +36,7 @@ function DetailsCard({ eat, type }) {
         srcImage={srcImage}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
-      <ShareIcon textToCopy={window.location.href} />
-      <FavoriteIcon
-        handleFavoriteChange={handleFavoriteStorage}
-        isFavoriteInit={takeFavStorage().some((favorite) => Number(favorite.id) === Number(id))}
-      />
+      <ActionsBar eat={eat} type={type} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (

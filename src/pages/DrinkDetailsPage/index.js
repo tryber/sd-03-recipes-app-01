@@ -15,7 +15,7 @@ function DrinkDetailsPage({ id }) {
 
   const [recomends, setRecomends] = useState(null);
   const fetchRecomends = () => fetchFoodsApi()
-    .then(({ meals }) => setRecomends(meals.slice(0, 6).map((meal) => handleFoodsData(meal))))
+    .then(({ meals }) => setRecomends(meals.slice(0, 6).map((meal) => handleFoodsData(meal))));
   const [{ loadingRecom, errorRecom }] = useRequisition(fetchRecomends);
 
   if (error) return <h1>Aconteceu algo errado em detalhes de bebidas 1</h1>;
