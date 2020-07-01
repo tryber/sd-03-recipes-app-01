@@ -1,12 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Footer } from '../../components';
 import Header from '../../components/Header';
-import { Link } from 'react-router-dom';
-
-
 
 function ProfilePage() {
-  const getLocal = localStorage.getItem('user')
+  const getLocal = localStorage.getItem('user');
 
   return (
     <div>
