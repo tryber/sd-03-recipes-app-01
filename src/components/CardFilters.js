@@ -4,16 +4,17 @@ import PropTypes from 'prop-types';
 function CardFilters({ categories, categorySel, setCategorySel }) {
   return (
     <div>
-      <button 
-      type="button" 
-      value="all"
-      data-testid="all-category-filter"
-      onClick={({ target: { value } }) => setCategorySel(value)}>
+      <button
+        type='button'
+        value='all'
+        data-testid='all-category-filter'
+        onClick={({ target: { value } }) => setCategorySel(value)}
+      >
         All
       </button>
       {categories.slice(0, 5).map(({ category }) => (
         <button
-          type="button"
+          type='button'
           data-testid={`${category}-category-filter`}
           value={category}
           onClick={({ target: { value } }) => {
@@ -25,9 +26,8 @@ function CardFilters({ categories, categorySel, setCategorySel }) {
         >
           {category}
         </button>
-      ))
-      }
-    </div >
+      ))}
+    </div>
   );
 }
 
