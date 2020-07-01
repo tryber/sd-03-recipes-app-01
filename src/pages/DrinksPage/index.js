@@ -18,7 +18,7 @@ const manageState = (loading, drinks, error) => {
 
 function DrinksPage() {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');  
+  const [error, setError] = useState('');
   const [categories, setCategories] = useState([]);
   const [{ drinks, drinkFilter }, { setDrinks, setDrinkFilter }] = useContext(DrinksContext);
 

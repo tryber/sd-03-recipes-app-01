@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const setURL = (category) => {
   switch (category) {
-    case "all":
+    case 'all':
       return 'search.php?s=';
     default:
       return `filter.php?c=${category}`;
@@ -11,7 +11,7 @@ const setURL = (category) => {
 };
 
 function CardFilters({ categories, filterMode }) {
-  const [categorySel, setCategorySel] = useState("all");
+  const [categorySel, setCategorySel] = useState('all');
   return (
     <div>
       <button
@@ -20,7 +20,7 @@ function CardFilters({ categories, filterMode }) {
         data-testid="All-category-filter"
         onClick={({ target: { value } }) => {
           filterMode(setURL(value));
-          setCategorySel("all");
+          setCategorySel('all');
         }}
       >
         All
@@ -32,8 +32,8 @@ function CardFilters({ categories, filterMode }) {
           value={category}
           onClick={({ target: { value } }) => {
             if (categorySel === value) {
-              setCategorySel("all");
-              return filterMode(setURL("all"));
+              setCategorySel('all');
+              return filterMode(setURL('all'));
             }
             setCategorySel(value);
             return filterMode(setURL(value));
@@ -48,6 +48,7 @@ function CardFilters({ categories, filterMode }) {
 
 CardFilters.propTypes = {
   categories: PropTypes.instanceOf(Array).isRequired,
+  filterMode: PropTypes.func.isRequired,
 };
 
 export default CardFilters;

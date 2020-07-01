@@ -19,7 +19,7 @@ const manageState = (loading, foods, error) => {
 function FoodsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [categories, setCategories] = useState([]); 
+  const [categories, setCategories] = useState([]);
   const [{ foods, foodFilter }, { setFoods, setFoodFilter }] = useContext(FoodsContext);
 
   useEffect(() => {
