@@ -16,11 +16,6 @@ const manageState = (loading, foods, error) => {
   return false;
 };
 
-const filterCategory = (categorySel, foods) => {
-  if (categorySel === 'all') return foods;
-  return foods.filter(({ category }) => category === categorySel);
-};
-
 function FoodsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');

@@ -13,7 +13,7 @@ function ActionsBar({ eat, type }) {
   const handleFavoriteStorage = useCallback((isToSend) => {
     if (isToSend) return sendToFavoriteStorage(eat, type);
     return rmFromFavoriteStorage(eat.id);
-  }, [type]);
+  }, [type, eat]);
 
   const isFavoriteInit = takeFavStorage()
     .some((favorite) => Number(favorite.id) === Number(eat.id));

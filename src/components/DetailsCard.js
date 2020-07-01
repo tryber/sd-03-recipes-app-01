@@ -1,6 +1,6 @@
 import React, { useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import ReactPlayer from 'react-player/youtube';
+import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 
 import Card from './Card';
@@ -26,7 +26,7 @@ function DetailsCard({ eat, type }) {
   const startRecipe = useCallback(() => {
     setFoodInproggress(eat);
     StoreRecipe(eat.id, eat.ingredients, type);
-  }, [eat, type]);
+  }, [eat, type, setFoodInproggress]);
 
   return (
     <div>
@@ -66,9 +66,9 @@ DetailsCard.propTypes = {
     name: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     instructions: PropTypes.string.isRequired,
-    origin: PropTypes.string.isRequired,
+    origin: PropTypes.string,
     srcImage: PropTypes.string.isRequired,
-    video: PropTypes.string.isRequired,
+    video: PropTypes.string,
     source: PropTypes.string,
     ingredients: PropTypes.arrayOf(
       PropTypes.objectOf(
@@ -81,7 +81,7 @@ DetailsCard.propTypes = {
 };
 
 DetailsCard.defaultProps = {
-  eat: { source: null, isAlcoholic: null },
+  eat: { source: null, isAlcoholic: null, origin: '', video: '' },
 };
 
 export default DetailsCard;
