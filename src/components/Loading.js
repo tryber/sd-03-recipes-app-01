@@ -1,5 +1,6 @@
-import React from 'react';
+import React from "react";
+import AtomSpinner from "@bit/bondz.react-epic-spinners.atom-spinner";
 
 export default function Loading() {
-  return (<div>Loading...</div>);
+  return <AtomSpinner color="#000000" size="200" />;
 }
