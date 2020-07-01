@@ -291,9 +291,11 @@ describe('Caso a receita tenha sido iniciada mas não finalizada, o texto do bot
   it('Verifica botão de "Continuar Receita" na tela de detalhes de uma comida', () => {
     cy.visit('http://localhost:3000/comidas/52771', {
       onBeforeLoad(win) {
-        const inProgressRecipes = [{
-          52771: []
-        }];
+        const inProgressRecipes = {
+          meals: {
+            52771: [],
+          },
+        };
         localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
         win.fetch = fetchMock;
       },
@@ -305,9 +307,11 @@ describe('Caso a receita tenha sido iniciada mas não finalizada, o texto do bot
   it('Verifica botão de "Continuar Receita" na tela de detalhes de uma bebida', () => {
     cy.visit('http://localhost:3000/bebidas/178319', {
       onBeforeLoad(win) {
-        const inProgressRecipes = [{
-          178319: []
-        }];
+        const inProgressRecipes = {
+          cocktails: {
+            178319: [],
+          },
+        };
         localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
         win.fetch = fetchMock;
       },

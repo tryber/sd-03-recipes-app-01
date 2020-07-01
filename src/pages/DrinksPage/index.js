@@ -1,38 +1,67 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
-
-
-import { Card, Footer, Loading } from '../../components';
-import Header from '../../components/Header';
-
+import { Link, Redirect } from 'react-router-dom';
+import { Card, CardFilters, Header, Footer, Loading } from '../../components';
 import { DrinksContext } from '../../contexts/DrinksContext';
-import { fetchDrinks, handleDrinksData } from '../../services/APIs/DRINKS_API';
+import {
+  fetchDrinks,
+  handleDrinksData,
+  fetchCategoriesApi,
+  handleCategoriesData,
+} from '../../services/APIs/DRINKS_API';
+
+const manageState = (loading, drinks, error) => {
+  if (loading) return <Loading />;
+  if (error.length > 0) return <h1 data-testid="error-drinks-page">Something Went Wrong</h1>;
+  if (drinks.length === 1) return <Redirect to={`/bebidas/${drinks[0].id}`} />;
+  return false;
+};
 
 function DrinksPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [{ drinks }, { setDrinks }] = useContext(DrinksContext);
+  const [categories, setCategories] = useState([]);
+  const [{ drinks, drinkFilter }, { setDrinks, setDrinkFilter }] = useContext(DrinksContext);
 
   useEffect(() => {
-    fetchDrinks()
+    fetchDrinks(drinkFilter)
       .then(({ drinks: drk }) => setDrinks(drk.map((drink) => handleDrinksData(drink))))
       .then(() => setLoading(false))
-      .catch((err) => setError(err));
-  }, [setDrinks, setLoading]);
+      .catch((err) => {
+        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+        setError(err);
+      });
+  }, [setDrinks, setLoading, drinkFilter]);
 
-  if (error.length > 0) return <h1 data-testid="error-drinks-page">Something Went Wrong</h1>;
-  if (loading) return <Loading />;
+  useEffect(() => {
+    fetchCategoriesApi()
+      .then(({ drinks: drks }) =>
+        setCategories(drks.map((category) => handleCategoriesData(category))),
+      )
+      .then(() => setLoading(false))
+      .catch((err) => {
+        console.log(err);
+        setError(err);
+      });
+  }, [setLoading]);
 
   return (
-    <div>
-      <Header titleTag="Bebidas" isSearchablePage />
-      {drinks.slice(0, 12).map(({ id, name, srcImage }, index) => (
-        <Link key={id} to={`/bebidas/${id}`}>
-          <Card name={name} index={index} srcImage={srcImage} />
-        </Link>
-      ))}
-      <Footer />
-    </div>
+    manageState(loading, drinks, error) || (
+      <div>
+        <Header titleTag="Bebidas" filterMode={setDrinkFilter} />
+        <CardFilters
+          categories={categories}
+          filterMode={setDrinkFilter}
+        />
+        {drinks
+          .slice(0, 12)
+          .map(({ id, name, srcImage }, index) => (
+            <Link key={id} to={`/bebidas/${id}`}>
+              <Card name={name} index={index} srcImage={srcImage} />
+            </Link>
+          ))}
+        <Footer />
+      </div>
+    )
   );
 }
 
