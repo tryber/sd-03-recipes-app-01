@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import shareIcon from '../images/shareIcon.svg';
 import './ActionsBar.css';
 
-function ShareIcon({urlParams}) {
+function ShareIcon({ urlParams }) {
   const [copying, setCopying] = useState(false);
 
   const enableCopy = useCallback(() => { setCopying(true); }, []);
@@ -17,7 +17,7 @@ function ShareIcon({urlParams}) {
     }
   }, [copying, setCopying, urlParams]);
 
- return (
+  return (
     <button className="tooltip hidden-button" onClick={enableCopy} onMouseOut={disableCopy}>
       {copying
         ? <p>Link copiado!</p>
@@ -28,8 +28,8 @@ function ShareIcon({urlParams}) {
   );
 }
 
-// ShareIcon.propTypes = {
-
-// };
+ShareIcon.propTypes = {
+  urlParams: PropTypes.string.isRequired,
+};
 
 export default ShareIcon;

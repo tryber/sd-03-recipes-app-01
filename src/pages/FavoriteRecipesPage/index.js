@@ -6,15 +6,15 @@ import './index.css';
 
 function FavoriteRecipesPage() {
   const data = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  const [ results, setResults ] = useState(data);
-  const [ filter, setFilter ] = useState('data');
-  
+  const [results, setResults] = useState(data);
+  const [filter, setFilter] = useState('data');
+
   useEffect(() => {
-    setResults(data.filter((el) => el.type === filter))
+    setResults(data.filter((el) => el.type === filter));
   }, [filter]);
 
   return (
-    <div className='fav-list'>
+    <div className="fav-list">
       <Header titleTag="Receitas Favoritas" />
       <button onClick={() => setFilter('comida')} data-testid="filter-by-food-btn">Food</button>
       <button onClick={() => setFilter('bebida')} data-testid="filter-by-drink-btn">Drink</button>

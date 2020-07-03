@@ -5,18 +5,21 @@ import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 import './ActionsBar.css';
 
-function FavoriteIcon({id}) {
+function FavoriteIcon({ id }) {
   const [isFav, setIsFav] = useState(true);
 
   return (
     <div>
-      <button className="hidden-button" onClick={() => {
+      <button
+        className="hidden-button"
+        onClick={() => {
         rmFromFavoriteStorage(id);
         setIsFav(false);
-      }}>
+      }}
+      >
         {isFav
-          ? <img data-testid="favorite-btn" src={blackHeart} alt="is amazing favorite" />
-          : <img data-testid="favorite-btn" src={whiteHeart} alt="is not favorite" />
+          ? <img data-testid="favorite-btn" src={blackHeart} alt="Is favorited" />
+          : <img data-testid="favorite-btn" src={whiteHeart} alt="Is not favorited" />
         }
       </button>
     </div>
@@ -24,7 +27,7 @@ function FavoriteIcon({id}) {
 }
 
 FavoriteIcon.propTypes = {
-  isFavInit: PropTypes.bool.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default FavoriteIcon;

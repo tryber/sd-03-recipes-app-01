@@ -7,33 +7,32 @@ import './CardFavDone.css';
 
 function CardFavDone({
     id,
+    type,
+    area,
     name,
     image,
-    alcoholicOrNot,
-    area,
     category,
-    type,
-  }) {
-
-  const link = (type, id) => { return `/${type}s/${id}` }
+    alcoholicOrNot,
+  }){
+  const makeLink = () => { return (`/${type}s/${id}`); }
 
   return (
-    <div key={id} className='card-fav-done'>
-      <Link to={link(type, id)}>
+    <div key={id} className="card-fav-done">
+      <Link to={makeLink(type, id)}>
         <img
           alt={name}
           src={image}
           width="165px"
-          />
+        />
       </Link>
-        <div className='info'>
-      <Link to={link(type, id)}>
-        <p className="food-info">{area || alcoholicOrNot} - {category}</p>
-        <p className="food-title">{name}</p>
-      </Link>
-        <div className='action-bar'>
-          <FavoriteIcon id={id}/>
-          <ShareIcon urlParams={link(type, id)} />
+      <div className="info">
+        <Link to={makeLink()}>
+          <p className="food-info">{area || alcoholicOrNot} - {category}</p>
+          <p className="food-title">{name}</p>
+        </Link>
+        <div className="action-bar">
+          <FavoriteIcon id={id} />
+          <ShareIcon urlParams={makeLink(type, id)} />
         </div>
       </div>
     </div>
@@ -41,9 +40,13 @@ function CardFavDone({
 }
 
 CardFavDone.propTypes = {
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  area: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-  index: PropTypes.number,
+  category: PropTypes.string.isRequired,
+  alcoholicOrNot: PropTypes.string.isRequired,
   // testid: PropTypes.shape({
   //   title: PropTypes.string.isRequired,
   //   img: PropTypes.string.isRequired,
