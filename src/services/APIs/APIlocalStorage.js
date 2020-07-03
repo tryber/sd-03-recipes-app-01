@@ -1,4 +1,4 @@
-export const takeFavStorage = () => JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+export const getFavStorage = () => JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
 
 export const translateType = (type) => {
   switch (type) {
@@ -28,12 +28,12 @@ export const sendToFavoriteStorage = ({
     name,
     image,
   };
-  const favoriteList = takeFavStorage();
+  const favoriteList = getFavStorage();
   localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteList, thisFood]));
 };
 
 export const rmFromFavoriteStorage = (id) => {
-  const favorite = takeFavStorage();
+  const favorite = getFavStorage();
   const oficialFavoriteList = favorite.filter((fav) => fav.id !== id);
   localStorage.setItem('favoriteRecipes', JSON.stringify(oficialFavoriteList));
 };

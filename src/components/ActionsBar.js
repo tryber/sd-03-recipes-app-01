@@ -8,36 +8,36 @@ import './ActionsBar.css';
 
 function ActionsBar({ handleFavorite, isFavInit = false }) {
   const [isFav, setIsFav] = useState(isFavInit);
-  const [coping, setCoping] = useState(false);
+  const [copying, setCopying] = useState(false);
 
-  const inverteIsFavorite = useCallback(() => { setIsFav(!isFav); }, [isFav]);
-  const enableCopy = useCallback(() => { setCoping(true); }, []);
-  const disableCopy = useCallback(() => { setCoping(false); }, []);
+  const toggleFavorite = useCallback(() => { setIsFav(!isFav); }, [isFav]);
+  const enableCopy = useCallback(() => { setCopying(true); }, []);
+  const disableCopy = useCallback(() => { setCopying(false); }, []);
 
   useEffect(() => {
-    if (coping) {
+    if (copying) {
       navigator.clipboard.writeText(window.location.href)
-        .then(() => console.log('succes copy'))
+        .then(() => console.log('Copy succeeded'))
         .catch((err) => console.log(err));
     }
-  }, [coping, setCoping]);
+  }, [copying, setCopying]);
 
   useEffect(() => { handleFavorite(isFav); }, [isFav, handleFavorite]);
 
   return (
     <div>
-      <button className="hidden-button" onClick={inverteIsFavorite}>
+      <button className="hidden-button" onClick={toggleFavorite}>
         {isFav
           ? <img data-testid="favorite-btn" src={blackHeart} alt="is amazing favorite" />
           : <img data-testid="favorite-btn" src={whiteHeart} alt="is not favorite" />
         }
       </button>
       <button className="tooltip hidden-button" onClick={enableCopy} onMouseOut={disableCopy}>
-        {coping
+        {copying
           ? <p>Link copiado!</p>
           : <img data-testid="share-btn" src={shareIcon} alt="click to copy the link" />
         }
-        {coping || <span className="tooltiptext">Copiar Link</span>}
+        {copying || <span className="tooltiptext">Copiar Link</span>}
       </button>
     </div>
   );

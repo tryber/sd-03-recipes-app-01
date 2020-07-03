@@ -1,0 +1,25 @@
+.card-fav-done {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  display: flex;
+  margin: 10px;
+  width: 400px;
+}
+
+.food-title {
+  font-size: 1.5em;
+}
+
+.food-info {
+  color: #a9a9a9;
+}
+
+.info {
+  line-height: 1.2em;
+  text-decoration: none;
+  width: auto;
+}
+
+.action-bar {
+  display: flex;
+}

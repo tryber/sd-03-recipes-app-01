@@ -7,7 +7,7 @@ import Card from './Card';
 import Carrosel from './Carrosel';
 import ActionsBar from './ActionsBar';
 import { sendToFavoriteStorage, rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
-import { takeFavStorage } from '../services/APIs/APIlocalStorage';
+import { getFavStorage } from '../services/APIs/APIlocalStorage';
 import { FoodsContext } from '../contexts/FoodsContext';
 import * as getAllApi from '../services/APIs/APIlocalStorage';
 
@@ -78,8 +78,8 @@ function DetailsCard({ eat, type }) {
     isAlcoholic,
   } = eat;
 
-  const handleFavoriteStorage = (isToSend) => {
-    if (isToSend) return sendToFavoriteStorage(eat, type);
+  const handleFavoriteStorage = (toBeSent) => {
+    if (toBeSent) return sendToFavoriteStorage(eat, type);
     return rmFromFavoriteStorage(id);
   };
 
@@ -94,7 +94,7 @@ function DetailsCard({ eat, type }) {
       />
       <ActionsBar
         handleFavorite={handleFavoriteStorage}
-        isFavInit={takeFavStorage().some((favorite) => Number(favorite.id) === Number(id))}
+        isFavInit={getFavStorage().some((favorite) => Number(favorite.id) === Number(id))}
       />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
