@@ -13,9 +13,9 @@ function FavoriteIcon({ id }) {
       <button
         className="hidden-button"
         onClick={() => {
-        rmFromFavoriteStorage(id);
-        setIsFav(false);
-      }}
+          rmFromFavoriteStorage(id);
+          setIsFav(false);
+        }}
       >
         {isFav
           ? <img data-testid="favorite-btn" src={blackHeart} alt="Is favorited" />

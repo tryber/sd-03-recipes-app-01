@@ -13,8 +13,8 @@ function CardFavDone({
     image,
     category,
     alcoholicOrNot,
-  }){
-  const makeLink = () => { return (`/${type}s/${id}`); }
+  }) {
+  const makeLink = () => (`/${type}s/${id}`);
 
   return (
     <div key={id} className="card-fav-done">
@@ -47,10 +47,6 @@ CardFavDone.propTypes = {
   image: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   alcoholicOrNot: PropTypes.string.isRequired,
-  // testid: PropTypes.shape({
-  //   title: PropTypes.string.isRequired,
-  //   img: PropTypes.string.isRequired,
-  // }),
 };
 
 CardFavDone.defaultProps = {
