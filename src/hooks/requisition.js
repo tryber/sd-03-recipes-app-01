@@ -7,8 +7,9 @@ const useRequisition = (requisition) => {
   useEffect(() => {
     if (loading && !error) {
       requisition()
-        .then(() => setLoading(false))
-        .catch((err) => { console.log(err); setError(err); });
+      .then(() => setLoading(false))
+      .catch((err) => { console.log(err); setError(err); })
+      .catch(() => setLoading(false));
     }
   }, [loading, error, requisition]);
 

@@ -71,11 +71,12 @@ DetailsCard.propTypes = {
     video: PropTypes.string,
     source: PropTypes.string,
     ingredients: PropTypes.arrayOf(
-      PropTypes.objectOf(
-        PropTypes.string.isRequired,
-      ).isRequired,
+      PropTypes.shape({
+        ingredient: PropTypes.string.isRequired,
+        measure: PropTypes.string,
+      }).isRequired,
     ).isRequired,
-    isAlcoholic: PropTypes.bool,
+    isAlcoholic: PropTypes.string,
   }).isRequired,
   type: PropTypes.oneOf(['food', 'drink']).isRequired,
 };
