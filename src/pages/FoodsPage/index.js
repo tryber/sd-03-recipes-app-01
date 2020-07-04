@@ -50,11 +50,11 @@ function FoodsPage() {
       {foods
         .slice(0, 12)
         .map(({ id, name, srcImage }, index) => (
-          <Link to={`/comidas/${id}`}>
-            <Card key={id} name={name} index={index} srcImage={srcImage} />
+          <Link key={id} to={`/comidas/${id}`}>
+            <Card name={name} index={index} srcImage={srcImage} />
           </Link>
         ))}
-        <Footer />
+      <Footer />
       </div>
   );
 }
