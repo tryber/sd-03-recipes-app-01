@@ -5,3 +5,4 @@ export { default as Loading } from './Loading';
 export { default as DetailsCard } from './DetailsCard';
 export { default as Header } from './Header';
 export { default as CheckBox } from './CheckBox';
+export { default as Carrosel } from './Carrosel';

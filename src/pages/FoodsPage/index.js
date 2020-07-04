@@ -34,8 +34,8 @@ function FoodsPage() {
 
   useEffect(() => {
     fetchCategoriesApi()
-      .then(({ meals }) => setCategories(meals.map((category) => handleCategoriesData(category))))
-      .then(() => setLoading(false))
+      .then(({ meals }) => meals.map((category) => handleCategoriesData(category)))
+      .then((arr) => { setCategories(arr); setLoading(false); })
       .catch((err) => { console.log(err); setError(err); });
   }, [setLoading]);
 
@@ -50,8 +50,8 @@ function FoodsPage() {
       {foods
         .slice(0, 12)
         .map(({ id, name, srcImage }, index) => (
-          <Link to={`/comidas/${id}`}>
-            <Card key={id} name={name} index={index} srcImage={srcImage} />
+          <Link key={id} to={`/comidas/${id}`}>
+            <Card name={name} index={index} srcImage={srcImage} />
           </Link>
         ))}
       <Footer />
