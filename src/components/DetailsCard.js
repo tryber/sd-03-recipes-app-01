@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import PropTypes, { number } from 'prop-types';
+import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 
@@ -48,7 +48,6 @@ function DetailsCard({ eat, type }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const ifDone = getAllApi.doneRecipes().some((element) => element.id === Number(eat.id));
-  console.log(number);
 
   useEffect(() => {
     let url = '';

@@ -1,34 +1,25 @@
-import React, { useContext } from 'react';
-import { FoodsContext } from '../contexts/FoodsContext';
-import Card from '../components/Card';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-function CheckBox() {
-  const [{ foodInproggress }] = useContext(FoodsContext);
-
-  const {
-    id,
-    name,
-    srcImage,
-    ingredients,
-  } = foodInproggress;
-
+function CheckBox({ ingredients }) {
   return (
-    <div>
-      <Card
-        key={id}
-        name={name}
-        srcImage={srcImage}
-      />
-      <ul>{ingredients.map((el, index) => (
-        <label htmlFor={el.ingredient} key={el.ingredient}>
-          <input data-testid={`${index}-ingredient-step`} type="checkbox" id={el.ingredient} />
-          {el.ingredient}
-        </label>
-      ))}
-      </ul>
-      <button data-testid="finish-recipe-btn">Finalizar Receita</button>
-    </div>
+    <ul>{ingredients.map((el, index) => (
+      <label htmlFor={el.ingredient} key={el.ingredient}>
+        <input data-testid={`${index}-ingredient-step`} type="checkbox" id={el.ingredient} />
+        {el.ingredient}
+      </label>
+    ))}
+    </ul>
   );
+}
+
+CheckBox.propTypes = {
+  ingredients: PropTypes.arrayOf(
+    PropTypes.exact({
+      ingredient: PropTypes.string.isRequired,
+      measure: PropTypes.string,
+    }).isRequired,
+  ).isRequired,
 }
 
 export default CheckBox;
