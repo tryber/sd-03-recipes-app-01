@@ -22,7 +22,7 @@ const mockedFetch = (url) => Promise.resolve({
         return Promise.resolve(drinkCategories);
       default: return Promise.resolve('url not valid');
     }
-  }
+  },
 });
 
 export default mockedFetch;

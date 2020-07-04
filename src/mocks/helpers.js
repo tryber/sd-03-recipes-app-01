@@ -11,7 +11,7 @@ export const renderWithRouterContext = (children, route = '/') => {
     ...render(
       <Router history={history}>
         <Provider>{children}</Provider>
-      </Router>
+      </Router>,
     ),
     history,
   };
