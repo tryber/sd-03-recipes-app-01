@@ -55,7 +55,7 @@ function FoodsPage() {
           </Link>
         ))}
       <Footer />
-      </div>
+    </div>
   );
 }
 
