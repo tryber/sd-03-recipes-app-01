@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { FoodsContext } from '../contexts/FoodsContext';
 import Card from '../components/Card';
 
-function ListaIng() {
+function CheckBox() {
   const [{ foodInproggress }] = useContext(FoodsContext);
 
   const {
@@ -31,4 +31,4 @@ function ListaIng() {
   );
 }
 
-export default ListaIng;
+export default CheckBox;
