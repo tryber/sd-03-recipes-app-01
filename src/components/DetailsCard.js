@@ -47,7 +47,7 @@ function DetailsCard({ eat, type }) {
       </ul>
       <p data-testid="instructions">{instructions}</p>
       {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
-      {doneRecipes(id) ||
+      {Boolean(doneRecipes(id)) ||
         <Link to={`${type === 'food' ? '/comidas' : '/bebidas'}/${id}/in-progress`}>
           <button
             data-testid="start-recipe-btn"

@@ -157,4 +157,13 @@ describe('Drink Details Page', () => {
 
     expect(getByTestId('start-recipe-btn')).toHaveTextContent('Continuar Receita');
   });
+
+  test('the Btn Start should be responsible to last acts', async () => {
+    localStorage.setItem('doneRecipes', JSON.stringify([{ id: 15997 }]));
+    const { queryByTestId } = renderWithContextAndRouter(<DrinkDetailsPage id={15997} />);
+
+    await waitForDomChange();
+
+    expect(queryByTestId('start-recipe-btn')).not.toBeInTheDocument();
+  });
 });
