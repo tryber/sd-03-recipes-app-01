@@ -33,8 +33,16 @@ function App() {
           <Route exact path="/" component={LoginPage} />
           <Route exact path="/comidas" component={FoodsPage} />
           <Route exact path="/bebidas" component={DrinksPage} />
-          <Route exact path="/comidas/:id/in-progress" component={FoodProcessPage} />
-          <Route exact path="/bebidas/:id/in-progress" component={DrinkProcessPage} />
+          <Route
+            exact
+            path="/comidas/:id/in-progress"
+            render={({ match }) => <FoodProcessPage id={Number(match.params.id)} />}
+          />
+          <Route
+            exact
+            path="/bebidas/:id/in-progress"
+            render={({ match }) => <DrinkProcessPage id={Number(match.params.id)} />}
+          />
           <Route
             exact
             path="/comidas/:id"

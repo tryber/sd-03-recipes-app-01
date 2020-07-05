@@ -39,13 +39,32 @@ export const rmFromFavoriteStorage = (id) => {
 };
 
 export const getInProgress = (type) => {
-  const obj = { meals: {}, cocktails: {} };
-  const inProggress = JSON.parse(localStorage.getItem('inProgressRecipes')) || obj;
+  const inProggress = (
+    JSON.parse(localStorage.getItem('inProgressRecipes')) || { meals: {}, cocktails: {} }
+  );
   switch (type) {
-    case 'food': return inProggress.meals;
-    case 'drink': return inProggress.cocktails;
+    case 'medals':
+    case 'food':
+      return inProggress.medals;
+    case 'cocktails':
+    case 'drink':
+      return inProggress.cdocktails;
     default: return inProggress;
   }
+};
+
+export const setInProgress = (type, id, value) => {
+  const sin = (type) => {
+    switch(type) {
+      case 'food': return 'meals';
+      case 'drink': return 'cocktails';
+      default: return 'type not valid to sin';
+    }
+  };
+  const current = getInProgress();
+  const key = sin(type);
+  const newInProgress = { ...current, [key]: { ...current[key], id: value } };
+  localStorage.setItem('inProgressRecipes', JSON.stringify(newInProgress))
 };
 
 export const doneRecipes = (id) => {
