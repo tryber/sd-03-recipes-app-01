@@ -23,7 +23,6 @@
   border: solid black 1px;
   color: black;
   display: flex;
-  font-family: "Times New Roman", Times, serif;
   font-size: 1.5em;
   margin-bottom: 10px;
   position: absolute;
@@ -35,7 +34,6 @@
   background-color: yellow;
   border-radius: 10%;
   cursor: pointer;
-  font-family: "Times New Roman", Times, serif;
   font-size: 1em;
   width: 30%;
 }

@@ -24,14 +24,12 @@ function LoginPage() {
             data-testid="email-input"
             onChange={(event) => setEmail(event.target.value)}
             type="email"
-            required
           />
           <input
             className="Buttons"
             data-testid="password-input"
             onChange={(event) => setPassword(event.target.value)}
             placeholder="Senha"
-            required
             type="password"
           />
           <Link to="./comidas" style={{ textDecoration: 'none' }}>
