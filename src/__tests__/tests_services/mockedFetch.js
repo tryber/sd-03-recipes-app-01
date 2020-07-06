@@ -1,1 +1,5 @@
-export { default as mockedFetch } from '../../../cypress/unit_tests_mocks/fetch';
+import fetch from '../../../cypress/unit_tests_mocks/fetch';
+
+const mockedFetch = fetch;
+
+export default mockedFetch;
