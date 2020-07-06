@@ -1,17 +1,14 @@
 import React from 'react';
 import { cleanup, waitForDomChange, fireEvent } from '@testing-library/react';
-
 import {
   mockedFetch,
+  renderWithContext,
   LocalStorage,
   Clipboard,
-  renderWithContextAndRouter,
-} from '../mocks';
+} from './tests_services';
 import { meals } from '../../cypress/mocks/meals';
 import { drinks } from '../../cypress/mocks/drinks';
-
 import { DrinkDetailsPage } from '../pages';
-
 import srcShareBtn from '../images/shareIcon.svg';
 import srcWhiteFavoriteBtn from '../images/whiteHeartIcon.svg';
 import srcBlackFavoriteBtn from '../images/blackHeartIcon.svg';
@@ -25,7 +22,7 @@ describe('Drink Details Page', () => {
   afterEach(cleanup);
   jest.spyOn(global, 'fetch').mockImplementation(mockedFetch);
   test('should make a requisition', async () => {
-    renderWithContextAndRouter(<DrinkDetailsPage id={15997} />);
+    renderWithContext(<DrinkDetailsPage id={15997} />);
     await waitForDomChange();
     expect(fetch).toHaveBeenCalledTimes(2);
     expect(fetch)
@@ -34,7 +31,7 @@ describe('Drink Details Page', () => {
   });
 
   test('should have data-testids', async () => {
-    const { getByTestId } = renderWithContextAndRouter(<DrinkDetailsPage id={15997} />);
+    const { getByTestId } = renderWithContext(<DrinkDetailsPage id={15997} />);
     await waitForDomChange();
     const GG = drinks[0];
     
@@ -70,7 +67,7 @@ describe('Drink Details Page', () => {
   });
 
   test('should update the localStorage favorite', async () => {
-    const { getByTestId } = renderWithContextAndRouter(<DrinkDetailsPage id={15997} />);
+    const { getByTestId } = renderWithContext(<DrinkDetailsPage id={15997} />);
 
     await waitForDomChange();
 
@@ -98,7 +95,7 @@ describe('Drink Details Page', () => {
   });
 
   test('share Button', async () => {
-    const { getByTestId, getByText } = renderWithContextAndRouter(<DrinkDetailsPage id={15997} />);
+    const { getByTestId, getByText } = renderWithContext(<DrinkDetailsPage id={15997} />);
     await waitForDomChange();
 
     const shareBtn = getByTestId('share-btn');
@@ -110,7 +107,7 @@ describe('Drink Details Page', () => {
 
   test('should start favorited',async () => {
     localStorage.setItem('favoriteRecipes', JSON.stringify([{ id: '15997' }]));
-    const { getByTestId } = renderWithContextAndRouter(<DrinkDetailsPage id={15997} />);
+    const { getByTestId } = renderWithContext(<DrinkDetailsPage id={15997} />);
     await waitForDomChange();
 
     const favoriteBtn = getByTestId('favorite-btn');
@@ -118,7 +115,7 @@ describe('Drink Details Page', () => {
   });
 
   test('Start Recipe Btn, should exist and update url and localStorage', async () => {
-    const { getByTestId, history } = renderWithContextAndRouter(<DrinkDetailsPage id={15997} />);
+    const { getByTestId, history } = renderWithContext(<DrinkDetailsPage id={15997} />);
     const GG = drinks[0]; 
 
     await waitForDomChange();
@@ -151,7 +148,7 @@ describe('Drink Details Page', () => {
       ]},
       meals: {},
     }));
-    const { getByTestId } = renderWithContextAndRouter(<DrinkDetailsPage id={15997} />);
+    const { getByTestId } = renderWithContext(<DrinkDetailsPage id={15997} />);
 
     await waitForDomChange();
 
@@ -160,7 +157,7 @@ describe('Drink Details Page', () => {
 
   test('the Btn Start should be responsible to last acts', async () => {
     localStorage.setItem('doneRecipes', JSON.stringify([{ id: 15997 }]));
-    const { queryByTestId } = renderWithContextAndRouter(<DrinkDetailsPage id={15997} />);
+    const { queryByTestId } = renderWithContext(<DrinkDetailsPage id={15997} />);
 
     await waitForDomChange();
 

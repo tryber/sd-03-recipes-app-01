@@ -1,116 +1,29 @@
 import React from 'react';
-import { render, cleanup, waitForDomChange, fireEvent } from '@testing-library/react';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from "history";
-
-class LocalStorage {
-  constructor(obj = {}) { this.store = obj; };
-  setItem = (key, value) => { this.store[key] = value.toString(); };
-  getItem = (key) => this.store[key];
-  clear = () => { this.store = {} };
-}
-
-class Clipboard {
-  constructor() { this.clip = '' };
-  writeText = (text) => { this.clip = text; return Promise.resolve() };
-}
-
-window.localStorage = new LocalStorage();
-navigator.clipboard = new Clipboard();
-
+import { cleanup, waitForDomChange, fireEvent } from '@testing-library/react';
 import {
-  FoodDetailsPage,
-  DrinkDetailsPage,
-} from '../pages';
-
-import { drinks } from '../../cypress/mocks/drinks';
+  mockedFetch,
+  renderWithContext,
+  LocalStorage,
+  Clipboard,
+} from './tests_services';
+import { FoodDetailsPage } from '../pages';
 import { meals } from '../../cypress/mocks/meals';
+import { drinks } from '../../cypress/mocks/drinks';
 import srcShareBtn from '../images/shareIcon.svg';
 import srcWhiteFavoriteBtn from '../images/whiteHeartIcon.svg';
 import srcBlackFavoriteBtn from '../images/blackHeartIcon.svg';
 
-const renderWithRouter = (ui, route = '/') => {
-  const historyEntry = { initialEntries: [route] };
-  const history = createMemoryHistory(historyEntry);
-  return { ...render(<Router history={history}>{ui}</Router>), history };
-};
+window.localStorage = new LocalStorage();
+navigator.clipboard = new Clipboard();
 
-jest.spyOn(window, 'fetch').mockImplementation((url) => Promise.resolve({
-  ok: 200,
-  json: () => {
-    if (url === `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${15997}`) {
-      return Promise.resolve({ drinks });
-    }
-    if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?s=') {
-      return Promise.resolve({ meals });
-    }
-    if (url === `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${52977}`) {
-      return Promise.resolve({ meals });
-    }
-    if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=') {
-      return Promise.resolve({ drinks });
-    }
-    console.log('bom dia seus bando de irmao', url);
-    return Promise.resolve('url not valid');
-  }
-}));
-
-describe('Details Page of Drink', () => {
-  beforeEach(() => {
-    localStorage.clear();
-  });
-  afterEach(cleanup);
-
-  test('should have all the data-testids', async () => {
-    const GG = drinks[0];
-    const { getByTestId } = renderWithRouter(<DrinkDetailsPage id={15997}/>, '/bebidas/15997');
-
-    await waitForDomChange();
-
-    const expectedIngredientAndMeasures = [
-      `${GG.strIngredient1} ${GG.strMeasure1.trim()}`,
-      `${GG.strIngredient2}`, // both dont have measure
-      `${GG.strIngredient3}`,
-    ];
-
-    const drinkPhoto = getByTestId('recipe-photo');
-    expect(drinkPhoto).toHaveAttribute('src', GG.strDrinkThumb);
-
-    const drinkName = getByTestId('recipe-title');
-    expect(drinkName).toHaveTextContent(GG.strDrink);
-
-    const shareBtn = getByTestId('share-btn');
-    expect(shareBtn).toHaveAttribute('src', srcShareBtn);
-
-    const favoriteBtn = getByTestId('favorite-btn');
-    expect(favoriteBtn).toHaveAttribute('src', srcWhiteFavoriteBtn);
-
-    const drinkCategory = getByTestId('recipe-category');
-    expect(drinkCategory).toHaveTextContent('Optional alcohol');
-
-    expectedIngredientAndMeasures.forEach((ingAndMea, index) => {
-      const drinksIngredients = getByTestId(`${index}-ingredient-name-and-measure`);
-      expect(drinksIngredients).toHaveTextContent(ingAndMea);
-    })
-
-    const drinkInstructions = getByTestId('instructions');
-    expect(drinkInstructions).toHaveTextContent(GG.strInstructions);
-
-    meals.slice(0, 6).forEach((meal, index) => {
-      const card = getByTestId(`${index}-recomendation-card`);
-      expect(card).toHaveAttribute('src', meal.strMealThumb);
-      const cardTitle = getByTestId(`${index}-recomendation-title`);
-      expect(cardTitle).toHaveTextContent(meal.strMeal);
-    });
-  });
-});
+jest.spyOn(window, 'fetch').mockImplementation(mockedFetch);
 
 describe('DetailsFoodPage', () => {
   afterEach(cleanup);
 
   test('should have all the data-testids', async () => {
     const corba = meals[0];
-    const { getByTestId } = renderWithRouter(<FoodDetailsPage id={52977}/>, '/comidas/52977');
+    const { getByTestId } = renderWithContextAndRouter(<FoodDetailsPage id={52977}/>, '/comidas/52977');
 
     await waitForDomChange();
     expect(fetch).toHaveBeenCalledWith(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${52977}`);
@@ -159,7 +72,7 @@ describe('DetailsFoodPage', () => {
   });
 
   test('localStorage favorite', async () => {
-    const { getByTestId, getByText } = renderWithRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
+    const { getByTestId, getByText } = renderWithContextAndRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
 
     await waitForDomChange();
 
@@ -169,7 +82,7 @@ describe('DetailsFoodPage', () => {
     fireEvent.click(favoriteBtn);
     const mockedObj = JSON.stringify([{
       id: '52977',
-      type: 'food',
+      type: 'comida',
       area: 'Turkish',
       category: 'Side',
       alcoholicOrNot: '',
@@ -195,7 +108,7 @@ describe('DetailsFoodPage', () => {
   test('should begin favorited', async () => {
     localStorage.setItem('favoriteRecipes', JSON.stringify([{ id: '52977' }]));
 
-    const { getByTestId } = renderWithRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
+    const { getByTestId } = renderWithContextAndRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
     await waitForDomChange();
 
     const favoriteBtn = getByTestId('favorite-btn');
@@ -203,7 +116,7 @@ describe('DetailsFoodPage', () => {
   });
 
   test('the Carrosel', async () => {
-    const { getByTestId } = renderWithRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
+    const { getByTestId } = renderWithContextAndRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
     await waitForDomChange();
     const dotsContainer = getByTestId('dot-containers');
     const firstDot = dotsContainer.children[0];
@@ -241,7 +154,7 @@ describe('DetailsFoodPage', () => {
   });
 
   test('prev and next arrows of Carrosel', async () => {
-    const { getByText, getByTestId } = renderWithRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
+    const { getByText, getByTestId } = renderWithContextAndRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
     
     await waitForDomChange();
 
@@ -292,12 +205,12 @@ describe('DetailsFoodPage', () => {
   test('should handle error', async () => {
     global.fetch
       .mockReturnValueOnce(Promise.resolve({ ok: 200, json: () => Promise.resolve({ meals }) }))
-      .mockReturnValue(Promise.resolve({ ok: null, json: () => 'Deu erradamente certo em detalhes testes' }));
-    const { getByText, getByTestId } = renderWithRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
+      .mockReturnValue(Promise.resolve({ ok: null, json: () => Promise.resolve('Deu erradamente certo em detalhes testes') }));
+    const { getByTestId } = renderWithContextAndRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
 
     await waitForDomChange();
 
-    expect(getByTestId('error-details')).toBeInTheDocument();
-    expect(getByTestId('error-details')).toHaveTextContent('Aconteceu algo errado em recomendações');
+    expect(getByTestId('error-recom')).toBeInTheDocument();
+    expect(getByTestId('error-recom')).toHaveTextContent('Aconteceu algo errado em recomendações');
   });
 });

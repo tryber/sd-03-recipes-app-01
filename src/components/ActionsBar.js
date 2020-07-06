@@ -15,24 +15,8 @@ function ActionsBar({ eat, type }) {
     return rmFromFavoriteStorage(eat.id);
   }, [type, eat]);
 
-<<<<<<< HEAD
-  const inverteIsFavorite = useCallback(() => { setIsFav(!isFav); }, [isFav]);
-  const enableCopy = useCallback(() => { setCoping(true); }, []);
-  const disableCopy = useCallback(() => { setCoping(false); }, []);
-
-  useEffect(() => {
-    if (coping) {
-      navigator.clipboard.writeText('teste')
-        .then(() => console.log('succes copy'))
-        .catch((err) => console.log(err));
-    }
-  }, [coping, setCoping]);
-
-  useEffect(() => { handleFavorite(isFav); }, [isFav, handleFavorite]);
-=======
   const isFavoriteInit = takeFavStorage()
     .some((favorite) => Number(favorite.id) === Number(eat.id));
->>>>>>> master
 
   return (
     <div>

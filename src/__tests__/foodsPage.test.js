@@ -1,8 +1,7 @@
 import React from "react";
 import { waitForDomChange, cleanup, fireEvent } from "@testing-library/react";
-import renderWithContext from './tests_services/renderWithContext';
 import { FoodsPage } from "../pages";
-import fetch from "../../cypress/unit_tests_mocks/fetch";
+import { mockedFetch, renderWithContext } from './tests_services';
 import meals from "../../cypress/unit_tests_mocks/meals";
 import beefMeals from "../../cypress/unit_tests_mocks/beefMeals";
 import breakfastMeals from "../../cypress/unit_tests_mocks/breakfastMeals";
@@ -10,8 +9,6 @@ import chickenMeals from "../../cypress/unit_tests_mocks/chickenMeals";
 import dessertMeals from "../../cypress/unit_tests_mocks/dessertMeals";
 import goatMeals from "../../cypress/unit_tests_mocks/goatMeals";
 import mealCategories from "../../cypress/unit_tests_mocks/mealCategories";
-
-const mockedFetch = fetch;
 
 const clean = () => {
   cleanup();
