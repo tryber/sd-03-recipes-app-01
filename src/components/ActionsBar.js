@@ -41,8 +41,8 @@ ActionsBar.propTypes = {
     source: PropTypes.string,
     ingredients: PropTypes.arrayOf(
       PropTypes.shape({
-        ingredient: PropTypes.string.isRequired,
         measure: PropTypes.string,
+        ingredient: PropTypes.string.isRequired,
       }).isRequired,
     ).isRequired,
     isAlcoholic: PropTypes.string,
