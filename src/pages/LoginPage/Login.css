@@ -1,3 +1,32 @@
 .Login {
-  background-color: #b3d9ff;
+  align-items: center;
+  background-image: url('../../images/receitas.jpg');
+  border-radius: 50%;
+  color: green;
+  display: inline-block;
+  height: 50vh;
+  margin-top: 100px;
+  padding: 50px;
+  text-align: center;
+  transform: translate(85vh);
+  width: 50vh;
+}
+
+.background {
+  background-image: url('../../images/comidas.jpg');
+  display: flex;
+  height: 100vh;
+}
+
+.buttons {
+  display: flex;
+  display: inline-block;
+}
+
+.Iniciar {
+  background-color: green;
+  border-radius: 10px;
+  display: flex;
+  font-size: 25px;
+  margin-top: 20%;
 }
