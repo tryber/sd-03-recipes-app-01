@@ -37,7 +37,7 @@ describe('FoodProcessPage', () => {
     const title = getByTestId('recipe-title');
     const image = getByTestId('recipe-photo');
     const category = getByTestId('recipe-category');
-    const instructions = getByTestId('recipe-instructions');
+    getByTestId('instructions');
 
     expect(title).toHaveTextContent(corba.name);
     expect(image).toHaveAttribute('src', corba.srcImage);
@@ -104,15 +104,15 @@ describe('DrinkProcessPage', () => {
   });
 
   test('should display the image, name, category and instructions', () => {
-    const { getByTestId } = renderWithContextAndRouter(<FProv><FoodProcessPage id={52977} /></FProv>);
+    const { getByTestId } = renderWithContextAndRouter(<DProv><DrinkProcessPage id={52977} /></DProv>);
     const title = getByTestId('recipe-title');
     const image = getByTestId('recipe-photo');
     const category = getByTestId('recipe-category');
-    const instructions = getByTestId('recipe-instructions');
+    getByTestId('instructions');
 
     expect(title).toHaveTextContent(GG.name);
     expect(image).toHaveAttribute('src', GG.srcImage);
-    expect(category).toHaveTextContent(GG.category);
+    expect(category).toHaveTextContent(GG.isAlcoholic);
   });
 
   test('Checkbox should start empty ', () => {
