@@ -1,32 +1,32 @@
 .Login {
-  align-items: center;
   background-image: url('../../images/receitas.jpg');
   border-radius: 50%;
   color: green;
   display: inline-block;
-  height: 50vh;
-  margin-top: 100px;
-  padding: 50px;
+  height: 50%;
+  margin-left: 25%;
   text-align: center;
-  transform: translate(85vh);
-  width: 50vh;
+  width: 60%;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 95%;
 }
 
 .background {
   background-image: url('../../images/comidas.jpg');
   display: flex;
   height: 100vh;
-}
-
-.buttons {
-  display: flex;
-  display: inline-block;
+  width: 100%;
 }
 
 .Iniciar {
   background-color: green;
-  border-radius: 10px;
+  border-radius: 1em;
   display: flex;
-  font-size: 25px;
+  font-size: 1.5em;
   margin-top: 20%;
 }

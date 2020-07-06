@@ -1,25 +1,28 @@
 .headerBar {
   align-items: center;
-  background-color: #c4c4c4;
+  background-image: url('../images/receitas.jpg');
   display: flex;
-  height: 58px;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 3em;
+  height: 2em;
   justify-content: space-around;
 }
 
 .searchButton {
-  background-color: #c4c4c4;
+  background-color: rgba(10,23,55,0.0);
   background-image: url('../images/searchIcon.svg');
   border: none;
-  height: 30px;
-  width: 30px;
+  cursor: pointer;
+  height:2.3em;
+  width: 2.2em;
 }
 
 .searchBar {
-  bottom: 0;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  left: 0;
-  right: 0;
-  top: 0;
+  background-image: url('../images/comidas.jpg');
+  color: rgb(255, 255, 255);
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.5em;
+  font-style: italic;
 }
 
 .radioSearchButtons {

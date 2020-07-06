@@ -1,26 +1,45 @@
 .card {
-  border: 2px solid black;
   border-radius: 10%;
+  border: 2px solid black;
   display: inline-block;
   margin: 1em 1em auto auto;
   overflow: hidden;
   position: relative;
+  width: 30vh;
+  height: 30vh;
+}
+
+.card :hover {
+  display: flex;
+  transform: rotateY(190deg);
+  transition-duration: 2s;
 }
 
 .card-invisible {
   display: none;
 }
 
-.card-img {
-  max-height: 80%;
-  max-width: 80%;
-}
-
 .card-title {
-  background-color: #ddd;
+  border: solid black 1px;
+  color: black;
+  display: flex;
+  font-family: 'Times New Roman', Times, serif;
   font-size: 1.5em;
   margin-bottom: 10px;
   position: absolute;
   text-align: center;
   width: 100%;
+}
+
+.ButtonSearch {
+  background-color: yellow;
+  border-radius: 10%;
+  cursor: pointer;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1em;
+  width: 30%;
+}
+
+.backSearch {
+  background-image: url('../images/receitas.jpg');
 }
