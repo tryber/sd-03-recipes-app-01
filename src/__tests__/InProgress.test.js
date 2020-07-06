@@ -32,6 +32,18 @@ describe('FoodProcessPage', () => {
     );
   });
 
+  test('should display the image, name, category and instructions', () => {
+    const { getByTestId } = renderWithContextAndRouter(<FProv><FoodProcessPage id={52977} /></FProv>);
+    const title = getByTestId('recipe-title');
+    const image = getByTestId('recipe-photo');
+    const category = getByTestId('recipe-category');
+    const instructions = getByTestId('recipe-instructions');
+
+    expect(title).toHaveTextContent(corba.name);
+    expect(image).toHaveAttribute('src', corba.srcImage);
+    expect(category).toHaveTextContent(corba.category);
+  });
+
   test('Checkbox should start empty ', () => {
     const {
       getByTestId,
@@ -89,6 +101,18 @@ describe('DrinkProcessPage', () => {
       'inProgressRecipes',
       JSON.stringify({ cocktails: { 15997: [] }, meals: {} }),
     );
+  });
+
+  test('should display the image, name, category and instructions', () => {
+    const { getByTestId } = renderWithContextAndRouter(<FProv><FoodProcessPage id={52977} /></FProv>);
+    const title = getByTestId('recipe-title');
+    const image = getByTestId('recipe-photo');
+    const category = getByTestId('recipe-category');
+    const instructions = getByTestId('recipe-instructions');
+
+    expect(title).toHaveTextContent(GG.name);
+    expect(image).toHaveAttribute('src', GG.srcImage);
+    expect(category).toHaveTextContent(GG.category);
   });
 
   test('Checkbox should start empty ', () => {
