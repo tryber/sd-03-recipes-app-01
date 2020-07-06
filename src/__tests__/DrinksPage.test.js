@@ -1,25 +1,11 @@
 import React from 'react';
-import { render, waitForDomChange, cleanup } from '@testing-library/react';
+import { waitForDomChange, cleanup } from '@testing-library/react';
 
 import { DrinksPage } from '../pages';
-import Provider from '../contexts/Provider';
 
 import drinks from '../../cypress/mocks/drinks';
-
-const renderWithContext = (children) => render(<Provider>{children}</Provider>);
-
-const mockedFetch = (url) => Promise.resolve({
-  ok: 200,
-  json: () => {
-    switch (url) {
-      case 'https://www.themealdb.com/api/json/v1/1/search.php?s=':
-        return Promise.resolve(meals);
-      case 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=':
-        return Promise.resolve(drinks);
-      default: return Promise.reject('test, wrong'); 
-    }
-  },
-})
+import mockedFetch from '../mocks/fetch';
+import renderWithRouterContext from '../mocks/helpers';
 
 const clean = () => {
   cleanup();
@@ -28,20 +14,21 @@ const clean = () => {
 describe('DrinksPage', () => {
   afterEach(clean);
   const fetch = jest.spyOn(global, 'fetch').mockImplementation(mockedFetch);
+  jest.spyOn(global, 'alert').mockImplementation(() => null);
 
   test('should open whth a requisition and a message of loading', async () => {
-    const { getByText } = renderWithContext(<DrinksPage />);
+    const { getByText } = renderWithRouterContext(<DrinksPage />);
     
     expect(getByText('Loading...')).toBeInTheDocument(); // not essencial for cy
 
     await waitForDomChange();
-    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledTimes(2);
 
     expect(getByText('Bebidas')).toBeInTheDocument();  
   });
 
   test('should render 12 Cards with image', async () => {
-    const { getByTestId } = renderWithContext(<DrinksPage />);
+    const { getByTestId } = renderWithRouterContext(<DrinksPage />);
 
     await waitForDomChange();
 
@@ -57,9 +44,9 @@ describe('DrinksPage', () => {
 
   test('should handle error', async () => {
     global.fetch.mockReturnValueOnce(
-      Promise.resolve({ ok: 0, json: () => Promise.resolve('Opss') }),
+      Promise.resolve({ ok: 0, json: () => Promise.resolve('Deu erradamente certo em Drink') }),
     );
-    const { getByTestId } =renderWithContext(<DrinksPage />);
+    const { getByTestId } =renderWithRouterContext(<DrinksPage />);
 
     await waitForDomChange();
 
