@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
@@ -9,13 +9,10 @@ import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
 
 import ActionsBar from './ActionsBar';
 
-import { FoodsContext } from '../contexts/FoodsContext';
-
-function DetailsCard({ eat, type }) {
-  const [, { setFoodInProgress }] = useContext(FoodsContext);
+function DetailsCard({ eat, type, setInProgress }) {
   const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
 
-  const startRecipe = useCallback(() => { setFoodInProgress(eat); }, [eat, setFoodInProgress]);
+  const startRecipe = useCallback(() => { setInProgress(eat); }, [eat, setInProgress]);
 
   return (
     <div>
@@ -68,6 +65,7 @@ DetailsCard.propTypes = {
     isAlcoholic: PropTypes.string,
   }).isRequired,
   type: PropTypes.oneOf(['food', 'drink']).isRequired,
+  setInProgress: PropTypes.func.isRequired,
 };
 
 DetailsCard.defaultProps = {

@@ -11,15 +11,18 @@ export function DrinksProvider({
 }) {
   const [drinks, setDrinks] = useState([]);
   const [drinkFilter, setDrinkFilter] = useState('search.php?s=');
+  const [drinkInProgress, setDrinkInProgress] = useState({});
 
   const state = {
     drinks,
     drinkFilter,
+    drinkInProgress,
   };
 
   const setState = {
     setDrinks,
     setDrinkFilter,
+    setDrinkInProgress,
   };
 
   return (
