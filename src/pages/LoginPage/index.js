@@ -17,38 +17,42 @@ function LoginPage() {
   };
 
   return (
-    <center>
-      <div className="Login">
+    <div className="background">
+      <div div className="Login">
         <h1>Login</h1>
-        <input
-          className="Buttons"
-          placeholder="Email"
-          data-testid="email-input"
-          onChange={(event) => setEmail(event.target.value)}
-          type="email"
-          required
-        />
-        <input
-          className="Buttons"
-          data-testid="password-input"
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder="Senha"
-          required
-          type="password"
-        />
-        <Link to="./comidas">
-          <button
+        <div className="buttons">
+          <input
             className="Buttons"
-            type="button"
-            disabled={!emailPassword()}
-            data-testid="login-submit-btn"
-            onClick={() => storage()}
-          >
-            Entrar
+            placeholder="Email"
+            data-testid="email-input"
+            onChange={(event) => setEmail(event.target.value)}
+            type="email"
+            required
+          />
+          <input
+            className="Buttons"
+            data-testid="password-input"
+            onChange={(event) => setPassword(event.target.value)}
+            placeholder="Senha"
+            required
+            type="password"
+          />
+          <Link to="./comidas" style={{textDecoration:"none"}}>
+            <center>
+              <button
+                className="Iniciar"
+                type="button"
+                disabled={!emailPassword()}
+                data-testid="login-submit-btn"
+                onClick={() => storage()}
+              >
+                Entrar
           </button>
-        </Link>
+            </center>
+          </Link>
+        </div>
       </div>
-    </center>
+    </div>
   );
 }
 

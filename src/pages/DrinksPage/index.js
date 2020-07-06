@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Card, CardFilters, Header, Footer, Loading } from '../../components';
 import { DrinksContext } from '../../contexts/DrinksContext';
+import './Drinks.css';
 import {
   fetchDrinkApi,
   handleDrinksData,
@@ -46,7 +47,7 @@ function DrinksPage() {
 
   return (
     manageState(loading, drinks, error) || (
-      <div>
+      <div className="Drinksback">
         <Header titleTag="Bebidas" filterMode={setDrinkFilter} />
         <CardFilters
           categories={categories}

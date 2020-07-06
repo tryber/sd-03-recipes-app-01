@@ -1,9 +1,7 @@
 .footer {
-  background-color: #c4c4c4;
+  background-image: url('../images/comidas.jpg');
   bottom: 0;
   display: flex;
-  justify-content: space-around;
-  left: 50%;
   position: fixed;
-  right: 50%;
+  transform: translateX(50%);
 }
