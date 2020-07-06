@@ -1,0 +1,5 @@
+.hidden-button , .hidden-button:focus {
+  background-color: unset;
+  border: none;
+  outline: 0;
+}
