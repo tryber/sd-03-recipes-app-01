@@ -17,7 +17,6 @@ function DetailsCard({ eat, type, setInProgress }) {
   return (
     <div>
       <Card
-        key={id}
         name={name}
         srcImage={srcImage}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}

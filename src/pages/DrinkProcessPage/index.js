@@ -1,14 +1,15 @@
 import React, { useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { CheckBox } from '../../components';
+import { CheckBox, Card } from '../../components';
 
 import { DrinksContext } from '../../contexts/DrinksContext';
 import useLocalStorage from '../../hooks/localStorage';
 import { getInProgress, setInProgress } from '../../services/APIs/APIlocalStorage';
 
 function DrinkProcessPage({ id }) {
-  const [{ drinkInProgress: { ingredients } }] = useContext(DrinksContext);
+  const [{ drinkInProgress }] = useContext(DrinksContext);
+  const { name, srcImage, category, ingredients, instructions, isAlcoholic } = drinkInProgress;
   const [usedIngredients, setUsedIngredients] = useLocalStorage(
     getInProgress('drink')[id] || [],
     (newUsed) => setInProgress('drink', id, newUsed),
@@ -23,6 +24,13 @@ function DrinkProcessPage({ id }) {
 
   return (
     <div>
+      <Card
+        srcImage={srcImage}
+        name={name}
+        testid={{ title: 'recipe-title', img: 'recipe-photo' }}
+      />
+      <p data-testid="recipe-category">{isAlcoholic || category}</p>
+      <p data-testid="instructions">{instructions}</p>
       <div>
         {ingredients && ingredients.map(({ ingredient }, index) => (
           <CheckBox
