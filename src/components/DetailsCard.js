@@ -1,101 +1,42 @@
-import React, { useState, useEffect, useContext } from 'react';
-import PropTypes, { number } from 'prop-types';
+import React, { useContext, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 
 import Card from './Card';
 import Carrosel from './Carrosel';
 import ActionsBar from './ActionsBar';
-import { sendToFavoriteStorage, rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
-import { getFavStorage } from '../services/APIs/APIlocalStorage';
+import { getFavStorage, sendToFavoriteStorage, rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
 import { FoodsContext } from '../contexts/FoodsContext';
-import * as getAllApi from '../services/APIs/APIlocalStorage';
 
-import { handleDrinksData } from '../services/APIs/DRINKS_API';
-import { handleFoodsData, fetchRecomendations } from '../services/APIs/FOODS_API';
+import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
 
-function ButtonFunc(props) {
-  const { eat, type } = props;
-  const { ingredients, id } = eat;
-  const [, { setFoodInproggress }] = useContext(FoodsContext);
-  const getIngre = getAllApi.getIngredients()[id];
+import ActionsBar from './ActionsBar';
 
-  function getIngredients() {
-    const ignt = JSON.parse(localStorage.getItem('inProggressRecipes')) || {};
-    localStorage.setItem('inProggressRecipes', JSON.stringify({
-      ...ignt,
-      [id]: ingredients
-        .reduce((acc, elIngredients) => {
-          const obj = { ...acc, [elIngredients.ingredient]: false };
-          return obj;
-        }, {}),
-    }));
-    setFoodInproggress(eat);
-  }
-
-  return (
-    <Link to={`${type === 'food' ? '/comidas' : '/bebidas'}/${id}/in-progress`}>
-      <button
-        data-testid="start-recipe-btn"
-        className="buttonIniciar"
-        onClick={() => getIngredients()}
-      >{getIngre ? 'Continuar Receita' : 'Iniciar Receita'}</button>
-    </Link>);
-}
+import { FoodsContext } from '../contexts/FoodsContext';
 
 function DetailsCard({ eat, type }) {
-  const [recomends, setRecomends] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const ifDone = getAllApi.doneRecipes().some((element) => element.id === Number(eat.id));
-  console.log(number);
-
-  useEffect(() => {
-    let url = '';
-    if (type === 'food') url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-    if (type === 'drink') url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-
-    fetchRecomendations(url)
-      .then((obj) => {
-        let arr = [];
-        Object.entries(obj).forEach(([key, value]) => {
-          if (key === 'drinks') arr = value.slice(0, 6).map((drk) => handleDrinksData(drk));
-          if (key === 'meals') arr = value.slice(0, 6).map((meal) => handleFoodsData(meal));
-        });
-        setRecomends(arr);
-      }).then(() => setLoading(false))
-      .catch((err) => { console.log(err); setError(err); });
-  }, [type]);
-
-  const {
-    id,
-    name,
-    srcImage,
-    video,
-    category,
-    ingredients,
-    instructions,
-    isAlcoholic,
-  } = eat;
+  const [, { setFoodInproggress }] = useContext(FoodsContext);
+  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
 
   const handleFavoriteStorage = (toBeSent) => {
     if (toBeSent) return sendToFavoriteStorage(eat, type);
     return rmFromFavoriteStorage(id);
   };
+ 
+  const startRecipe = useCallback(() => {
+    setFoodInproggress(eat);
+  }, [eat, type, setFoodInproggress]);
 
   return (
     <div>
       <Card
         key={id}
         name={name}
-        index={-100}
         srcImage={srcImage}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
-      <ActionsBar
-        handleFavorite={handleFavoriteStorage}
-        isFavInit={getFavStorage().some((favorite) => Number(favorite.id) === Number(id))}
-      />
+      <ActionsBar eat={eat} type={type} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
@@ -104,22 +45,20 @@ function DetailsCard({ eat, type }) {
           </li>
         ))}
       </ul>
-      <p data-testid="instructions">{instructions.replace(/\r\n/g, ' ')}</p>
+      <p data-testid="instructions">{instructions}</p>
       {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
-      {error && <h3 data-testid="error-details">Aconteceu algo errado em recomendações</h3>}
-      {!error && loading && <h3>Carrgando detalhes de comida...</h3>}
-      {!error && !loading && recomends && <Carrosel cards={recomends} />}
-      {ifDone ||
-        <ButtonFunc eat={eat} type={type} />
+      {Boolean(doneRecipes(id)) ||
+        <Link to={`${type === 'food' ? '/comidas' : '/bebidas'}/${id}/in-progress`}>
+          <button
+            data-testid="start-recipe-btn"
+            className="buttonIniciar"
+            onClick={startRecipe}
+          >{getInProgress(type)[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
+        </Link>
       }
     </div>
   );
 }
-
-ButtonFunc.propTypes = {
-  eat: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-};
 
 DetailsCard.propTypes = {
   eat: PropTypes.shape({
@@ -127,18 +66,23 @@ DetailsCard.propTypes = {
     name: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     instructions: PropTypes.string.isRequired,
-    origin: PropTypes.string.isRequired,
+    origin: PropTypes.string,
     srcImage: PropTypes.string.isRequired,
-    video: PropTypes.string.isRequired,
-    source: PropTypes.string.isRequired,
+    video: PropTypes.string,
+    source: PropTypes.string,
     ingredients: PropTypes.arrayOf(
-      PropTypes.objectOf(
-        PropTypes.string.isRequired,
-      ).isRequired,
+      PropTypes.shape({
+        ingredient: PropTypes.string.isRequired,
+        measure: PropTypes.string,
+      }).isRequired,
     ).isRequired,
-    isAlcoholic: PropTypes.bool,
+    isAlcoholic: PropTypes.string,
   }).isRequired,
   type: PropTypes.oneOf(['food', 'drink']).isRequired,
+};
+
+DetailsCard.defaultProps = {
+  eat: { source: null, isAlcoholic: null, origin: '', video: '' },
 };
 
 export default DetailsCard;

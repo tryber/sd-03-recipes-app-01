@@ -1,23 +1,8 @@
-export async function fetchFoodsApi(query) {
+export async function fetchFoodsApi(query = 'search.php?s=') {
   const response = await fetch(`https://www.themealdb.com/api/json/v1/1/${query}`);
   const json = await response.json();
   return response.ok ? Promise.resolve(json) : Promise.reject(json);
 }
-
-export async function fetchRecomendations(url) {
-  const response = await fetch(url);
-  const json = await response.json();
-  return response.ok ? Promise.resolve(json) : Promise.reject(json);
-}
-
-export const fetchDetailsFood = (id) => (
-  fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
-    .then((response) => response.json().then((json) => {
-      if (response.ok) return Promise.resolve(json);
-      return Promise.reject(json);
-    }),
-  )
-);
 
 export const handleFoodsData = ({
   idMeal,

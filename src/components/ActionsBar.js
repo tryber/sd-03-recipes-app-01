@@ -1,51 +1,57 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-import whiteHeart from '../images/whiteHeartIcon.svg';
-import blackHeart from '../images/blackHeartIcon.svg';
-import shareIcon from '../images/shareIcon.svg';
-import './ActionsBar.css';
+import ShareIcon from './ShareIcon';
+import FavoriteIcon from './FavoriteIcon';
+import {
+  sendToFavoriteStorage,
+  rmFromFavoriteStorage,
+  takeFavStorage,
+} from '../services/APIs/APIlocalStorage';
 
-function ActionsBar({ handleFavorite, isFavInit = false }) {
-  const [isFav, setIsFav] = useState(isFavInit);
-  const [copying, setCopying] = useState(false);
+function ActionsBar({ eat, type }) {
+  const handleFavoriteStorage = useCallback((isToSend) => {
+    if (isToSend) return sendToFavoriteStorage(eat, type);
+    return rmFromFavoriteStorage(eat.id);
+  }, [type, eat]);
 
-  const toggleFavorite = useCallback(() => { setIsFav(!isFav); }, [isFav]);
-  const enableCopy = useCallback(() => { setCopying(true); }, []);
-  const disableCopy = useCallback(() => { setCopying(false); }, []);
-
-  useEffect(() => {
-    if (copying) {
-      navigator.clipboard.writeText(window.location.href)
-        .then(() => console.log('Copy succeeded'))
-        .catch((err) => console.log(err));
-    }
-  }, [copying, setCopying]);
-
-  useEffect(() => { handleFavorite(isFav); }, [isFav, handleFavorite]);
+  const isFavoriteInit = takeFavStorage()
+    .some((favorite) => Number(favorite.id) === Number(eat.id));
 
   return (
     <div>
-      <button className="hidden-button" onClick={toggleFavorite}>
-        {isFav
-          ? <img data-testid="favorite-btn" src={blackHeart} alt="is amazing favorite" />
-          : <img data-testid="favorite-btn" src={whiteHeart} alt="is not favorite" />
-        }
-      </button>
-      <button className="tooltip hidden-button" onClick={enableCopy} onMouseOut={disableCopy}>
-        {copying
-          ? <p>Link copiado!</p>
-          : <img data-testid="share-btn" src={shareIcon} alt="click to copy the link" />
-        }
-        {copying || <span className="tooltiptext">Copiar Link</span>}
-      </button>
+      <ShareIcon textToCopy={window.location.href} />
+      <FavoriteIcon
+        handleFavoriteChange={handleFavoriteStorage}
+        isFavoriteInit={isFavoriteInit}
+      />
     </div>
   );
 }
 
 ActionsBar.propTypes = {
-  handleFavorite: PropTypes.func.isRequired,
-  isFavInit: PropTypes.bool.isRequired,
+  eat: PropTypes.shape({
+    id: PropTypes.string.isRequired, // number as string
+    name: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    instructions: PropTypes.string.isRequired,
+    origin: PropTypes.string,
+    srcImage: PropTypes.string.isRequired,
+    video: PropTypes.string,
+    source: PropTypes.string,
+    ingredients: PropTypes.arrayOf(
+      PropTypes.shape({
+        ingredient: PropTypes.string.isRequired,
+        measure: PropTypes.string,
+      }).isRequired,
+    ).isRequired,
+    isAlcoholic: PropTypes.string,
+  }).isRequired,
+  type: PropTypes.oneOf(['food', 'drink']).isRequired,
+};
+
+ActionsBar.defaultProps = {
+  eat: { source: null, isAlcoholic: null, origin: '', video: '' },
 };
 
 export default ActionsBar;

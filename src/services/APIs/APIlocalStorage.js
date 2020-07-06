@@ -38,6 +38,18 @@ export const rmFromFavoriteStorage = (id) => {
   localStorage.setItem('favoriteRecipes', JSON.stringify(oficialFavoriteList));
 };
 
-export const getIngredients = () => JSON.parse(localStorage.getItem('inProggressRecipes')) || {};
+export const getInProgress = (type) => {
+  const obj = { meals: {}, cocktails: {} };
+  const inProggress = JSON.parse(localStorage.getItem('inProgressRecipes')) || obj;
+  switch (type) {
+    case 'food': return inProggress.meals;
+    case 'drink': return inProggress.cocktails;
+    default: return inProggress;
+  }
+};
 
-export const doneRecipes = () => JSON.parse(localStorage.getItem('doneRecipes')) || [];
+export const doneRecipes = (id) => {
+  const stored = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+  if (id || id === 0) return stored.find((doneRecipe) => doneRecipe.id === Number(id));
+  return stored;
+};
