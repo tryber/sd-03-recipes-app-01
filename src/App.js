@@ -11,8 +11,7 @@ import {
   DrinksPage,
   FoodDetailsPage,
   DrinkDetailsPage,
-  FoodProcessPage,
-  DrinkProcessPage,
+  InProcessPage,
   ExploreMainPage,
   ExploreFoodPage,
   ExploreDrinkPage,
@@ -36,12 +35,12 @@ function App() {
           <Route
             exact
             path="/comidas/:id/in-progress"
-            render={({ match }) => <FoodProcessPage id={Number(match.params.id)} />}
+            render={({ match }) => <InProcessPage id={Number(match.params.id)} type="food" />}
           />
           <Route
             exact
             path="/bebidas/:id/in-progress"
-            render={({ match }) => <DrinkProcessPage id={Number(match.params.id)} />}
+            render={({ match }) => <InProcessPage id={Number(match.params.id)} type="drink" />}
           />
           <Route
             exact

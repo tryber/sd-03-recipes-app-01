@@ -1,15 +1,13 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { DetailsCard, Carrosel } from '../../components';
-import { FoodsContext } from '../../contexts/FoodsContext';
 
 import { fetchFoodsApi, handleFoodsData } from '../../services/APIs/FOODS_API';
 import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API';
 import useRequisition from '../../hooks/requisition';
 
 function FoodDetailsPage({ id }) {
-  const [, { setFoodInProgress }] = useContext(FoodsContext);
   const [food, setFood] = useState(null);
   const fetchFood = useCallback(() => fetchFoodsApi(`lookup.php?i=${id}`)
     .then(({ meals }) => setFood(handleFoodsData(meals[0]))), [setFood, id]);
@@ -25,7 +23,7 @@ function FoodDetailsPage({ id }) {
   if (loading) return <h1>Carrgando detalhes de comida...</h1>;
   return (
     <div>
-      <DetailsCard type="food" eat={food} setInProgress={setFoodInProgress} />
+      <DetailsCard type="food" eat={food} />
       {errorRecom && <h3 data-testid="error-recom">Aconteceu algo errado em recomendações</h3>}
       {!errorRecom && loadingRecom && <h3>Carrgando detalhes de comida...</h3>}
       {!errorRecom && !loadingRecom && recomends && <Carrosel cards={recomends} />}

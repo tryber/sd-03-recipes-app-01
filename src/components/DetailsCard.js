@@ -9,10 +9,8 @@ import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
 
 import ActionsBar from './ActionsBar';
 
-function DetailsCard({ eat, type, setInProgress }) {
+function DetailsCard({ eat, type }) {
   const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
-
-  const startRecipe = useCallback(() => { setInProgress(eat); }, [eat, setInProgress]);
 
   return (
     <div>
@@ -37,7 +35,6 @@ function DetailsCard({ eat, type, setInProgress }) {
           <button
             data-testid="start-recipe-btn"
             className="buttonIniciar"
-            onClick={startRecipe}
           >{getInProgress(type)[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
         </Link>
       }
@@ -64,7 +61,6 @@ DetailsCard.propTypes = {
     isAlcoholic: PropTypes.string,
   }).isRequired,
   type: PropTypes.oneOf(['food', 'drink']).isRequired,
-  setInProgress: PropTypes.func.isRequired,
 };
 
 DetailsCard.defaultProps = {

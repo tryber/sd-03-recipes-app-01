@@ -6,7 +6,7 @@ function CheckBox({ item, checked, index, handleChange }) {
   return (
     <label className={checked ? 'line-through' : ''} htmlFor={item}>
       <input
-        data-testid={`${index}-item-step`}
+        data-testid={`${index}-ingredient-step`}
         type="checkbox"
         id={item}
         checked={checked}
