@@ -8,7 +8,7 @@ import { handleFoodsData } from '../services/APIs/FOODS_API';
 import { meals } from '../../cypress/mocks/meals';
 import { FoodsContext } from '../contexts/FoodsContext';
 
-window.localStorage = new LocalStorage();
+localStorage = new LocalStorage();
 
 const corba = handleFoodsData(meals[0]);
 

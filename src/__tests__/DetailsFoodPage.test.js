@@ -15,7 +15,7 @@ import srcShareBtn from '../images/shareIcon.svg';
 import srcWhiteFavoriteBtn from '../images/whiteHeartIcon.svg';
 import srcBlackFavoriteBtn from '../images/blackHeartIcon.svg';
 
-window.localStorage = new LocalStorage();
+localStorage = new LocalStorage();
 navigator.clipboard = new Clipboard();
 
 jest.spyOn(window, 'fetch').mockImplementation(mockedFetch);
