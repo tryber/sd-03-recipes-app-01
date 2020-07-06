@@ -19,10 +19,7 @@ function CheckBox({ item, checked, index, handleChange }) {
 }
 
 CheckBox.propTypes = {
-  item: PropTypes.exact({
-    item: PropTypes.string.isRequired,
-    measure: PropTypes.string,
-  }).isRequired,
+  item: PropTypes.string.isRequired,
   checked: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,

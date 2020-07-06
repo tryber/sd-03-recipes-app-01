@@ -8,8 +8,7 @@ import useLocalStorage from '../../hooks/localStorage';
 import { getInProgress, setInProgress } from '../../services/APIs/APIlocalStorage';
 
 function FoodProcessPage({ id }) {
-  const [{ foodInProgress }] = useContext(FoodsContext);
-  const { ingredients } = foodInProgress;
+  const [{ foodInProgress: { ingredients } }] = useContext(FoodsContext);
   const [usedIngredients, setUsedIngredients] = useLocalStorage(
     getInProgress('food')[id] || [],
     (newUsed) => setInProgress('food', id, newUsed),
