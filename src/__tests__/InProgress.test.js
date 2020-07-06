@@ -3,7 +3,7 @@ import { fireEvent } from '@testing-library/react';
 
 import { FoodProcessPage, DrinkProcessPage } from '../pages';
 
-import { LocalStorage, renderWithContextAndRouter, Clipboard } from '../mocks';
+import { LocalStorage, renderWithContext, Clipboard } from './tests_services';
 import { meals } from '../../cypress/mocks/meals';
 import { drinks } from '../../cypress/mocks/drinks';
 import { FoodsContext } from '../contexts/FoodsContext';
@@ -38,7 +38,7 @@ describe('FoodProcessPage', () => {
   });
 
   test('should display the image, name, category and instructions', () => {
-    const { getByTestId } = renderWithContextAndRouter(<FProv><FoodProcessPage id={52977} /></FProv>);
+    const { getByTestId } = renderWithContext(<FProv><FoodProcessPage id={52977} /></FProv>);
     const title = getByTestId('recipe-title');
     const image = getByTestId('recipe-photo');
     const category = getByTestId('recipe-category');
@@ -50,7 +50,7 @@ describe('FoodProcessPage', () => {
   });
 
   test('localStorage favorite', async () => {
-    const { getByTestId, getByText } = renderWithContextAndRouter(<FProv><FoodProcessPage id={52977} /></FProv>);
+    const { getByTestId, getByText } = renderWithContext(<FProv><FoodProcessPage id={52977} /></FProv>);
 
     const favoriteBtn = getByTestId('favorite-btn');
     expect(favoriteBtn).toHaveAttribute('src', srcWhiteFavoriteBtn);
@@ -84,7 +84,7 @@ describe('FoodProcessPage', () => {
   test('should begin favorited', async () => {
     localStorage.setItem('favoriteRecipes', JSON.stringify([{ id: '52977' }]));
 
-    const { getByTestId } = renderWithContextAndRouter(<FProv><FoodProcessPage id={52977} /></FProv>);
+    const { getByTestId } = renderWithContext(<FProv><FoodProcessPage id={52977} /></FProv>);
 
     const favoriteBtn = getByTestId('favorite-btn');
     expect(favoriteBtn).toHaveAttribute('src', srcBlackFavoriteBtn);
@@ -94,7 +94,7 @@ describe('FoodProcessPage', () => {
     const {
       getByTestId,
       getByLabelText,
-    } = renderWithContextAndRouter(<FProv><FoodProcessPage id={52977} /></FProv>);
+    } = renderWithContext(<FProv><FoodProcessPage id={52977} /></FProv>);
     corba.ingredients.forEach(({ ingredient }, index) => {
       expect(getByTestId(`${index}-item-step`)).toEqual(getByLabelText(ingredient));
     });
@@ -103,7 +103,7 @@ describe('FoodProcessPage', () => {
   test('should be able to check some ingredients setting the local storage', () => {
     const {
       getByTestId,
-    } = renderWithContextAndRouter(<FProv><FoodProcessPage id={52977} /></FProv>);
+    } = renderWithContext(<FProv><FoodProcessPage id={52977} /></FProv>);
 
     const firstIngre = getByTestId('0-item-step');
     expect(firstIngre).not.toBeChecked();
@@ -119,7 +119,7 @@ describe('FoodProcessPage', () => {
     localStorage.setItem('inProgressRecipes', JSON.stringify({ meals: { 52977: [0, 1, 3] } }));
     const {
       getByTestId,
-    } = renderWithContextAndRouter(<FProv><FoodProcessPage id={52977} /></FProv>);
+    } = renderWithContext(<FProv><FoodProcessPage id={52977} /></FProv>);
 
     expect(getByTestId('0-item-step')).toBeChecked();
     expect(getByTestId('1-item-step')).toBeChecked();
@@ -150,7 +150,7 @@ describe('DrinkProcessPage', () => {
   });
 
   test('should display the image, name, category and instructions', () => {
-    const { getByTestId } = renderWithContextAndRouter(<DProv><DrinkProcessPage id={15997} /></DProv>);
+    const { getByTestId } = renderWithContext(<DProv><DrinkProcessPage id={15997} /></DProv>);
     const title = getByTestId('recipe-title');
     const image = getByTestId('recipe-photo');
     const category = getByTestId('recipe-category');
@@ -162,7 +162,7 @@ describe('DrinkProcessPage', () => {
   });
 
   test('localStorage favorite', async () => {
-    const { getByTestId, getByText } = renderWithContextAndRouter(<DProv><DrinkProcessPage id={15997} /></DProv>);
+    const { getByTestId, getByText } = renderWithContext(<DProv><DrinkProcessPage id={15997} /></DProv>);
 
     const favoriteBtn = getByTestId('favorite-btn');
     expect(favoriteBtn).toHaveAttribute('src', srcWhiteFavoriteBtn);
@@ -196,7 +196,7 @@ describe('DrinkProcessPage', () => {
   test('should begin favorited', async () => {
     localStorage.setItem('favoriteRecipes', JSON.stringify([{ id: '15997' }]));
 
-    const { getByTestId } = renderWithContextAndRouter(<DProv><DrinkProcessPage id={15997} /></DProv>);
+    const { getByTestId } = renderWithContext(<DProv><DrinkProcessPage id={15997} /></DProv>);
 
     const favoriteBtn = getByTestId('favorite-btn');
     expect(favoriteBtn).toHaveAttribute('src', srcBlackFavoriteBtn);
@@ -207,7 +207,7 @@ describe('DrinkProcessPage', () => {
     const {
       getByTestId,
       getByLabelText,
-    } = renderWithContextAndRouter(<DProv><DrinkProcessPage id={15997} /></DProv>);
+    } = renderWithContext(<DProv><DrinkProcessPage id={15997} /></DProv>);
     GG.ingredients.forEach(({ ingredient }, index) => {
       expect(getByTestId(`${index}-item-step`)).toEqual(getByLabelText(ingredient));
     });
@@ -216,7 +216,7 @@ describe('DrinkProcessPage', () => {
   test('should be able to check some ingredients setting the local storage', () => {
     const {
       getByTestId,
-    } = renderWithContextAndRouter(<DProv><DrinkProcessPage id={15997} /></DProv>);
+    } = renderWithContext(<DProv><DrinkProcessPage id={15997} /></DProv>);
 
     const firstIngre = getByTestId('0-item-step');
     expect(firstIngre).not.toBeChecked();
@@ -232,7 +232,7 @@ describe('DrinkProcessPage', () => {
     localStorage.setItem('inProgressRecipes', JSON.stringify({ cocktails: { 15997: [0, 1] } }));
     const {
       getByTestId,
-    } = renderWithContextAndRouter(<DProv><DrinkProcessPage id={15997} /></DProv>);
+    } = renderWithContext(<DProv><DrinkProcessPage id={15997} /></DProv>);
 
     expect(getByTestId('0-item-step')).toBeChecked();
     expect(getByTestId('1-item-step')).toBeChecked();
