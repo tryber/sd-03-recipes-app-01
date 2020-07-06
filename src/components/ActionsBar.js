@@ -31,8 +31,8 @@ function ActionsBar({ eat, type }) {
 
 ActionsBar.propTypes = {
   eat: PropTypes.shape({
-    id: PropTypes.string.isRequired, // number as string
     name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired, // number as string
     category: PropTypes.string.isRequired,
     instructions: PropTypes.string.isRequired,
     origin: PropTypes.string,
