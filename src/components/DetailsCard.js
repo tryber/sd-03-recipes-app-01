@@ -11,22 +11,11 @@ import ActionsBar from './ActionsBar';
 
 import { FoodsContext } from '../contexts/FoodsContext';
 
-function StoreRecipe(id, ingredients, type) {
-  const newStorage = {
-    ...getInProgress(),
-    [type === 'food' ? 'meals' : 'cocktails']: { ...getInProgress(type), [id]: ingredients },
-  };
-  localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
-}
-
 function DetailsCard({ eat, type }) {
-  const [, { setFoodInproggress }] = useContext(FoodsContext);
+  const [, { setFoodInProgress }] = useContext(FoodsContext);
   const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
 
-  const startRecipe = useCallback(() => {
-    setFoodInproggress(eat);
-    StoreRecipe(eat.id, eat.ingredients, type);
-  }, [eat, type, setFoodInproggress]);
+  const startRecipe = useCallback(() => { setFoodInProgress(eat); }, [eat, setFoodInProgress]);
 
   return (
     <div>
@@ -48,7 +37,7 @@ function DetailsCard({ eat, type }) {
       <p data-testid="instructions">{instructions}</p>
       {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
       {Boolean(doneRecipes(id)) ||
-        <Link to={`${type === 'food' ? '/comidas' : '/bebidas'}/${id}/in-progress`}>
+        <Link to={`${type === 'food' ? '/comidas' : '/bebidas' }/${id}/in-progress`}>
           <button
             data-testid="start-recipe-btn"
             className="buttonIniciar"

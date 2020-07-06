@@ -43,12 +43,12 @@ export const getInProgress = (type) => {
     JSON.parse(localStorage.getItem('inProgressRecipes')) || { meals: {}, cocktails: {} }
   );
   switch (type) {
-    case 'medals':
+    case 'meals':
     case 'food':
-      return inProggress.medals;
+      return inProggress.meals;
     case 'cocktails':
     case 'drink':
-      return inProggress.cdocktails;
+      return inProggress.cocktails;
     default: return inProggress;
   }
 };
@@ -56,14 +56,18 @@ export const getInProgress = (type) => {
 export const setInProgress = (type, id, value) => {
   const sin = (type) => {
     switch(type) {
-      case 'food': return 'meals';
-      case 'drink': return 'cocktails';
-      default: return 'type not valid to sin';
+      case 'food':
+      case 'meals':
+        return 'meals';
+      case 'drink':
+      case 'cocktails':
+        return 'cocktails';
+      default: return `type ${type} not valid to sin`;
     }
   };
   const current = getInProgress();
   const key = sin(type);
-  const newInProgress = { ...current, [key]: { ...current[key], id: value } };
+  const newInProgress = { ...current, [key]: { ...current[key], [id]: value } };
   localStorage.setItem('inProgressRecipes', JSON.stringify(newInProgress))
 };
 

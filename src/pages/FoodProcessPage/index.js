@@ -4,23 +4,24 @@ import PropTypes from 'prop-types';
 import { CheckBox } from '../../components';
 
 import { FoodsContext } from '../../contexts/FoodsContext';
-import { useLocalStorage } from '../../hooks/localStorage';
+import useLocalStorage from '../../hooks/localStorage';
 import { getInProgress, setInProgress } from '../../services/APIs/APIlocalStorage';
 
 function FoodProcessPage({ id }) {
-  const [{ foodInproggress: { ingredients } }] = useContext(FoodsContext);
+  const [{ foodInProgress }] = useContext(FoodsContext);
+  const { ingredients } = foodInProgress;
   const [usedIngredients, setUsedIngredients] = useLocalStorage(
     getInProgress('food')[id] || [],
-    (newUsed) => setInProgress('meals', id, newUsed)
+    (newUsed) => setInProgress('food', id, newUsed)
   );
-  
-  const toogleCheckbox = useCallback((index, checked) => {
-    setUsedIngredients(checked
-      ? usedIngredients.filter((used) => used === index)
-      : [ ...usedIngredients, index].sort((a, b) => a - b)
+    console.log(getInProgress('food')[id])
+  const toogleCheckbox = useCallback(({ target: { value, checked } }) => {
+    setUsedIngredients((used) => checked
+      ? [ ...used, Number(value)].sort((a, b) => a - b)
+      : used.filter((used) => used !== Number(value))
     );
-  }, [usedIngredients]);
-  
+  }, [setUsedIngredients]);
+
   return (
     <div>
       <div>
@@ -30,7 +31,7 @@ function FoodProcessPage({ id }) {
           checked={usedIngredients.some((used) => used === index)}
           index={index}
           item={ingredient}
-          handleClick={toogleCheckbox}
+          handleChange={toogleCheckbox}
         />
       ))}
       </div>

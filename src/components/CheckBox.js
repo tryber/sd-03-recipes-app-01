@@ -2,28 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './CheckBox.css'
 
-function CheckBox({ ingredient, checked, index, handleClick }) {
+function CheckBox({ item, checked, index, handleChange }) {
   return (
-    <label className={checked ? 'line-through' : ''} htmlFor={ingredient}>
+    <label className={checked ? 'line-through' : ''} htmlFor={item}>
       <input
-        data-testid={`${index}-ingredient-step`}
+        data-testid={`${index}-item-step`}
         type="checkbox"
-        id={ingredient}
+        id={item}
         checked={checked}
-        onClick={handleClick}
+        value={index}
+        onChange={handleChange}
       />
-      {ingredient}
+      {item}
     </label>
   );
 }
 
 CheckBox.propTypes = {
-  ingredient: PropTypes.exact({
-    ingredient: PropTypes.string.isRequired,
+  item: PropTypes.exact({
+    item: PropTypes.string.isRequired,
     measure: PropTypes.string,
   }).isRequired,
   checked: PropTypes.bool,
-  handleClick: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
 };
 
