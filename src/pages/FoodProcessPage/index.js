@@ -17,7 +17,7 @@ function FoodProcessPage({ id }) {
 
   const toogleCheckbox = useCallback(({ target: { value, checked } }) => {
     setUsedIngredients((used) => {
-      if (checked) return [ ...used, Number(value)].sort((a, b) => a - b);
+      if (checked) return [...used, Number(value)].sort((a, b) => a - b);
       return used.filter((usedIngredient) => usedIngredient !== Number(value));
     });
   }, [setUsedIngredients]);
