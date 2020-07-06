@@ -12,28 +12,28 @@ function FoodProcessPage({ id }) {
   const { ingredients } = foodInProgress;
   const [usedIngredients, setUsedIngredients] = useLocalStorage(
     getInProgress('food')[id] || [],
-    (newUsed) => setInProgress('food', id, newUsed)
+    (newUsed) => setInProgress('food', id, newUsed),
   );
-    console.log(getInProgress('food')[id])
+
   const toogleCheckbox = useCallback(({ target: { value, checked } }) => {
-    setUsedIngredients((used) => checked
-      ? [ ...used, Number(value)].sort((a, b) => a - b)
-      : used.filter((used) => used !== Number(value))
-    );
+    setUsedIngredients((used) => {
+      if (checked) return [ ...used, Number(value)].sort((a, b) => a - b);
+      return used.filter((usedIngredient) => usedIngredient !== Number(value));
+    });
   }, [setUsedIngredients]);
 
   return (
     <div>
       <div>
-      {ingredients && ingredients.map(({ ingredient }, index) => (
-        <CheckBox
-          key={ingredient}
-          checked={usedIngredients.some((used) => used === index)}
-          index={index}
-          item={ingredient}
-          handleChange={toogleCheckbox}
-        />
-      ))}
+        {ingredients && ingredients.map(({ ingredient }, index) => (
+          <CheckBox
+            key={ingredient}
+            checked={usedIngredients.some((used) => used === index)}
+            index={index}
+            item={ingredient}
+            handleChange={toogleCheckbox}
+          />
+        ))}
       </div>
     </div>
   );

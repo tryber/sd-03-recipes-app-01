@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './CheckBox.css'
+import './CheckBox.css';
 
 function CheckBox({ item, checked, index, handleChange }) {
   return (
