@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+
 const setURL = (category) => {
   switch (category) {
     case 'all':
@@ -22,6 +23,7 @@ function CardFilters({ categories, filterMode }) {
           filterMode(setURL(value));
           setCategorySel('all');
         }}
+
       >
         All
       </button>
