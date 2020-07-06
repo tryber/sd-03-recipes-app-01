@@ -1,11 +1,17 @@
 import React, { useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-import { CheckBox, Card } from '../../components';
+import { CheckBox, Card, FavoriteIcon, ShareIcon } from '../../components';
 
 import { FoodsContext } from '../../contexts/FoodsContext';
 import useLocalStorage from '../../hooks/localStorage';
-import { getInProgress, setInProgress } from '../../services/APIs/APIlocalStorage';
+import {
+  getInProgress,
+  setInProgress,
+  sendToFavoriteStorage,
+  rmFromFavoriteStorage,
+  takeFavStorage,
+} from '../../services/APIs/APIlocalStorage';
 
 function FoodProcessPage({ id }) {
   const [{ foodInProgress }] = useContext(FoodsContext);
@@ -23,6 +29,13 @@ function FoodProcessPage({ id }) {
     });
   }, [setUsedIngredients]);
 
+  const favoriteStorage = useCallback((isToSend) => {
+    if (isToSend) return sendToFavoriteStorage(foodInProgress, 'drink');
+    return rmFromFavoriteStorage(id);
+  }, [foodInProgress]);
+
+  const isFavInit = takeFavStorage().some((favorite) => Number(favorite.id) === Number(id));
+
   return (
     <div>
       <Card
@@ -30,6 +43,8 @@ function FoodProcessPage({ id }) {
         name={name}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
+      <ShareIcon textToCopy={`${window.location.href.slice(0, -12)}`} />
+      <FavoriteIcon handleFavoriteChange={favoriteStorage} isFavoriteInit={isFavInit} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <p data-testid="instructions">{instructions}</p>
       <div>
