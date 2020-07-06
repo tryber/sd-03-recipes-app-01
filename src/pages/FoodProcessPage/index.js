@@ -30,9 +30,9 @@ function FoodProcessPage({ id }) {
   }, [setUsedIngredients]);
 
   const favoriteStorage = useCallback((isToSend) => {
-    if (isToSend) return sendToFavoriteStorage(foodInProgress, 'drink');
+    if (isToSend) return sendToFavoriteStorage(foodInProgress, 'food');
     return rmFromFavoriteStorage(id);
-  }, [foodInProgress]);
+  }, [foodInProgress, id]);
 
   const isFavInit = takeFavStorage().some((favorite) => Number(favorite.id) === Number(id));
 

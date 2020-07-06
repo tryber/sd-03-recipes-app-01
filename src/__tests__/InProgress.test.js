@@ -3,7 +3,7 @@ import { fireEvent } from '@testing-library/react';
 
 import { FoodProcessPage, DrinkProcessPage } from '../pages';
 
-import { LocalStorage, renderWithContextAndRouter } from '../mocks';
+import { LocalStorage, renderWithContextAndRouter, Clipboard } from '../mocks';
 import { meals } from '../../cypress/mocks/meals';
 import { drinks } from '../../cypress/mocks/drinks';
 import { FoodsContext } from '../contexts/FoodsContext';
@@ -11,7 +11,12 @@ import { DrinksContext } from '../contexts/DrinksContext';
 import { handleFoodsData } from '../services/APIs/FOODS_API';
 import { handleDrinksData } from '../services/APIs/DRINKS_API';
 
+import srcShareBtn from '../images/shareIcon.svg';
+import srcWhiteFavoriteBtn from '../images/whiteHeartIcon.svg';
+import srcBlackFavoriteBtn from '../images/blackHeartIcon.svg';
+
 localStorage = new LocalStorage();
+navigator.clipboard = new Clipboard();
 
 const corba = handleFoodsData(meals[0]);
 
@@ -42,6 +47,47 @@ describe('FoodProcessPage', () => {
     expect(title).toHaveTextContent(corba.name);
     expect(image).toHaveAttribute('src', corba.srcImage);
     expect(category).toHaveTextContent(corba.category);
+  });
+
+  test('localStorage favorite', async () => {
+    const { getByTestId, getByText } = renderWithContextAndRouter(<FProv><FoodProcessPage id={52977} /></FProv>);
+
+    const favoriteBtn = getByTestId('favorite-btn');
+    expect(favoriteBtn).toHaveAttribute('src', srcWhiteFavoriteBtn);
+
+    fireEvent.click(favoriteBtn);
+    const mockedObj = JSON.stringify([{
+      id: '52977',
+      type: 'comida',
+      area: 'Turkish',
+      category: 'Side',
+      alcoholicOrNot: '',
+      name: 'Corba',
+      image: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg'
+    }]);
+
+    expect(localStorage.getItem('favoriteRecipes')).toEqual(mockedObj);
+    expect(favoriteBtn).toHaveAttribute('src', srcBlackFavoriteBtn);
+
+    fireEvent.click(favoriteBtn);
+
+    expect(favoriteBtn).toHaveAttribute('src', srcWhiteFavoriteBtn);
+    expect(localStorage.getItem('favoriteRecipes')).toEqual(JSON.stringify([]));
+    
+    const shareBtn = getByTestId('share-btn');
+    expect(shareBtn).toHaveAttribute('src', srcShareBtn);
+    fireEvent.click(shareBtn);
+
+    expect(getByText('Link copiado!')).toBeInTheDocument();
+  });
+
+  test('should begin favorited', async () => {
+    localStorage.setItem('favoriteRecipes', JSON.stringify([{ id: '52977' }]));
+
+    const { getByTestId } = renderWithContextAndRouter(<FProv><FoodProcessPage id={52977} /></FProv>);
+
+    const favoriteBtn = getByTestId('favorite-btn');
+    expect(favoriteBtn).toHaveAttribute('src', srcBlackFavoriteBtn);
   });
 
   test('Checkbox should start empty ', () => {
@@ -104,7 +150,7 @@ describe('DrinkProcessPage', () => {
   });
 
   test('should display the image, name, category and instructions', () => {
-    const { getByTestId } = renderWithContextAndRouter(<DProv><DrinkProcessPage id={52977} /></DProv>);
+    const { getByTestId } = renderWithContextAndRouter(<DProv><DrinkProcessPage id={15997} /></DProv>);
     const title = getByTestId('recipe-title');
     const image = getByTestId('recipe-photo');
     const category = getByTestId('recipe-category');
@@ -114,6 +160,48 @@ describe('DrinkProcessPage', () => {
     expect(image).toHaveAttribute('src', GG.srcImage);
     expect(category).toHaveTextContent(GG.isAlcoholic);
   });
+
+  test('localStorage favorite', async () => {
+    const { getByTestId, getByText } = renderWithContextAndRouter(<DProv><DrinkProcessPage id={15997} /></DProv>);
+
+    const favoriteBtn = getByTestId('favorite-btn');
+    expect(favoriteBtn).toHaveAttribute('src', srcWhiteFavoriteBtn);
+
+    fireEvent.click(favoriteBtn);
+    const mockedObj = JSON.stringify([{
+      id: '15997',
+      type: 'bebida',
+      area: '',
+      category: 'Ordinary Drink',
+      alcoholicOrNot: 'Optional alcohol',
+      name: 'GG',
+      image: 'https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg'
+    }]);
+
+    expect(localStorage.getItem('favoriteRecipes')).toEqual(mockedObj);
+    expect(favoriteBtn).toHaveAttribute('src', srcBlackFavoriteBtn);
+
+    fireEvent.click(favoriteBtn);
+
+    expect(favoriteBtn).toHaveAttribute('src', srcWhiteFavoriteBtn);
+    expect(localStorage.getItem('favoriteRecipes')).toEqual(JSON.stringify([]));
+    
+    const shareBtn = getByTestId('share-btn');
+    expect(shareBtn).toHaveAttribute('src', srcShareBtn);
+    fireEvent.click(shareBtn);
+
+    expect(getByText('Link copiado!')).toBeInTheDocument();
+  });
+
+  test('should begin favorited', async () => {
+    localStorage.setItem('favoriteRecipes', JSON.stringify([{ id: '15997' }]));
+
+    const { getByTestId } = renderWithContextAndRouter(<DProv><DrinkProcessPage id={15997} /></DProv>);
+
+    const favoriteBtn = getByTestId('favorite-btn');
+    expect(favoriteBtn).toHaveAttribute('src', srcBlackFavoriteBtn);
+  });
+
 
   test('Checkbox should start empty ', () => {
     const {
