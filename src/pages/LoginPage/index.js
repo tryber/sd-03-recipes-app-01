@@ -15,10 +15,9 @@ function LoginPage() {
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
   };
-
   return (
     <div className="background">
-      <div div className="Login">
+      <div className="Login">
         <h1>Login</h1>
         <div className="buttons">
           <input
@@ -37,18 +36,16 @@ function LoginPage() {
             required
             type="password"
           />
-          <Link to="./comidas" style={{textDecoration:"none"}}>
-            <center>
-              <button
-                className="Iniciar"
-                type="button"
-                disabled={!emailPassword()}
-                data-testid="login-submit-btn"
-                onClick={() => storage()}
-              >
-                Entrar
+          <Link to="./comidas" style={{ textDecoration: 'none' }}>
+            <button
+              className="Iniciar"
+              type="button"
+              disabled={!emailPassword()}
+              data-testid="login-submit-btn"
+              onClick={() => storage()}
+            >
+              Entrar
           </button>
-            </center>
           </Link>
         </div>
       </div>

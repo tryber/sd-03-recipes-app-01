@@ -1,12 +1,12 @@
 .card {
-  border-radius: 10%;
   border: 2px solid black;
+  border-radius: 10%;
   display: inline-block;
+  height: 30vh;
   margin: 1em 1em auto auto;
   overflow: hidden;
   position: relative;
   width: 30vh;
-  height: 30vh;
 }
 
 .card :hover {
@@ -23,7 +23,7 @@
   border: solid black 1px;
   color: black;
   display: flex;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: 1.5em;
   margin-bottom: 10px;
   position: absolute;
@@ -35,7 +35,7 @@
   background-color: yellow;
   border-radius: 10%;
   cursor: pointer;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: 1em;
   width: 30%;
 }

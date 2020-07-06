@@ -49,14 +49,14 @@ function FoodsPage() {
         filterMode={setFoodFilter}
       />
       <div className="FodePage">
-      {foods
-        .slice(0, 12)
-        .map(({ id, name, srcImage }, index) => (
-          <Link key={id} to={`/comidas/${id}`}>
-            <Card name={name} index={index} srcImage={srcImage} />
-          </Link>
-        ))}
-      <Footer />
+        {foods
+          .slice(0, 12)
+          .map(({ id, name, srcImage }, index) => (
+            <Link key={id} to={`/comidas/${id}`}>
+              <Card name={name} index={index} srcImage={srcImage} />
+            </Link>
+          ))}
+        <Footer />
       </div>
     </div>
   );
