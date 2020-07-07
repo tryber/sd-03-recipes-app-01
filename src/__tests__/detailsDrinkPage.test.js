@@ -8,7 +8,7 @@ import srcShareBtn from "../images/shareIcon.svg";
 import srcWhiteFavoriteBtn from "../images/whiteHeartIcon.svg";
 import srcBlackFavoriteBtn from "../images/blackHeartIcon.svg";
 
-window.localStorage = new LocalStorage();
+localStorage = new LocalStorage();
 navigator.clipboard = new Clipboard();
 
 jest.spyOn(window, 'fetch').mockImplementation(mockedFetch);
@@ -104,9 +104,8 @@ describe("Drink Details Page", () => {
     expect(favoriteBtn).toHaveAttribute("src", srcBlackFavoriteBtn);
   });
 
-  test("Start Recipe Btn, should exist and update url and localStorage", async () => {
+  test("Start Recipe Btn, should exist and update url", async () => {
     const { getByTestId, history } = renderWithContext(<DrinkDetailsPage id={15997} />);
-    const GG = drinks[0];
 
     await waitForDomChange();
 
@@ -115,18 +114,7 @@ describe("Drink Details Page", () => {
 
     fireEvent.click(startBtn);
 
-    const mockInProgress = {
-      cocktails: {
-        15997: [
-          { ingredient: GG.strIngredient1, measure: GG.strMeasure1 },
-          { ingredient: GG.strIngredient2, measure: GG.strMeasure2 },
-          { ingredient: GG.strIngredient3, measure: GG.strMeasure3 },
-        ],
-      },
-      meals: {},
-    };
     expect(history.location.pathname).toEqual(`/bebidas/${15997}/in-progress`);
-    expect(JSON.parse(localStorage.getItem("inProgressRecipes"))).toEqual(mockInProgress);
   });
 
   test("the Btn Start should be responsible to last acts", async () => {
