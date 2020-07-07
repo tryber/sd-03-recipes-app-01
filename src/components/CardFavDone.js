@@ -1,24 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import FavoriteIcon from './FavoriteIcon';
 import ShareIcon from './ShareIcon';
+import blackHeart from '../images/blackHeartIcon.svg';
 import './CardFavDone.css';
+import { rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
 
 function CardFavDone({
-    id,
-    type,
-    area,
-    name,
-    image,
-    category,
-    alcoholicOrNot,
-  }) {
-  const makeLink = () => (`/${type}s/${id}`);
+  id,
+  type,
+  area,
+  name,
+  image,
+  category,
+  alcoholicOrNot,
+}) {
 
   return (
     <div key={id} className="card-fav-done">
-      <Link to={makeLink(type, id)}>
+      <Link to={`/${type}s/${id}`}>
         <img
           alt={name}
           src={image}
@@ -26,13 +26,17 @@ function CardFavDone({
         />
       </Link>
       <div className="info">
-        <Link to={makeLink()}>
+        <Link to={`/${type}s/${id}`}>
           <p className="food-info">{area || alcoholicOrNot} - {category}</p>
           <p className="food-title">{name}</p>
         </Link>
         <div className="action-bar">
-          <FavoriteIcon id={id} />
-          <ShareIcon urlParams={makeLink(type, id)} />
+          <img
+            alt='remove from favorites'
+            src={blackHeart}
+            onClick={() => rmFromFavoriteStorage(id)}>
+          </img>
+          <ShareIcon id={id} type={type} />
         </div>
       </div>
     </div>
@@ -50,7 +54,7 @@ CardFavDone.propTypes = {
 };
 
 CardFavDone.defaultProps = {
-  testid: { title: '', img: '' },
+  // testid: { title: '', img: '' },
   index: null,
   show: true,
 };

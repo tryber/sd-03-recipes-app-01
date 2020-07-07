@@ -4,10 +4,6 @@ import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 
 import Card from './Card';
-import Carrosel from './Carrosel';
-import ActionsBar from './ActionsBar';
-import { getFavStorage, sendToFavoriteStorage, rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
-import { FoodsContext } from '../contexts/FoodsContext';
 
 import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
 
@@ -15,17 +11,21 @@ import ActionsBar from './ActionsBar';
 
 import { FoodsContext } from '../contexts/FoodsContext';
 
+function StoreRecipe(id, ingredients, type) {
+  const newStorage = {
+    ...getInProgress(),
+    [type === 'food' ? 'meals' : 'cocktails']: { ...getInProgress(type), [id]: ingredients },
+  };
+  localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+}
+
 function DetailsCard({ eat, type }) {
   const [, { setFoodInproggress }] = useContext(FoodsContext);
   const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
 
-  const handleFavoriteStorage = (toBeSent) => {
-    if (toBeSent) return sendToFavoriteStorage(eat, type);
-    return rmFromFavoriteStorage(id);
-  };
- 
   const startRecipe = useCallback(() => {
     setFoodInproggress(eat);
+    StoreRecipe(eat.id, eat.ingredients, type);
   }, [eat, type, setFoodInproggress]);
 
   return (
@@ -36,7 +36,7 @@ function DetailsCard({ eat, type }) {
         srcImage={srcImage}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
-      <ActionsBar eat={eat} type={type} />
+      <ActionsBar eat={eat} type={type === 'food' ? 'comida' : 'bebida'} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (

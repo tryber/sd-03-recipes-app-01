@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Header from '../../components/Header';
 import CardFavDone from '../../components/CardFavDone';
 import './index.css';
-
+import { getFavStorage } from '../../services/APIs/APIlocalStorage';
 
 function FavoriteRecipesPage() {
-  const data = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const data = getFavStorage();
   const [results, setResults] = useState(data);
-  const [filter, setFilter] = useState('data');
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     setResults(data.filter((el) => el.type === filter));
@@ -20,7 +20,10 @@ function FavoriteRecipesPage() {
       <button onClick={() => setFilter('bebida')} data-testid="filter-by-drink-btn">Drink</button>
       <button onClick={() => setResults(data)} data-testid="filter-by-all-btn">All</button>
       <div className="fav-grid">
-        {results.map((elem) => <CardFavDone {...elem} />)}
+        {filter
+          ? results.map((elem) => <CardFavDone {...elem} />)
+          : data.map((elem) => <CardFavDone {...elem} />)
+        }
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import FavoriteIcon from './FavoriteIcon';
 import {
   sendToFavoriteStorage,
   rmFromFavoriteStorage,
-  takeFavStorage,
+  getFavStorage,
 } from '../services/APIs/APIlocalStorage';
 
 function ActionsBar({ eat, type }) {
@@ -15,12 +15,12 @@ function ActionsBar({ eat, type }) {
     return rmFromFavoriteStorage(eat.id);
   }, [type, eat]);
 
-  const isFavoriteInit = takeFavStorage()
+  const isFavoriteInit = getFavStorage()
     .some((favorite) => Number(favorite.id) === Number(eat.id));
 
   return (
     <div>
-      <ShareIcon textToCopy={window.location.href} />
+      <ShareIcon id={eat.id} type={type} />
       <FavoriteIcon
         handleFavoriteChange={handleFavoriteStorage}
         isFavoriteInit={isFavoriteInit}

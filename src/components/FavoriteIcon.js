@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 import './FavoriteIcon.css';
@@ -8,24 +7,23 @@ import './FavoriteIcon.css';
 function FavoriteIcon({ handleFavoriteChange, isFavoriteInit }) {
   const [isFavorite, setIsFavorite] = useState(isFavoriteInit);
 
-  const inverteIsFavorite = useCallback(() => {
+  const toggleFavorite = useCallback(() => {
     setIsFavorite(!isFavorite);
   }, [isFavorite, setIsFavorite]);
 
   useEffect(() => { handleFavoriteChange(isFavorite); }, [isFavorite, handleFavoriteChange]);
 
   const src = isFavorite ? blackHeart : whiteHeart;
-  const alt = `is ${isFavorite ? '' : 'not'} favorited`;
+  const alt = `Item is ${isFavorite ? '' : 'not'} favorited`;
 
   return (
-    <button className="hidden-button" onClick={inverteIsFavorite}>
+    <button className="hidden-button" onClick={toggleFavorite}>
       <img
         alt={alt}
         data-testid="favorite-btn"
         src={src}
       />
     </button>
-
   );
 }
 
@@ -35,7 +33,7 @@ FavoriteIcon.propTypes = {
 };
 
 FavoriteIcon.defaultProps = {
-  handleFavoriteChange: (fav) => console.log(fav),
+  handleFavoriteChange: () => true,
   isFavoriteInit: false,
 };
 

@@ -2,11 +2,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import shareIcon from '../images/shareIcon.svg';
-import './ActionsBar.css';
+import './ShareIcon.css';
 
-function ShareIcon({ urlParams }) {
+
+function ShareIcon({id , type}) {
   const [copying, setCopying] = useState(false);
-
+  const makeLink = () => (`/${type}s/${id}`);
+  const urlParams = makeLink(id, type);
   const enableCopy = useCallback(() => { setCopying(true); }, []);
   const disableCopy = useCallback(() => { setCopying(false); }, []);
 
