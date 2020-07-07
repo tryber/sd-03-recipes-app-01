@@ -4,10 +4,10 @@ import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 
 import Card from './Card';
+import ShareIcon from './ShareIcon';
+import FavoriteIcon from './FavoriteIcon';
 
 import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
-
-import ActionsBar from './ActionsBar';
 
 function DetailsCard({ eat, type }) {
   const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
@@ -19,7 +19,8 @@ function DetailsCard({ eat, type }) {
         srcImage={srcImage}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
-      <ActionsBar eat={eat} type={type} />
+      <ShareIcon textToCopy={window.location.href} />
+      <FavoriteIcon eat={eat} type={type} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (

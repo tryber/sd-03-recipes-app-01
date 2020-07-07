@@ -13,9 +13,6 @@ import useLocalStorage from '../../hooks/localStorage';
 import {
   getInProgress,
   setInProgress,
-  sendToFavoriteStorage,
-  rmFromFavoriteStorage,
-  takeFavStorage,
   rmInProgress,
   setDoneRecipeStorage,
 } from '../../services/APIs/APIlocalStorage';
@@ -30,7 +27,7 @@ const fetchAPI = async (type, id, setEat) => {
   } return Promise.reject(`type ${type} insn't valid`);
 };
 
-const endRecipe = (type, id) => {
+const endRecipe = (type, id) => () => {
   rmInProgress(type, id);
   setDoneRecipeStorage(id);
 };
@@ -54,26 +51,20 @@ const renderBtn = (disabled, endRecipe) => (
       </Link>
 );
 
+const setInProgressUse = (type, id) => (newUsed) => setInProgress(type, id, newUsed);
+
 function InProcessPage({ id, type }) {
   const [eat, setEat] = useState(null);
-  const [{ loading, error }] = useRequisition(useCallback(() => (
-    fetchAPI(type, id, setEat), [id, type, setEat])
-  ));
+  const [{ loading, error }] = useRequisition(fetchAPI(type, id, setEat), [id, type, setEat]);
   
   const [usedIngredients, setUsedIngredients] = useLocalStorage(
     getInProgress(type)[id] || [],
-    (newUsed) => setInProgress(type, id, newUsed),
+    setInProgressUse(type, id),
   );
 
   const toogleCheckbox = useCallback(({ target: { value, checked } }) => {
     setUsedIngredients((usedIng) => changeCheckBox(usedIng, checked, value));
   }, [setUsedIngredients]);
-
-  const favoriteStorage = useCallback((isToSend) => {
-    if (isToSend) return sendToFavoriteStorage(eat, type);
-    return rmFromFavoriteStorage(eat.id);
-  }, [eat]);
-  const isFavInit = takeFavStorage().some((favorite) => Number(favorite.id) === Number(id));
 
   if (error) return <h1>Aconteceu algo errado em detalhes de bebidas em progresso</h1>;
   if (loading) return <h1>Carrgando detalhes de bebidas em progresso...</h1>;
@@ -83,7 +74,7 @@ function InProcessPage({ id, type }) {
     <div>
       <Card srcImage={srcImage} name={name} />
       <ShareIcon textToCopy={`${window.location.href.slice(0, -12)}`} />
-      <FavoriteIcon handleFavoriteChange={favoriteStorage} isFavoriteInit={isFavInit} />
+      <FavoriteIcon eat={eat} type={type} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <p data-testid="instructions">{instructions}</p>
       <div>
@@ -97,7 +88,7 @@ function InProcessPage({ id, type }) {
           />
         ))}
       </div>
-      {renderBtn(usedIngredients.length < ingredients.length, () => endRecipe(type, id))}
+      {renderBtn(usedIngredients.length < ingredients.length, endRecipe(type, id))}
     </div>
   );
 }
