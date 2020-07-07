@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ShareIcon from './ShareIcon';
-import blackHeart from '../images/blackHeartIcon.svg';
 import './CardFavDone.css';
 import { rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
 
@@ -30,12 +29,10 @@ function CardFavDone({
           <p className="food-title">{name}</p>
         </Link>
         <div className="action-bar">
-          <div onClick={() => rmFromFavoriteStorage(id)}>
-            <img
-              alt="remove from favorites"
-              src={blackHeart}
-            />
-          </div>
+          <button
+            className="unfavoriteBtn"
+            onClick={() => rmFromFavoriteStorage(id)}
+          />
           <ShareIcon id={id} type={type} />
         </div>
       </div>
