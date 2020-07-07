@@ -39,16 +39,12 @@ const changeCheckBox = (usedIng, checked, value) => {
 
 const renderBtn = (disabled, onClick) => (
   disabled ?
-  <button
-    data-testid="finish-recipe-btn"
-    disabled
-    onClick={onClick}
-  >
-    Finalizar Receita
-  </button>
-  : <Link to="/receitas-feitas">
-      <button data-testid="finish-recipe-btn" onClick={onClick}>Finalizar Receita</button>
-    </Link>
+    <button data-testid="finish-recipe-btn" disabled onClick={onClick}>
+      Finalizar Receita
+    </button>
+    : <Link to="/receitas-feitas">
+        <button data-testid="finish-recipe-btn" onClick={onClick}>Finalizar Receita</button>
+      </Link>
 );
 
 const setInProgressUse = (type, id) => (newUsed) => setInProgress(type, id, newUsed);

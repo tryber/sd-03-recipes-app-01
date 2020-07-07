@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  eatShape,
-  typeShape,
-} from '../services/APIs/shapes';
+import { eatShape, typeShape, } from '../services/APIs/shapes';
 
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
@@ -17,7 +14,7 @@ import {
 
 function FavoriteIcon({ eat, type }) {
   const [isFavorite, setIsFavorite] = useState(
-    takeFavStorage().some((favorite) => Number(favorite.id) === Number(eat.id))
+    takeFavStorage().some((favorite) => Number(favorite.id) === Number(eat.id)),
   );
 
   const handleFavoriteStorage = useCallback((isToSend) => {
