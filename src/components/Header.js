@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
+import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 import './Header.css';
 
@@ -16,9 +17,11 @@ const Header = ({ titleTag, filterMode }) => {
         </Link>
         <h2 data-testid="page-title">{titleTag}</h2>
         { filterMode ? (
-          <button
+          <img
+            alt="search icon"
             className="searchButton"
             data-testid="search-top-btn"
+            src={searchIcon}
             onClick={() => setDisplaySearch(!displaySearch)}
           />
         ) : <div />
