@@ -9,12 +9,12 @@ import './FavoriteIcon.css';
 import {
   sendToFavoriteStorage,
   rmFromFavoriteStorage,
-  takeFavStorage,
+  getFavStorage,
 } from '../services/APIs/APIlocalStorage';
 
 function FavoriteIcon({ eat, type }) {
   const [isFavorite, setIsFavorite] = useState(
-    takeFavStorage().some((favorite) => Number(favorite.id) === Number(eat.id)),
+    getFavStorage().some((favorite) => Number(favorite.id) === Number(eat.id)),
   );
 
   const handleFavoriteStorage = useCallback((isToSend) => {
@@ -22,17 +22,17 @@ function FavoriteIcon({ eat, type }) {
     return rmFromFavoriteStorage(eat.id);
   }, [type, eat]);
 
-  const inverteIsFavorite = useCallback(() => {
+  const toggleFavorite = useCallback(() => {
     setIsFavorite(!isFavorite);
   }, [isFavorite, setIsFavorite]);
 
   useEffect(() => { handleFavoriteStorage(isFavorite); }, [isFavorite, handleFavoriteStorage]);
 
   const src = isFavorite ? blackHeart : whiteHeart;
-  const alt = `is ${isFavorite ? '' : 'not'} favorited`;
+  const alt = `Item is ${isFavorite ? '' : 'not'} favorited`;
 
   return (
-    <button className="hidden-button" onClick={inverteIsFavorite}>
+    <button className="hidden-button" onClick={toggleFavorite}>
       <img
         alt={alt}
         data-testid="favorite-btn"
