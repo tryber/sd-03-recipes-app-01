@@ -14,3 +14,4 @@ export { default as ExploreFoodAreaPage } from './ExploreFoodAreaPage';
 export { default as ProfilePage } from './ProfilePage';
 export { default as CookedRecipesPage } from './CookedRecipesPage';
 export { default as FavoriteRecipesPage } from './FavoriteRecipesPage';
+export { default as NotFoundPage } from './NotFoundPage';

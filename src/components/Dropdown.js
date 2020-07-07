@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const setURL = (area) => {
   switch (area) {
-    case "all":
-      return "search.php?s=";
+    case 'all':
+      return 'search.php?s=';
     default:
       return `filter.php?a=${area}`;
   }
@@ -12,26 +12,20 @@ const setURL = (area) => {
 
 function Dropdown({ areas, filterMode }) {
   return (
-    <div>      
-        <select        
-        onChange={({ target: { value }}) => filterMode(setURL(value))}
-        data-testid="explore-by-area-dropdown">
-        <option          
-          value="all"
-          data-testid="All-areas-filter"         
-        >
+    <div>
+      <select
+        onChange={({ target: { value } }) => filterMode(setURL(value))}
+        data-testid='explore-by-area-dropdown'
+      >
+        <option value='all' data-testid='All-areas-filter'>
           All
         </option>
         {areas.map(({ area }) => (
-          <option
-            key={area}            
-            data-testid={`${area}-option`}
-            value={area}           
-          >
+          <option key={area} data-testid={`${area}-option`} value={area}>
             {area}
           </option>
         ))}
-        </select>     
+      </select>
     </div>
   );
 }
