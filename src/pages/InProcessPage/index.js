@@ -1,8 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
-import { CheckBox, Card, FavoriteIcon, ShareIcon } from '../../components';
+import { CheckBox, Card, FavoriteIcon, ShareIcon, LinkBtn } from '../../components';
 
 import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API';
 import { fetchFoodsApi, handleFoodsData } from '../../services/APIs/FOODS_API';
@@ -36,16 +35,6 @@ const changeCheckBox = (usedIng, checked, value) => {
   if (checked) return [...usedIng, Number(value)].sort((a, b) => a - b);
   return usedIng.filter((usedIngredient) => usedIngredient !== Number(value));
 };
-
-const renderBtn = (disabled, onClick) => (
-  disabled ?
-    <button data-testid="finish-recipe-btn" disabled onClick={onClick}>
-      Finalizar Receita
-    </button>
-    : <Link to="/receitas-feitas">
-      <button data-testid="finish-recipe-btn" onClick={onClick}>Finalizar Receita</button>
-    </Link>
-);
 
 const setInProgressUse = (type, id) => (newUsed) => setInProgress(type, id, newUsed);
 
@@ -89,7 +78,13 @@ function InProcessPage({ id, type }) {
           />
         ))}
       </div>
-      {renderBtn(usedIngredients.length < ingredients.length, endRecipe(type, id))}
+      <LinkBtn
+        disabled={usedIngredients.length < ingredients.length}
+        onClick={endRecipe(type, id)}
+        testid="finish-recipe-btn"
+        text="Finalizar Receita"
+        to="/receitas-feitas"
+      />
     </div>
   );
 }
