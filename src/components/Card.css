@@ -20,17 +20,17 @@
 }
 
 .card-title {
-  -webkit-text-stroke-color: #000;
-  -webkit-text-stroke-width: 2px;
   border: solid black 1px;
-  color: black;
+  color: white;
   display: flex;
   font-size: 1.5em;
-  font-size: 2em; color: #fffdd9;
+  font-size: 2em;
   margin-bottom: 10px;
   position: absolute;
   text-align: center;
   width: 100%;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: 2px;
 }
 
 .ButtonSearch {
@@ -50,7 +50,7 @@
   width: auto;
 }
 
-.ig{
+.ig {
   background-color: yellow;
 }
 
@@ -60,6 +60,6 @@
   font-style: italic;
 }
 
-.backDetal{
+.backDetal {
   background-image: url('../images/ketchup.jpg');
 }

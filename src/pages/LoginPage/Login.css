@@ -1,17 +1,18 @@
 .Login {
-  -webkit-text-stroke-color: #000;
-  -webkit-text-stroke-width: 1px;
   background-image: url('../../images/receitas.jpg');
   border-radius: 50%;
-  font-size: 2em; color: green;
+  font-size: 2em;
+  color: green;
+  font-style: italic;
   height: 50vh;
   text-align: center;
   transform: translateX(6%);
   width: 50vh;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: 1px;
 }
 
 .buttons {
-  align-items: center;
   align-items: center;
   display: flex;
   flex-direction: column;
