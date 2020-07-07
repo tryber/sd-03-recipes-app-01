@@ -4,7 +4,7 @@ import { Card, CardFilters, Header, Footer, Loading } from '../../components';
 import { DrinksContext } from '../../contexts/DrinksContext';
 import './Drinks.css';
 import {
-  fetchDrinks,
+  fetchDrinkApi,
   handleDrinksData,
   fetchCategoriesApi,
   handleCategoriesData,
@@ -24,7 +24,7 @@ function DrinksPage() {
   const [{ drinks, drinkFilter }, { setDrinks, setDrinkFilter }] = useContext(DrinksContext);
 
   useEffect(() => {
-    fetchDrinks(drinkFilter)
+    fetchDrinkApi(drinkFilter)
       .then(({ drinks: drk }) => setDrinks(drk.map((drink) => handleDrinksData(drink))))
       .then(() => setLoading(false))
       .catch((err) => {

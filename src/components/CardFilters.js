@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Card.css';
 
+
 const setURL = (category) => {
   switch (category) {
     case 'all':
@@ -24,12 +25,13 @@ function CardFilters({ categories, filterMode }) {
           filterMode(setURL(value));
           setCategorySel('all');
         }}
+
       >
         All
       </button>
       {categories.slice(0, 5).map(({ category }) => (
         <button
-          className="ButtonSearch"
+          key={category}
           type="button"
           data-testid={`${category}-category-filter`}
           value={category}

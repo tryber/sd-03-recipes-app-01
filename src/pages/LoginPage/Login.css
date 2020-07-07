@@ -2,18 +2,17 @@
   background-image: url('../../images/receitas.jpg');
   border-radius: 50%;
   color: green;
-  display: inline-block;
-  height: 50%;
-  margin-left: 25%;
+  transform: translateX(6%);
+  height: 50vh;
   text-align: center;
-  width: 60%;
+  width: 50vh;
 }
 
 .buttons {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 95%;
+  width: 100%;
 }
 
 .background {

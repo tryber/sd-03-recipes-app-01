@@ -1,26 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-import { DetailsCard } from '../../components';
+import { DetailsCard, Carrosel } from '../../components';
 
-import { fetchDetailsFood, handleFoodsData } from '../../services/APIs/FOODS_API';
+import { fetchFoodsApi, handleFoodsData } from '../../services/APIs/FOODS_API';
+import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API';
+import useRequisition from '../../hooks/requisition';
 
 function FoodDetailsPage({ id }) {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
   const [food, setFood] = useState(null);
+  const fetchFood = useCallback(() => fetchFoodsApi(`lookup.php?i=${id}`)
+    .then(({ meals }) => setFood(handleFoodsData(meals[0]))), [setFood, id]);
+  const [{ loading, error }] = useRequisition(fetchFood);
 
-  useEffect(() => {
-    fetchDetailsFood(id)
-      .then(({ meals }) => setFood(handleFoodsData(meals[0])))
-      .then(() => setLoading(false))
-      .catch((err) => { console.log(err); setError(err); });
-  }, [id, setError, setFood, setLoading]);
+  const [recomends, setRecomends] = useState(null);
+  const fetchRecomends = useCallback(() => (fetchDrinkApi()
+    .then(({ drinks }) => setRecomends(drinks.slice(0, 6).map((drk) => handleDrinksData(drk))))
+  ), []);
+  const [{ loading: loadingRecom, error: errorRecom }] = useRequisition(fetchRecomends);
 
   if (error) return <h1>Aconteceu algo errado em detalhes de comida</h1>;
   if (loading) return <h1>Carrgando detalhes de comida...</h1>;
-  if (food) return <DetailsCard type="food" eat={food} />;
-  return <h1>Não parou em nenhum</h1>;
+  return (
+    <div>
+      <DetailsCard type="food" eat={food} />
+      {errorRecom && <h3 data-testid="error-recom">Aconteceu algo errado em recomendações</h3>}
+      {!errorRecom && loadingRecom && <h3>Carrgando detalhes de comida...</h3>}
+      {!errorRecom && !loadingRecom && recomends && <Carrosel cards={recomends} />}
+    </div>
+  );
 }
 
 FoodDetailsPage.propTypes = {
