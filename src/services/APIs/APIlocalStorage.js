@@ -72,8 +72,40 @@ export const setInProgress = (type, id, value) => {
   localStorage.setItem('inProgressRecipes', JSON.stringify(newInProgress));
 };
 
+export const rmInProgress = (type, id) => {
+  const current = getInProgress();
+  const key = sin(type);
+  const newPart = Object.entries(current[key]).reduce((acc, [elem, value]) => {
+    if (id !== elem) return acc[elem] + value;
+    return acc;
+  }, {});
+  localStorage.setItem('inProgressRecipes', JSON.stringify({ ...current, [key]: newPart }));
+}
+
 export const doneRecipes = (id) => {
   const stored = JSON.parse(localStorage.getItem('doneRecipes')) || [];
   if (id || id === 0) return stored.find((doneRecipe) => doneRecipe.id === Number(id));
   return stored;
 };
+
+export const setDoneRecipeStorage = ({
+  id,
+  origin,
+  category,
+  isAlcoholic,
+  name,
+  srcImage: image,
+}, type) => {
+  const thisFood = {
+    id,
+    type: translateType(type),
+    area: origin || '',
+    category,
+    alcoholicOrNot: isAlcoholic || '',
+    name,
+    image,
+    doneDate: new Date(),
+    tags: [],
+  };
+  localStorage('doneRecipes', JSON.parse([...doneRecipes(), thisFood]));
+}

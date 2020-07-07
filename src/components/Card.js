@@ -34,7 +34,7 @@ Card.propTypes = {
 };
 
 Card.defaultProps = {
-  testid: { title: '', img: '' },
+  testid: { title: 'recipe-title', img: 'recipe-photo' },
   index: null,
   show: true,
 };

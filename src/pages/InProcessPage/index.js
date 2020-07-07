@@ -16,7 +16,10 @@ import {
   sendToFavoriteStorage,
   rmFromFavoriteStorage,
   takeFavStorage,
+  rmInProgress,
+  setDoneRecipeStorage,
 } from '../../services/APIs/APIlocalStorage';
+import { Redirect } from 'react-router-dom';
 
 const fetchAPI = async (type, id, setEat) => {
   if (type === 'food') {
@@ -29,10 +32,15 @@ const fetchAPI = async (type, id, setEat) => {
 };
 
 function InProcessPage({ id, type }) {
+  const [redirect, setRedirect] = useState(false);
   const [eat, setEat] = useState(null);
   const fetchDrink = useCallback(() => fetchAPI(type, id, setEat), [id, type, setEat]);
   const [{ loading, error }] = useRequisition(fetchDrink);
-
+  const endRecipe = useCallback(() => {
+    rmInProgress(type, id);
+    setDoneRecipeStorage(id);
+    setRedirect(true);
+  }, []);
   const [usedIngredients, setUsedIngredients] = useLocalStorage(
     getInProgress(type)[id] || [],
     (newUsed) => setInProgress(type, id, newUsed),
@@ -54,15 +62,12 @@ function InProcessPage({ id, type }) {
 
   if (error) return <h1>Aconteceu algo errado em detalhes de bebidas em progresso</h1>;
   if (loading) return <h1>Carrgando detalhes de bebidas em progresso...</h1>;
+  if (redirect) return <Redirect to="receitas-feitas" />
 
   const { name, srcImage, category, ingredients, instructions, isAlcoholic } = eat;
   return (
     <div>
-      <Card
-        srcImage={srcImage}
-        name={name}
-        testid={{ title: 'recipe-title', img: 'recipe-photo' }}
-      />
+      <Card srcImage={srcImage} name={name} />
       <ShareIcon textToCopy={`${window.location.href.slice(0, -12)}`} />
       <FavoriteIcon handleFavoriteChange={favoriteStorage} isFavoriteInit={isFavInit} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
@@ -78,6 +83,13 @@ function InProcessPage({ id, type }) {
           />
         ))}
       </div>
+      <button
+        data-testid="finish-recipe-btn"
+        disabled={usedIngredients.length < ingredients.length}
+        onClick={endRecipe}
+      >
+        Finallizar Receita
+      </button>
     </div>
   );
 }
