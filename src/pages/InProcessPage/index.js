@@ -19,10 +19,10 @@ import {
 const fetchAPI = async (type, id, setEat) => {
   if (type === 'food') {
     return fetchFoodsApi(`lookup.php?i=${id}`)
-    .then(({ meals }) => setEat(handleFoodsData(meals[0])));
+      .then(({ meals }) => setEat(handleFoodsData(meals[0])));
   } else if (type === 'drink') {
     return fetchDrinkApi(`lookup.php?i=${id}`)
-    .then(({ drinks }) => setEat(handleDrinksData(drinks[0])));
+      .then(({ drinks }) => setEat(handleDrinksData(drinks[0])));
   } return Promise.reject(`type ${type} insn't valid`);
 };
 
