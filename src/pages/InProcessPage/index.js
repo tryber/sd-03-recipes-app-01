@@ -69,7 +69,11 @@ function InProcessPage({ id, type }) {
   const { name, srcImage, category, ingredients, instructions, isAlcoholic } = eat;
   return (
     <div>
-      <Card srcImage={srcImage} name={name} />
+      <Card
+        srcImage={srcImage}
+        name={name}
+        testid={{ title: 'recipe-title', img: 'recipe-photo' }}
+      />
       <ShareIcon textToCopy={`${window.location.href.slice(0, -12)}`} />
       <FavoriteIcon eat={eat} type={type} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
