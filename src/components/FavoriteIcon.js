@@ -9,12 +9,12 @@ import './FavoriteIcon.css';
 import {
   sendToFavoriteStorage,
   rmFromFavoriteStorage,
-  takeFavStorage,
+  getFavStorage,
 } from '../services/APIs/APIlocalStorage';
 
 function FavoriteIcon({ eat, type }) {
   const [isFavorite, setIsFavorite] = useState(
-    takeFavStorage().some((favorite) => Number(favorite.id) === Number(eat.id)),
+    getFavStorage().some((favorite) => Number(favorite.id) === Number(eat.id)),
   );
 
   const handleFavoriteStorage = useCallback((isToSend) => {

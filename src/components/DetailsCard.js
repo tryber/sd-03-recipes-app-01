@@ -9,8 +9,8 @@ import FavoriteIcon from './FavoriteIcon';
 
 import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
 
-function DetailsCard({ recipe, type }) {
-  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = recipe;
+function DetailsCard({ eat, type }) {
+  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
   const translate = (word) => (word === 'food' ? 'comidas' : 'bebidas');
 
   return (
@@ -21,7 +21,7 @@ function DetailsCard({ recipe, type }) {
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
       <ShareIcon textToCopy={window.location.href} />
-      <FavoriteIcon eat={recipe} type={translate(type)} />
+      <FavoriteIcon eat={eat} type={translate(type)} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
@@ -45,7 +45,7 @@ function DetailsCard({ recipe, type }) {
 }
 
 DetailsCard.propTypes = {
-  recipe: PropTypes.shape({
+  eat: PropTypes.shape({
     id: PropTypes.string.isRequired, // number as string
     name: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
@@ -66,7 +66,7 @@ DetailsCard.propTypes = {
 };
 
 DetailsCard.defaultProps = {
-  recipe: { source: null, isAlcoholic: null, origin: '', video: '' },
+  eat: { source: null, isAlcoholic: null, origin: '', video: '' },
 };
 
 export default DetailsCard;

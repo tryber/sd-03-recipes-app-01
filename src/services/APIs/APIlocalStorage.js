@@ -33,7 +33,7 @@ export const sendToFavoriteStorage = ({
 };
 
 export const rmFromFavoriteStorage = (id) => {
-  const favorite = takeFavStorage();
+  const favorite = getFavStorage();
   const oficialFavoriteList = favorite.filter((fav) => Number(fav.id) !== Number(id));
   localStorage.setItem('favoriteRecipes', JSON.stringify(oficialFavoriteList));
 };
