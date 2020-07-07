@@ -17,7 +17,7 @@
   right: 0;
 }
 
-.prev, .next {
+.prev , .next {
   background-color: green;
   border-radius: 10vh;
   color: #333;
@@ -31,7 +31,7 @@
   width: auto;
 }
 
-.prev:hover, .next:hover {
+.prev:hover , .next:hover {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -45,7 +45,7 @@
   width: auto;
 }
 
-.dot:active, .dot:hover {
+.dot:active , .dot:hover {
   background-color: black;
 }
 
