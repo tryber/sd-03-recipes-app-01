@@ -82,7 +82,7 @@ function InProcessPage({ id, type }) {
         disabled={usedIngredients.length < ingredients.length}
         onClick={endRecipe(type, id)}
         testid="finish-recipe-btn"
-        text="Finalizar Receita"
+        text="Finalizar receita"
         to="/receitas-feitas"
       />
     </div>

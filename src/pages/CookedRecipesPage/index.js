@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../../components/Header';
-import { getInProgress } from '../../services/APIs/APIlocalStorage';
+import { doneRecipes } from '../../services/APIs/APIlocalStorage';
 import CardFavDone from '../../components/CardFavDone';
 
 function CookedRecipesPage() {
-  const data = getInProgress();
+  const data = doneRecipes();
   const [results, setResults] = useState(data);
   const [filter, setFilter] = useState('');
 
