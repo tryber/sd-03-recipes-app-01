@@ -28,6 +28,10 @@ function DetailsCard({ eat, type }) {
     StoreRecipe(eat.id, eat.ingredients, type);
   }, [eat, type, setFoodInproggress]);
 
+  const translate = (type) => {
+    return type === 'food' ? 'comidas' : 'bebidas';
+  }
+
   return (
     <div>
       <Card
@@ -36,7 +40,7 @@ function DetailsCard({ eat, type }) {
         srcImage={srcImage}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
-      <ActionsBar eat={eat} type={type === 'food' ? 'comida' : 'bebida'} />
+      <ActionsBar eat={eat} type={translate(type)} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
@@ -48,7 +52,7 @@ function DetailsCard({ eat, type }) {
       <p data-testid="instructions">{instructions}</p>
       {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
       {Boolean(doneRecipes(id)) ||
-        <Link to={`${type === 'food' ? '/comidas' : '/bebidas'}/${id}/in-progress`}>
+        <Link to={`/${translate(type)}/${id}/in-progress`}>
           <button
             data-testid="start-recipe-btn"
             className="buttonIniciar"

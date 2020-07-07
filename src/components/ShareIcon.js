@@ -7,7 +7,7 @@ import './ShareIcon.css';
 
 function ShareIcon({ id, type }) {
   const [copying, setCopying] = useState(false);
-  const makeLink = () => (`/${type}s/${id}`);
+  const makeLink = () => (`/${type}/${id}`);
   const urlParams = makeLink(id, type);
   const enableCopy = useCallback(() => { setCopying(true); }, []);
   const disableCopy = useCallback(() => { setCopying(false); }, []);

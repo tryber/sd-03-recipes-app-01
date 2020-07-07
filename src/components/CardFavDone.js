@@ -30,11 +30,12 @@ function CardFavDone({
           <p className="food-title">{name}</p>
         </Link>
         <div className="action-bar">
-          <img
-            alt="remove from favorites"
-            src={blackHeart}
-            onClick={() => rmFromFavoriteStorage(id)}
-          />
+          <div onClick={() => rmFromFavoriteStorage(id)}>
+            <img
+              alt="remove from favorites"
+              src={blackHeart}
+            />
+          </div>
           <ShareIcon id={id} type={type} />
         </div>
       </div>
