@@ -2,7 +2,7 @@
   align-items: center;
   background-image: url('../images/receitas.jpg');
   display: flex;
-  font-size: 3em;
+  font-size: 1em;
   height: 2em;
   justify-content: space-around;
 }

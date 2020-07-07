@@ -32,6 +32,7 @@ function CardFilters({ categories, filterMode }) {
       {categories.slice(0, 5).map(({ category }) => (
         <button
           className="ButtonSearch"
+          key={category}
           type="button"
           data-testid={`${category}-category-filter`}
           value={category}
