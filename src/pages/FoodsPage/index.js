@@ -5,7 +5,6 @@ import { FoodsContext } from '../../contexts/FoodsContext';
 import {
   fetchFoodsApi, 
   handleFoodsData,
-  handleCategoriesData,
 } from '../../services/APIs/FOODS_API';
 
 const manageState = (loading, foods, error) => {
@@ -33,7 +32,7 @@ function FoodsPage() {
 
   useEffect(() => {
     fetchFoodsApi('list.php?c=list')
-      .then(({ meals }) => meals.map((category) => handleCategoriesData(category)))
+      .then(({ meals }) => meals.map(({ strCategory: category }) => ({ category })))
       .then((arr) => { setCategories(arr); setLoading(false); })
       .catch((err) => { console.log(err); setError(err); });
   }, [setLoading]);

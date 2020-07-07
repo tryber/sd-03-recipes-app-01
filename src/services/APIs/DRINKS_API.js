@@ -42,6 +42,3 @@ export const handleDrinksData = ({
   }, []);
   return obj;
 };
-
-export const handleCategoriesData = ({ strCategory }) => ({ category: strCategory });
-
