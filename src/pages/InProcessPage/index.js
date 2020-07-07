@@ -51,7 +51,9 @@ const setInProgressUse = (type, id) => (newUsed) => setInProgress(type, id, newU
 
 function InProcessPage({ id, type }) {
   const [eat, setEat] = useState(null);
-  const [{ loading, error }] = useRequisition(() => fetchAPI(type, id, setEat));
+  const [{ loading, error }] = useRequisition(
+    useCallback(() => fetchAPI(type, id, setEat), [type, id, setEat]),
+  );
   const [usedIngredients, setUsedIngredients] = useLocalStorage(
     getInProgress(type)[id] || [],
     setInProgressUse(type, id),
