@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Card, Header, Footer, Loading } from "../../components";
-import { Link, Redirect } from "react-router-dom";
-import { FoodsContext } from "../../contexts/FoodsContext";
-import { fetchFoodsApi } from "../../services/APIs/FOODS_API";
+import React, { useEffect, useState, useContext } from 'react';
+import { Card, Header, Footer, Loading } from '../../components';
+import { Link, Redirect } from 'react-router-dom';
+import { FoodsContext } from '../../contexts/FoodsContext';
+import { fetchFoodsApi } from '../../services/APIs/FOODS_API';
 
 const handleRedirect = (name, setFoodFilter, setRedirect) => {
   const search = `filter.php?i=${name}`;
@@ -12,13 +12,13 @@ const handleRedirect = (name, setFoodFilter, setRedirect) => {
 
 function ExploreFoodIngredientsPage() {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [ingredients, setIngredients] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [{ foodFilter }, { setFoodFilter }] = useContext(FoodsContext);
 
   useEffect(() => {
-    fetchFoodsApi("list.php?i=list")
+    fetchFoodsApi('list.php?i=list')
       .then(({ meals }) =>
         meals.map(({ strIngredient: ingredient }) => ({
           name: ingredient,
@@ -36,10 +36,10 @@ function ExploreFoodIngredientsPage() {
   }, [setLoading]);
 
   if (loading) return <Loading />;
-  if (redirect) return <Redirect to="/comidas" />
-  return (    
+  if (redirect) return <Redirect to='/comidas' />;
+  return (
     <div>
-      <Header titleTag="Explorar Ingredientes" />
+      <Header titleTag='Explorar Ingredientes' />
       {ingredients.slice(0, 12).map(({ name, srcImage }, index) => (
         <button onClick={() => handleRedirect(name, setFoodFilter, setRedirect)}>
           <Card
