@@ -73,7 +73,6 @@ function InProcessPage({ id, type }) {
     if (isToSend) return sendToFavoriteStorage(eat, type);
     return rmFromFavoriteStorage(eat.id);
   }, [eat]);
-
   const isFavInit = takeFavStorage().some((favorite) => Number(favorite.id) === Number(id));
 
   if (error) return <h1>Aconteceu algo errado em detalhes de bebidas em progresso</h1>;
