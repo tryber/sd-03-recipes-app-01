@@ -11,8 +11,7 @@ import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
 
 const translate = (word) => (word === 'food' ? 'comidas' : 'bebidas');
 
-const beginRecipeBtn = (id, type) => {
-  return(
+const beginRecipeBtn = (id, type) => (
     Boolean(doneRecipes(id)) ||
       <Link to={`/${translate(type)}/${id}/in-progress`}>
         <button
@@ -20,8 +19,7 @@ const beginRecipeBtn = (id, type) => {
           className="buttonIniciar"
         >{getInProgress(type)[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
       </Link>
-  )
-};
+  );
 
 function DetailsCard({ eat, type }) {
   const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
@@ -45,7 +43,7 @@ function DetailsCard({ eat, type }) {
       </ul>
       <p data-testid="instructions">{instructions}</p>
       {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
-      {beginRecipeBtn(id,type)}
+      {beginRecipeBtn(id, type)}
     </div>
   );
 }
