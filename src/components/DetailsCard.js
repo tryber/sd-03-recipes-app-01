@@ -2,6 +2,7 @@ import React, { useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
+import './Card.css';
 
 import Card from './Card';
 
@@ -29,7 +30,7 @@ function DetailsCard({ eat, type }) {
   }, [eat, type, setFoodInproggress]);
 
   return (
-    <div>
+    <div className="backDetal">
       <Card
         key={id}
         name={name}
@@ -40,13 +41,13 @@ function DetailsCard({ eat, type }) {
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
-          <li data-testid={`${index}-ingredient-name-and-measure`} key={ingredient}>
+          <li className="ig" data-testid={`${index}-ingredient-name-and-measure`} key={ingredient}>
             {ingredient} {measure}
           </li>
         ))}
       </ul>
-      <p data-testid="instructions">{instructions}</p>
-      {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
+      <p className="instructions" data-testid="instructions">{instructions}</p>
+      {video && <div data-testid="video"><p  className="ytb"><ReactPlayer url={video} /></p></div>}
       {Boolean(doneRecipes(id)) ||
         <Link to={`${type === 'food' ? '/comidas' : '/bebidas'}/${id}/in-progress`}>
           <button

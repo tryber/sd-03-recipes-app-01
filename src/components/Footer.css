@@ -3,5 +3,5 @@
   bottom: 0;
   display: flex;
   position: fixed;
-  transform: translateX(50%);
+  transform: translateX(18vh);
 }

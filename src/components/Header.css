@@ -1,6 +1,7 @@
 .headerBar {
   align-items: center;
   background-image: url('../images/receitas.jpg');
+  border: black solid 1px;
   display: flex;
   font-size: 1em;
   height: 2em;
@@ -18,8 +19,9 @@
 
 .searchBar {
   background-image: url('../images/comidas.jpg');
-  color: white;
-  font-size: 1.5em;
+  border: solid black 1px;
+  color:rgb(0, 4, 255);
+  font-size: 1em;
   font-style: italic;
 }
 

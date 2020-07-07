@@ -20,10 +20,13 @@
 }
 
 .card-title {
+  -webkit-text-stroke-color: #000;
+  -webkit-text-stroke-width: 2px;
   border: solid black 1px;
   color: black;
   display: flex;
   font-size: 1.5em;
+  font-size: 2em; color: #fffdd9;
   margin-bottom: 10px;
   position: absolute;
   text-align: center;
@@ -32,7 +35,7 @@
 
 .ButtonSearch {
   background-color: yellow;
-  border-radius: 10%;
+  border: black solid 1px;
   cursor: pointer;
   font-size: 1em;
   width: 30%;
@@ -40,4 +43,23 @@
 
 .backSearch {
   background-image: url('../images/receitas.jpg');
+}
+
+.ytb {
+  display: flex;
+  width: auto;
+}
+
+.ig{
+  background-color: yellow;
+}
+
+.instructions {
+  background-color: rgb(255, 255, 58);
+  font-size: 1em;
+  font-style: italic;
+}
+
+.backDetal{
+  background-image: url('../images/ketchup.jpg');
 }
