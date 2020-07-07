@@ -22,6 +22,7 @@ import {
   ProfilePage,
   CookedRecipesPage,
   FavoriteRecipesPage,
+  NotFoundPage,
 } from './pages';
 import './App.css';
 
@@ -54,6 +55,8 @@ function App() {
           <Route exact path="/perfil" component={ProfilePage} />
           <Route exact path="/receitas-feitas" component={CookedRecipesPage} />
           <Route exact path="/receitas-favoritas" component={FavoriteRecipesPage} />
+          <Route exact path="/receitas-favoritas" component={FavoriteRecipesPage} />
+          <Route component={NotFoundPage} />
         </Switch>
       </Router>
     </Provider>

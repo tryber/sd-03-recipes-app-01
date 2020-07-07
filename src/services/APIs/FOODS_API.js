@@ -34,11 +34,3 @@ export const handleFoodsData = ({
   }, []);
   return obj;
 };
-
-export async function fetchCategoriesApi() {
-  const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
-  const json = await response.json();
-  return response.ok ? Promise.resolve(json) : Promise.reject(json);
-}
-
-export const handleCategoriesData = ({ strCategory }) => ({ category: strCategory });
