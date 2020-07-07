@@ -4,17 +4,21 @@ import PropTypes from 'prop-types';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 import './FavoriteIcon.css';
+import {
+  sendToFavoriteStorage,
+  rmFromFavoriteStorage,
+  takeFavStorage,
+} from '../services/APIs/APIlocalStorage';
 
-function FavoriteIcon({ isFavoriteInit, eat, type }) {
-  const [isFavorite, setIsFavorite] = useState(isFavoriteInit);
+function FavoriteIcon({ eat, type }) {
+  const [isFavorite, setIsFavorite] = useState(
+    takeFavStorage().some((favorite) => Number(favorite.id) === Number(eat.id))
+  );
 
   const handleFavoriteStorage = useCallback((isToSend) => {
     if (isToSend) return sendToFavoriteStorage(eat, type);
     return rmFromFavoriteStorage(eat.id);
   }, [type, eat]);
-
-  const isFavoriteInit = takeFavStorage()
-    .some((favorite) => Number(favorite.id) === Number(eat.id));
 
   const inverteIsFavorite = useCallback(() => {
     setIsFavorite(!isFavorite);
@@ -55,11 +59,6 @@ FavoriteIcon.propTypes = {
     isAlcoholic: PropTypes.string,
   }).isRequired,
   type: PropTypes.oneOf(['food', 'drink']).isRequired,
-};
-
-FavoriteIcon.defaultProps = {
-  handleFavoriteChange: (fav) => console.log(fav),
-  isFavoriteInit: false,
 };
 
 export default FavoriteIcon;

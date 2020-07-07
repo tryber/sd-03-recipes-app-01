@@ -35,20 +35,20 @@ const endRecipe = (type, id) => () => {
 const changeCheckBox = (usedIng, checked, value) => {
   if (checked) return [...usedIng, Number(value)].sort((a, b) => a - b);
   return usedIng.filter((usedIngredient) => usedIngredient !== Number(value));
-}
+};
 
-const renderBtn = (disabled, endRecipe) => (
+const renderBtn = (disabled, onClick) => (
   disabled ?
-    <button
-      data-testid="finish-recipe-btn"
-      disabled
-      onClick={endRecipe}
-    >
-      Finalizar Receita
-    </button>
-    : <Link to="/receitas-feitas">
-        <button data-testid="finish-recipe-btn" onClick={endRecipe}>Finalizar Receita</button>
-      </Link>
+  <button
+    data-testid="finish-recipe-btn"
+    disabled
+    onClick={onClick}
+  >
+    Finalizar Receita
+  </button>
+  : <Link to="/receitas-feitas">
+      <button data-testid="finish-recipe-btn" onClick={onClick}>Finalizar Receita</button>
+    </Link>
 );
 
 const setInProgressUse = (type, id) => (newUsed) => setInProgress(type, id, newUsed);
@@ -56,7 +56,6 @@ const setInProgressUse = (type, id) => (newUsed) => setInProgress(type, id, newU
 function InProcessPage({ id, type }) {
   const [eat, setEat] = useState(null);
   const [{ loading, error }] = useRequisition(fetchAPI(type, id, setEat), [id, type, setEat]);
-  
   const [usedIngredients, setUsedIngredients] = useLocalStorage(
     getInProgress(type)[id] || [],
     setInProgressUse(type, id),
