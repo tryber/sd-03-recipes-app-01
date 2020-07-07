@@ -9,9 +9,9 @@ import FavoriteIcon from './FavoriteIcon';
 
 import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
 
-function DetailsCard({ eat, type }) {
-  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
-  const translate = (word) => ( word === 'food' ? 'comidas' : 'bebidas');
+function DetailsCard({ recipe, type }) {
+  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = recipe;
+  // const translate = (word) => (word === 'food' ? 'comidas' : 'bebidas');
 
   return (
     <div>
@@ -21,7 +21,7 @@ function DetailsCard({ eat, type }) {
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
       <ShareIcon textToCopy={window.location.href} />
-      <FavoriteIcon eat={eat} type={translate(type)} />
+      <FavoriteIcon eat={recipe} type={type === 'food' ? 'comidas' : 'bebidas'} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
@@ -33,7 +33,7 @@ function DetailsCard({ eat, type }) {
       <p data-testid="instructions">{instructions}</p>
       {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
       {Boolean(doneRecipes(id)) ||
-        <Link to={`/${translate(type)}/${id}/in-progress`}>
+        <Link to={`/${type === 'food' ? 'comidas' : 'bebidas'}/${id}/in-progress`}>
           <button
             data-testid="start-recipe-btn"
             className="buttonIniciar"
@@ -45,7 +45,7 @@ function DetailsCard({ eat, type }) {
 }
 
 DetailsCard.propTypes = {
-  eat: PropTypes.shape({
+  recipe: PropTypes.shape({
     id: PropTypes.string.isRequired, // number as string
     name: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
@@ -66,7 +66,7 @@ DetailsCard.propTypes = {
 };
 
 DetailsCard.defaultProps = {
-  eat: { source: null, isAlcoholic: null, origin: '', video: '' },
+  recipe: { source: null, isAlcoholic: null, origin: '', video: '' },
 };
 
 export default DetailsCard;
