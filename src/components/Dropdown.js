@@ -17,7 +17,7 @@ function Dropdown({ areas, filterMode }) {
         onChange={({ target: { value } }) => filterMode(setURL(value))}
         data-testid="explore-by-area-dropdown"
       >
-        <option value="all" data-testid="All-areas-filter">
+        <option value="all" data-testid="All-option">
           All
         </option>
         {areas.map(({ area }) => (
