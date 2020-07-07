@@ -6,7 +6,7 @@ import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API'
 
 const manageState = (loading, drinks, error) => {
   if (loading) return <Loading />;
-  if (error.length > 0) return <h1 data-testid='error-drinks-page'>Something Went Wrong</h1>;
+  if (error.length > 0) return <h1 data-testid="error-drinks-page">Something Went Wrong</h1>;
   if (drinks.length === 1) return <Redirect to={`/bebidas/${drinks[0].id}`} />;
   return false;
 };
@@ -42,7 +42,7 @@ function DrinksPage() {
   return (
     manageState(loading, drinks, error) || (
       <div>
-        <Header titleTag='Bebidas' filterMode={setDrinkFilter} />
+        <Header titleTag="Bebidas" filterMode={setDrinkFilter} />
         <CardFilters categories={categories} filterMode={setDrinkFilter} />
         {drinks.slice(0, 12).map(({ id, name, srcImage }, index) => (
           <Link key={id} to={`/bebidas/${id}`}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Card, Header, Footer, Loading } from '../../components';
-import { Link, Redirect } from 'react-router-dom';
 import { FoodsContext } from '../../contexts/FoodsContext';
 import { fetchFoodsApi } from '../../services/APIs/FOODS_API';
 
@@ -11,11 +11,10 @@ const handleRedirect = (name, setFoodFilter, setRedirect) => {
 };
 
 function ExploreFoodIngredientsPage() {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true); 
   const [ingredients, setIngredients] = useState([]);
   const [redirect, setRedirect] = useState(false);
-  const [{ foodFilter }, { setFoodFilter }] = useContext(FoodsContext);
+  const [, { setFoodFilter }] = useContext(FoodsContext);
 
   useEffect(() => {
     fetchFoodsApi('list.php?i=list')
@@ -30,16 +29,15 @@ function ExploreFoodIngredientsPage() {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
-        setError(err);
+        console.log(err);        
       });
   }, [setLoading]);
 
   if (loading) return <Loading />;
-  if (redirect) return <Redirect to='/comidas' />;
+  if (redirect) return <Redirect to="/comidas" />;
   return (
     <div>
-      <Header titleTag='Explorar Ingredientes' />
+      <Header titleTag="Explorar Ingredientes" />
       {ingredients.slice(0, 12).map(({ name, srcImage }, index) => (
         <button onClick={() => handleRedirect(name, setFoodFilter, setRedirect)}>
           <Card

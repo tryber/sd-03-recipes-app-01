@@ -6,9 +6,10 @@ import { fetchFoodsApi, handleFoodsData } from '../../services/APIs/FOODS_API';
 
 const manageState = (loading, foods, error) => {
   if (loading) return <Loading />;
-  if (error.length > 0) return <h1 data-testid='error-foods-page'>Something Went Wrong</h1>;
-  if (foods.length === 1 && !foods[0].name.includes('Goat'))
+  if (error.length > 0) return <h1 data-testid="error-foods-page">Something Went Wrong</h1>;
+  if (foods.length === 1 && !foods[0].name.includes('Goat')) {
     return <Redirect to={`/comidas/${foods[0].id}`} />;
+  }
   return false;
 };
 
@@ -48,7 +49,7 @@ function ExploreFoodAreaPage() {
   return (
     manageState(loading, foods, error) || (
       <div>
-        <Header titleTag='Comidas' filterMode={setFoodFilter} />
+        <Header titleTag="Comidas" filterMode={setFoodFilter} />
         <Dropdown areas={areas} filterMode={setFoodFilter} />
         {foods.slice(0, 12).map(({ id, name, srcImage }, index) => (
           <Link key={id} to={`/comidas/${id}`}>

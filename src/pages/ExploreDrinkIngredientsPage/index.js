@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Card, Header, Footer, Loading } from '../../components';
 import { Redirect } from 'react-router-dom';
+import { Card, Header, Footer, Loading } from '../../components';
 import { DrinksContext } from '../../contexts/DrinksContext';
 import { fetchDrinkApi } from '../../services/APIs/DRINKS_API';
 
@@ -34,11 +34,11 @@ function ExploreDrinkIngredientsPage() {
   }, [setLoading]);
 
   if (loading) return <Loading />;
-  if (redirect) return <Redirect to='/bebidas' />;
+  if (redirect) return <Redirect to="/bebidas" />;
 
   return (
     <div>
-      <Header titleTag='Explorar Ingredientes' />
+      <Header titleTag="Explorar Ingredientes" />
       {ingredients.slice(0, 12).map(({ name, srcImage }, index) => (
         <button onClick={() => handleRedirect(name, setDrinkFilter, setRedirect)}>
           <Card

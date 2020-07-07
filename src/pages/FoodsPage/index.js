@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Card, CardFilters, Header, Footer, Loading } from '../../components';
 import { FoodsContext } from '../../contexts/FoodsContext';
 import {
-  fetchFoodsApi, 
+  fetchFoodsApi,
   handleFoodsData,
 } from '../../services/APIs/FOODS_API';
 
