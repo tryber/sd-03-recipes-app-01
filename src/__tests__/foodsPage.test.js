@@ -14,6 +14,8 @@ const clean = () => {
   cleanup();
 };
 
+window.alert = () => console.log();
+
 const checkFirstTwelveRecipes = (recipes, queryByTestId) => {
   const recipeType = 'Meal';
 
