@@ -9,7 +9,8 @@ import {
   fetchCategoriesApi,
   handleCategoriesData,
 } from '../../services/APIs/DRINKS_API';
-
+=======
+import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API';
 const manageState = (loading, drinks, error) => {
   if (loading) return <Loading />;
   if (error.length > 0) return <h1 data-testid="error-drinks-page">Something Went Wrong</h1>;
@@ -34,9 +35,9 @@ function DrinksPage() {
   }, [setDrinks, setLoading, drinkFilter]);
 
   useEffect(() => {
-    fetchCategoriesApi()
+    fetchDrinkApi('list.php?c=list')
       .then(({ drinks: drks }) =>
-        setCategories(drks.map((category) => handleCategoriesData(category))),
+        setCategories(drks.map(({ strCategory: category }) => ({ category }))),
       )
       .then(() => setLoading(false))
       .catch((err) => {
@@ -49,17 +50,12 @@ function DrinksPage() {
     manageState(loading, drinks, error) || (
       <div className="Drinksback">
         <Header titleTag="Bebidas" filterMode={setDrinkFilter} />
-        <CardFilters
-          categories={categories}
-          filterMode={setDrinkFilter}
-        />
-        {drinks
-          .slice(0, 12)
-          .map(({ id, name, srcImage }, index) => (
-            <Link key={id} to={`/bebidas/${id}`}>
-              <Card name={name} index={index} srcImage={srcImage} />
-            </Link>
-          ))}
+        <CardFilters categories={categories} filterMode={setDrinkFilter} />
+        {drinks.slice(0, 12).map(({ id, name, srcImage }, index) => (
+          <Link key={id} to={`/bebidas/${id}`}>
+            <Card name={name} index={index} srcImage={srcImage} />
+          </Link>
+        ))}
         <Footer />
       </div>
     )

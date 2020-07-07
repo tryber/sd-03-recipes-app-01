@@ -1,43 +1,27 @@
-import React, { useContext, useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 import './Card.css';
 
 import Card from './Card';
+import ShareIcon from './ShareIcon';
+import FavoriteIcon from './FavoriteIcon';
 
 import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
 
-import ActionsBar from './ActionsBar';
-
-import { FoodsContext } from '../contexts/FoodsContext';
-
-function StoreRecipe(id, ingredients, type) {
-  const newStorage = {
-    ...getInProgress(),
-    [type === 'food' ? 'meals' : 'cocktails']: { ...getInProgress(type), [id]: ingredients },
-  };
-  localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
-}
-
 function DetailsCard({ eat, type }) {
-  const [, { setFoodInproggress }] = useContext(FoodsContext);
   const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
-
-  const startRecipe = useCallback(() => {
-    setFoodInproggress(eat);
-    StoreRecipe(eat.id, eat.ingredients, type);
-  }, [eat, type, setFoodInproggress]);
 
   return (
     <div className="backDetal">
       <Card
-        key={id}
         name={name}
         srcImage={srcImage}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
-      <ActionsBar eat={eat} type={type} />
+      <ShareIcon textToCopy={window.location.href} />
+      <FavoriteIcon eat={eat} type={type} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
@@ -53,7 +37,6 @@ function DetailsCard({ eat, type }) {
           <button
             data-testid="start-recipe-btn"
             className="buttonIniciar"
-            onClick={startRecipe}
           >{getInProgress(type)[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
         </Link>
       }
