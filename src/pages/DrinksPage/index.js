@@ -4,8 +4,7 @@ import { Card, CardFilters, Header, Footer, Loading } from '../../components';
 import { DrinksContext } from '../../contexts/DrinksContext';
 import {
   fetchDrinkApi,
-  handleDrinksData,
-  fetchCategoriesApi,
+  handleDrinksData,  
   handleCategoriesData,
 } from '../../services/APIs/DRINKS_API';
 
@@ -33,7 +32,7 @@ function DrinksPage() {
   }, [setDrinks, setLoading, drinkFilter]);
 
   useEffect(() => {
-    fetchCategoriesApi()
+    fetchDrinkApi('list.php?c=list')
       .then(({ drinks: drks }) =>
         setCategories(drks.map((category) => handleCategoriesData(category))),
       )
