@@ -4,9 +4,7 @@ import { Card, CardFilters, Header, Footer, Loading } from '../../components';
 import { FoodsContext } from '../../contexts/FoodsContext';
 import {
   fetchFoodsApi,
-  fetchCategoriesApi,
   handleFoodsData,
-  handleCategoriesData,
 } from '../../services/APIs/FOODS_API';
 
 const manageState = (loading, foods, error) => {
@@ -33,8 +31,8 @@ function FoodsPage() {
   }, [setFoods, setLoading, foodFilter]);
 
   useEffect(() => {
-    fetchCategoriesApi()
-      .then(({ meals }) => meals.map((category) => handleCategoriesData(category)))
+    fetchFoodsApi('list.php?c=list')
+      .then(({ meals }) => meals.map(({ strCategory: category }) => ({ category })))
       .then((arr) => { setCategories(arr); setLoading(false); })
       .catch((err) => { console.log(err); setError(err); });
   }, [setLoading]);
