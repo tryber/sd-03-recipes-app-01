@@ -11,7 +11,7 @@ import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
 
 function DetailsCard({ recipe, type }) {
   const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = recipe;
-  // const translate = (word) => (word === 'food' ? 'comidas' : 'bebidas');
+  const translate = (word) => (word === 'food' ? 'comidas' : 'bebidas');
 
   return (
     <div>
@@ -21,7 +21,7 @@ function DetailsCard({ recipe, type }) {
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
       <ShareIcon textToCopy={window.location.href} />
-      <FavoriteIcon eat={recipe} type={type === 'food' ? 'comidas' : 'bebidas'} />
+      <FavoriteIcon eat={recipe} type={translate(type)} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
@@ -33,7 +33,7 @@ function DetailsCard({ recipe, type }) {
       <p data-testid="instructions">{instructions}</p>
       {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
       {Boolean(doneRecipes(id)) ||
-        <Link to={`/${type === 'food' ? 'comidas' : 'bebidas'}/${id}/in-progress`}>
+        <Link to={`/${translate(type)}/${id}/in-progress`}>
           <button
             data-testid="start-recipe-btn"
             className="buttonIniciar"
