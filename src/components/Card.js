@@ -8,7 +8,7 @@ function Card({ srcImage, name, index, testid, show }) {
       className={`card ${show ? '' : 'card-invisible'}`}
       data-testid={testid.title || `${index}-recipe-card`}
     >
-      <h3 className="card-title" data-testid={`${index}-card-name`}>
+      <h3 className="card-title cssNew" data-testid={`${index}-card-name`}>
         {name}
       </h3>
       <img
