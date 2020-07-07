@@ -17,13 +17,14 @@ const Header = ({ titleTag, filterMode }) => {
         </Link>
         <h2 data-testid="page-title">{titleTag}</h2>
         { filterMode ? (
-          <img
-            alt="search icon"
-            className="searchButton"
-            data-testid="search-top-btn"
-            src={searchIcon}
-            onClick={() => setDisplaySearch(!displaySearch)}
-          />
+          <button onClick={() => setDisplaySearch((dplSearch) => !dplSearch)}>
+            <img
+              alt="search icon"
+              className="searchButton"
+              data-testid="search-top-btn"
+              src={searchIcon}
+            />
+          </button>
         ) : <div />
         }
       </div>
