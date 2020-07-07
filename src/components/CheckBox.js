@@ -1,34 +1,27 @@
-import React, { useContext } from 'react';
-import { FoodsContext } from '../contexts/FoodsContext';
-import Card from '../components/Card';
+import React from 'react';
+import PropTypes from 'prop-types';
+import './CheckBox.css';
 
-function ListaIng() {
-  const [{ foodInproggress }] = useContext(FoodsContext);
-
-  const {
-    id,
-    name,
-    srcImage,
-    ingredients,
-  } = foodInproggress;
-
+function CheckBox({ item, checked, index, handleChange }) {
   return (
-    <div>
-      <Card
-        key={id}
-        name={name}
-        srcImage={srcImage}
-      />
-      <ul>{ingredients.map((el, index) => (
-        <label htmlFor={el.ingredient} key={el.ingredient}>
-          <input data-testid={`${index}-ingredient-step`} type="checkbox" id={el.ingredient} />
-          {el.ingredient}
-        </label>
-      ))}
-      </ul>
-      <button data-testid="finish-recipe-btn">Finalizar Receita</button>
-    </div>
+    <label
+      data-testid={`${index}-ingredient-step`}
+      className={checked ? 'line-through' : ''}
+      htmlFor={item}
+    >
+      <input type="checkbox" id={item} checked={checked} value={index} onChange={handleChange} />
+      {item}
+    </label>
   );
 }
 
-export default ListaIng;
+CheckBox.propTypes = {
+  item: PropTypes.string.isRequired,
+  checked: PropTypes.bool,
+  handleChange: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+};
+
+CheckBox.defaultProps = { checked: false };
+
+export default CheckBox;

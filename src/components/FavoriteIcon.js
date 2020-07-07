@@ -1,17 +1,32 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
+
+import { eatShape, typeShape } from '../services/APIs/shapes';
+
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 import './FavoriteIcon.css';
+import {
+  sendToFavoriteStorage,
+  rmFromFavoriteStorage,
+  takeFavStorage,
+} from '../services/APIs/APIlocalStorage';
 
-function FavoriteIcon({ handleFavoriteChange, isFavoriteInit }) {
-  const [isFavorite, setIsFavorite] = useState(isFavoriteInit);
+function FavoriteIcon({ eat, type }) {
+  const [isFavorite, setIsFavorite] = useState(
+    takeFavStorage().some((favorite) => Number(favorite.id) === Number(eat.id)),
+  );
+
+  const handleFavoriteStorage = useCallback((isToSend) => {
+    if (isToSend) return sendToFavoriteStorage(eat, type);
+    return rmFromFavoriteStorage(eat.id);
+  }, [type, eat]);
 
   const toggleFavorite = useCallback(() => {
     setIsFavorite(!isFavorite);
   }, [isFavorite, setIsFavorite]);
 
-  useEffect(() => { handleFavoriteChange(isFavorite); }, [isFavorite, handleFavoriteChange]);
+  useEffect(() => { handleFavoriteStorage(isFavorite); }, [isFavorite, handleFavoriteStorage]);
 
   const src = isFavorite ? blackHeart : whiteHeart;
   const alt = `Item is ${isFavorite ? '' : 'not'} favorited`;
@@ -28,13 +43,8 @@ function FavoriteIcon({ handleFavoriteChange, isFavoriteInit }) {
 }
 
 FavoriteIcon.propTypes = {
-  handleFavoriteChange: PropTypes.func,
-  isFavoriteInit: PropTypes.bool,
-};
-
-FavoriteIcon.defaultProps = {
-  handleFavoriteChange: () => true,
-  isFavoriteInit: false,
+  eat: PropTypes.shape(eatShape).isRequired,
+  type: typeShape.isRequired,
 };
 
 export default FavoriteIcon;
