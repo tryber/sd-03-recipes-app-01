@@ -5,7 +5,7 @@ import shareIcon from '../images/shareIcon.svg';
 import './ShareIcon.css';
 
 
-function ShareIcon({id , type}) {
+function ShareIcon({ id, type }) {
   const [copying, setCopying] = useState(false);
   const makeLink = () => (`/${type}s/${id}`);
   const urlParams = makeLink(id, type);
@@ -31,7 +31,8 @@ function ShareIcon({id , type}) {
 }
 
 ShareIcon.propTypes = {
-  urlParams: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default ShareIcon;

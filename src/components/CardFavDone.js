@@ -15,7 +15,6 @@ function CardFavDone({
   category,
   alcoholicOrNot,
 }) {
-
   return (
     <div key={id} className="card-fav-done">
       <Link to={`/${type}s/${id}`}>
@@ -32,10 +31,10 @@ function CardFavDone({
         </Link>
         <div className="action-bar">
           <img
-            alt='remove from favorites'
+            alt="remove from favorites"
             src={blackHeart}
-            onClick={() => rmFromFavoriteStorage(id)}>
-          </img>
+            onClick={() => rmFromFavoriteStorage(id)}
+          />
           <ShareIcon id={id} type={type} />
         </div>
       </div>
