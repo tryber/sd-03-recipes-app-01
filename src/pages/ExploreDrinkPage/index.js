@@ -16,7 +16,7 @@ function ExploreDrinkPage() {
   return (
     <div>
       <Header titleTag="Explorar Bebidas" />
-      <Link to='/explorar/bebidas/ingredientes'>
+      <Link to="/explorar/bebidas/ingredientes">
         <button data-testid="explore-by-ingredient">Por Ingredientes</button>
       </Link>
       <button type="button" data-testid="explore-surprise" onClick={() => handleRedirect(setId)}>

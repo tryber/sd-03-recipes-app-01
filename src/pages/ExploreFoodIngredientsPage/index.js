@@ -11,7 +11,7 @@ const handleRedirect = (name, setFoodFilter, setRedirect) => {
 };
 
 function ExploreFoodIngredientsPage() {
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [ingredients, setIngredients] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [, { setFoodFilter }] = useContext(FoodsContext);
@@ -29,7 +29,7 @@ function ExploreFoodIngredientsPage() {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);        
+        console.log(err);     
       });
   }, [setLoading]);
 
