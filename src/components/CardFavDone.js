@@ -33,7 +33,7 @@ function CardFavDone({
             className="unfavoriteBtn"
             onClick={() => rmFromFavoriteStorage(id)}
           />
-          <ShareIcon id={id} type={type} />
+          <ShareIcon textToCopy={`${window.location.host}/${type}s/${id}`} />
         </div>
       </div>
     </div>

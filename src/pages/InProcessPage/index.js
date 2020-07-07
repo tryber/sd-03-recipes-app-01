@@ -29,7 +29,7 @@ const fetchAPI = async (type, id, setEat) => {
 
 const endRecipe = (type, id) => () => {
   rmInProgress(type, id);
-  setDoneRecipeStorage(id);
+  setDoneRecipeStorage(id, type);
 };
 
 const changeCheckBox = (usedIng, checked, value) => {
