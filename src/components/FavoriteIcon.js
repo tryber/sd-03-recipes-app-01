@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
+import {
+  eatShape,
+  typeShape,
+} from '../services/APIs/shapes';
+
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 import './FavoriteIcon.css';
@@ -41,24 +46,8 @@ function FavoriteIcon({ eat, type }) {
 }
 
 FavoriteIcon.propTypes = {
-  eat: PropTypes.shape({
-    id: PropTypes.string.isRequired, // number as string
-    name: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
-    instructions: PropTypes.string.isRequired,
-    origin: PropTypes.string,
-    video: PropTypes.string,
-    srcImage: PropTypes.string.isRequired,
-    source: PropTypes.string,
-    ingredients: PropTypes.arrayOf(
-      PropTypes.shape({
-        ingredient: PropTypes.string.isRequired,
-        measure: PropTypes.string,
-      }).isRequired,
-    ).isRequired,
-    isAlcoholic: PropTypes.string,
-  }).isRequired,
-  type: PropTypes.oneOf(['food', 'drink']).isRequired,
+  eat: PropTypes.shape(eatShape).isRequired,
+  type: typeShape.isRequired,
 };
 
 export default FavoriteIcon;
