@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';

@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 import { CheckBox, Card, FavoriteIcon, ShareIcon } from '../../components';
-
 
 import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API';
 import { fetchFoodsApi, handleFoodsData } from '../../services/APIs/FOODS_API';
@@ -19,7 +19,6 @@ import {
   rmInProgress,
   setDoneRecipeStorage,
 } from '../../services/APIs/APIlocalStorage';
-import { Redirect } from 'react-router-dom';
 
 const fetchAPI = async (type, id, setEat) => {
   if (type === 'food') {
@@ -27,8 +26,8 @@ const fetchAPI = async (type, id, setEat) => {
     .then(({ meals }) => setEat(handleFoodsData(meals[0])));
   } else if (type === 'drink') {
     return fetchDrinkApi(`lookup.php?i=${id}`)
-    .then(({ drinks }) => setEat(handleDrinksData(drinks[0])))
-  }
+    .then(({ drinks }) => setEat(handleDrinksData(drinks[0])));
+  } return Promise.reject(`type ${type} insn't valid`);
 };
 
 function InProcessPage({ id, type }) {
@@ -62,7 +61,7 @@ function InProcessPage({ id, type }) {
 
   if (error) return <h1>Aconteceu algo errado em detalhes de bebidas em progresso</h1>;
   if (loading) return <h1>Carrgando detalhes de bebidas em progresso...</h1>;
-  if (redirect) return <Redirect to="receitas-feitas" />
+  if (redirect) return <Redirect to="receitas-feitas" />;
 
   const { name, srcImage, category, ingredients, instructions, isAlcoholic } = eat;
   return (

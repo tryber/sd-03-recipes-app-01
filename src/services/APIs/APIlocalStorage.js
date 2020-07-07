@@ -80,7 +80,7 @@ export const rmInProgress = (type, id) => {
     return acc;
   }, {});
   localStorage.setItem('inProgressRecipes', JSON.stringify({ ...current, [key]: newPart }));
-}
+};
 
 export const doneRecipes = (id) => {
   const stored = JSON.parse(localStorage.getItem('doneRecipes')) || [];
@@ -108,4 +108,4 @@ export const setDoneRecipeStorage = ({
     tags: [],
   };
   localStorage('doneRecipes', JSON.parse([...doneRecipes(), thisFood]));
-}
+};
