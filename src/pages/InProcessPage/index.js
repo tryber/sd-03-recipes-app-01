@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { CheckBox, Card, FavoriteIcon, ShareIcon } from '../../components';
 
@@ -30,26 +30,43 @@ const fetchAPI = async (type, id, setEat) => {
   } return Promise.reject(`type ${type} insn't valid`);
 };
 
+const endRecipe = (type, id) => {
+  rmInProgress(type, id);
+  setDoneRecipeStorage(id);
+};
+
+const changeCheckBox = (usedIng, checked, value) => {
+  if (checked) return [...usedIng, Number(value)].sort((a, b) => a - b);
+  return usedIng.filter((usedIngredient) => usedIngredient !== Number(value));
+}
+
+const renderBtn = (disabled, endRecipe) => (
+  disabled ?
+    <button
+      data-testid="finish-recipe-btn"
+      disabled
+      onClick={endRecipe}
+    >
+      Finalizar Receita
+    </button>
+    : <Link to="/receitas-feitas">
+        <button data-testid="finish-recipe-btn" onClick={endRecipe}>Finalizar Receita</button>
+      </Link>
+);
+
 function InProcessPage({ id, type }) {
-  const [redirect, setRedirect] = useState(false);
   const [eat, setEat] = useState(null);
-  const fetchDrink = useCallback(() => fetchAPI(type, id, setEat), [id, type, setEat]);
-  const [{ loading, error }] = useRequisition(fetchDrink);
-  const endRecipe = useCallback(() => {
-    rmInProgress(type, id);
-    setDoneRecipeStorage(id);
-    setRedirect(true);
-  }, []);
+  const [{ loading, error }] = useRequisition(useCallback(() => (
+    fetchAPI(type, id, setEat), [id, type, setEat])
+  ));
+  
   const [usedIngredients, setUsedIngredients] = useLocalStorage(
     getInProgress(type)[id] || [],
     (newUsed) => setInProgress(type, id, newUsed),
   );
 
   const toogleCheckbox = useCallback(({ target: { value, checked } }) => {
-    setUsedIngredients((usedIng) => {
-      if (checked) return [...usedIng, Number(value)].sort((a, b) => a - b);
-      return usedIng.filter((usedIngredient) => usedIngredient !== Number(value));
-    });
+    setUsedIngredients((usedIng) => changeCheckBox(usedIng, checked, value));
   }, [setUsedIngredients]);
 
   const favoriteStorage = useCallback((isToSend) => {
@@ -61,7 +78,6 @@ function InProcessPage({ id, type }) {
 
   if (error) return <h1>Aconteceu algo errado em detalhes de bebidas em progresso</h1>;
   if (loading) return <h1>Carrgando detalhes de bebidas em progresso...</h1>;
-  if (redirect) return <Redirect to="receitas-feitas" />;
 
   const { name, srcImage, category, ingredients, instructions, isAlcoholic } = eat;
   return (
@@ -82,13 +98,7 @@ function InProcessPage({ id, type }) {
           />
         ))}
       </div>
-      <button
-        data-testid="finish-recipe-btn"
-        disabled={usedIngredients.length < ingredients.length}
-        onClick={endRecipe}
-      >
-        Finallizar Receita
-      </button>
+      {renderBtn(usedIngredients.length < ingredients.length, () => endRecipe(type, id))}
     </div>
   );
 }
