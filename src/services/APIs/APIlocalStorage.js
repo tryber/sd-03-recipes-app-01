@@ -85,7 +85,7 @@ export const doneRecipes = (id) => {
 };
 
 export const setDoneRecipeStorage = (
-  { id, origin, category, isAlcoholic, name, srcImage: image, }, type
+  { id, origin, category, isAlcoholic, name, srcImage: image }, type,
 ) => {
   const thisFood = {
     id,
