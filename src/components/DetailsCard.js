@@ -40,8 +40,6 @@ function DetailsCard({ recipe, type }) {
           </li>
         ))}
       </ul>
-<<<<<<< HEAD
-=======
       <p className="instructions" data-testid="instructions">{instructions}</p>
       {video && <div data-testid="video"><p className="ytb"><ReactPlayer url={video} /></p></div>}
       {Boolean(doneRecipes(id)) ||
@@ -52,7 +50,6 @@ function DetailsCard({ recipe, type }) {
           >{getInProgress(type)[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
         </Link>
       }
->>>>>>> 4a2f23fdef02bae38955b61ccf1e50ec9091f16c
       <p data-testid="instructions">{instructions}</p>
       {video && <div data-testid="video" className="ytb"><ReactPlayer url={video} /></div>}
       {beginRecipeBtn(id, type)}
