@@ -1,4 +1,4 @@
-export const takeFavStorage = () => JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+export const getFavStorage = () => JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
 
 export const translateType = (type) => {
   switch (type) {
@@ -7,7 +7,7 @@ export const translateType = (type) => {
       return type;
     case 'food': return 'comida';
     case 'drink': return 'bebida';
-    default: return 'type is not valid';
+    default: return `type ${type} is not valid`;
   }
 };
 
@@ -28,12 +28,12 @@ export const sendToFavoriteStorage = ({
     name,
     image,
   };
-  const favoriteList = takeFavStorage();
+  const favoriteList = getFavStorage();
   localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteList, thisFood]));
 };
 
 export const rmFromFavoriteStorage = (id) => {
-  const favorite = takeFavStorage();
+  const favorite = getFavStorage();
   const oficialFavoriteList = favorite.filter((fav) => Number(fav.id) !== Number(id));
   localStorage.setItem('favoriteRecipes', JSON.stringify(oficialFavoriteList));
 };
@@ -74,12 +74,8 @@ export const setInProgress = (type, id, value) => {
 
 export const rmInProgress = (type, id) => {
   const current = getInProgress();
-  const key = sin(type);
-  const newPart = Object.entries(current[key]).reduce((acc, [elem, value]) => {
-    if (id !== elem) return acc[elem] + value;
-    return acc;
-  }, {});
-  localStorage.setItem('inProgressRecipes', JSON.stringify({ ...current, [key]: newPart }));
+  delete current[sin(type)][id];
+  localStorage.setItem('inProgressRecipes', JSON.stringify(current));
 };
 
 export const doneRecipes = (id) => {
@@ -88,14 +84,9 @@ export const doneRecipes = (id) => {
   return stored;
 };
 
-export const setDoneRecipeStorage = ({
-  id,
-  origin,
-  category,
-  isAlcoholic,
-  name,
-  srcImage: image,
-}, type) => {
+export const setDoneRecipeStorage = (
+  { id, origin, category, isAlcoholic, name, srcImage: image }, type,
+) => {
   const thisFood = {
     id,
     type: translateType(type),
@@ -107,5 +98,5 @@ export const setDoneRecipeStorage = ({
     doneDate: new Date(),
     tags: [],
   };
-  localStorage('doneRecipes', JSON.parse([...doneRecipes(), thisFood]));
+  localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes(), thisFood]));
 };

@@ -2,6 +2,12 @@
   background-image: url('../images/comidas.jpg');
   bottom: 0;
   display: flex;
+  height: 58px;
+  justify-content: space-around;
+  left: 30%;
   position: fixed;
-  transform: translateX(18vh);
+}
+
+.footer img {
+  width: 40px;
 }

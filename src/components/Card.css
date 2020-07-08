@@ -35,7 +35,7 @@
 }
 
 .ButtonSearch {
-  background-color:greenyellow;
+  background-color: greenyellow;
   border: black solid 1px;
   cursor: pointer;
   font-size: 1em;
@@ -47,8 +47,8 @@
 }
 
 .ytb {
+  height: 60vh;
   display: flex;
-  width: auto;
 }
 
 .ig {
@@ -61,6 +61,6 @@
   font-style: italic;
 }
 
-.backDetal {
-  background-image: url('../images/ketchup.jpg');
+.buttonIniciar {
+  width: 300px;
 }
