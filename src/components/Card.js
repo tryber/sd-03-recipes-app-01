@@ -16,7 +16,11 @@ function Card({ srcImage, name, index, testid, show }) {
         className="card-img"
         data-testid={testid.img || `${index}-card-img`}
         src={srcImage}
+<<<<<<< HEAD
         width='100%'
+=======
+        width="100%"
+>>>>>>> 4a2f23fdef02bae38955b61ccf1e50ec9091f16c
       />
     </div>
 
