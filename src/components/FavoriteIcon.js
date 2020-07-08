@@ -12,7 +12,7 @@ import {
   getFavStorage,
 } from '../services/APIs/APIlocalStorage';
 
-function FavoriteIcon({ recipe, type, testid, onFavorite }) {
+function FavoriteIcon({ recipe, type }) {
   const [isFavorite, setIsFavorite] = useState(
     getFavStorage().some((favorite) => Number(favorite.id) === Number(recipe.id)),
   );
@@ -22,15 +22,13 @@ function FavoriteIcon({ recipe, type, testid, onFavorite }) {
     return rmFromFavoriteStorage(recipe.id);
   }, [type, recipe]);
 
-  
   const toggleFavorite = useCallback(() => {
     setIsFavorite(!isFavorite);
   }, [isFavorite, setIsFavorite]);
-  
+
   useEffect(() => {
-    if (onFavorite) onFavorite(isFavorite);
     handleFavoriteStorage(isFavorite);
-  }, [isFavorite, handleFavoriteStorage, onFavorite]);
+  }, [isFavorite, handleFavoriteStorage]);
 
   const src = isFavorite ? blackHeart : whiteHeart;
   const alt = `Item is ${isFavorite ? '' : 'not'} favorited`;
@@ -39,7 +37,7 @@ function FavoriteIcon({ recipe, type, testid, onFavorite }) {
     <button className="hidden-button" onClick={toggleFavorite}>
       <img
         alt={alt}
-        data-testid={testid}
+        data-testid={"favorite-btn"}
         src={src}
       />
     </button>
@@ -50,7 +48,5 @@ FavoriteIcon.propTypes = {
   recipe: PropTypes.shape(eatShape).isRequired,
   type: typeShape.isRequired,
 };
-
-FavoriteIcon.defaultProps = { testid: "favorite-btn" };
 
 export default FavoriteIcon;

@@ -12,9 +12,9 @@ function FavoriteRecipesPage() {
   const [filter, setFilter] = useState('');
   const [rmId, setRmId] = useState(0);
 
-  useEffect(() => { 
+  useEffect(() => {
     setResults((res) => res.filter((fav) => Number(fav.id) !== Number(rmId)));
-  }, [rmId, setResults])
+  }, [rmId, setResults]);
 
   return (
     <div className="fav-list">
@@ -25,7 +25,7 @@ function FavoriteRecipesPage() {
       <div className="fav-grid">
         {(filter === '' ? results : results.filter((elem) => elem.type === filter))
           .map((e, index) => (
-            <CardFavDone recipe={e} key={e.id} index={index} rmRecipe={setRmId}/>
+            <CardFavDone recipe={e} key={e.id} index={index} rmRecipe={setRmId} />
         ))}
       </div>
     </div>

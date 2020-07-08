@@ -23,7 +23,7 @@ const addExtraInfo = (tags, doneDate, index) => (
 );
 
 function CardFavDone({ recipe, mode, index, rmRecipe }) {
-  const { id, type, area, name, image, category, alcoholicOrNot, doneDate, tags, } = recipe;
+  const { id, type, area, name, image, category, alcoholicOrNot, doneDate, tags } = recipe;
   return (
     <div className="card-fav-done">
       <Link to={`/${type}s/${id}`}>
@@ -75,11 +75,13 @@ CardFavDone.propTypes = {
   }),
   index: PropTypes.number.isRequired,
   mode: PropTypes.string,
+  rmRecipe: PropTypes.func,
 };
 
 CardFavDone.defaultProps = {
   index: null,
   show: true,
+  rmRecipe: null,
 };
 
 export default CardFavDone;

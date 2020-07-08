@@ -44,6 +44,6 @@ Header.propTypes = {
   titleTag: PropTypes.string.isRequired,
 };
 
-Header.defultProps = { filterMode: false };
+Header.defaultProps = { filterMode: false };
 
 export default Header;
