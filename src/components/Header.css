@@ -9,7 +9,16 @@
 }
 
 .searchButton {
+<<<<<<< HEAD
   background-color: #c4c4c4;
+=======
+<<<<<<< HEAD
+  background-color: rgba(10,23,55,0.0);
+  background-image: url('../images/searchIcon.svg');
+=======
+  background-color: #c4c4c4;
+>>>>>>> c2bdab2df9974a803118bc50e73df408d4da33af
+>>>>>>> master
   border: none;
   cursor: pointer;
   height: 2.3em;

@@ -1,12 +1,24 @@
 .card {
   border: 0.5em solid white;
   border-radius: 10%;
+  border-radius: 10%;
+  border: 2px solid black;
+  border-radius: 6px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   display: inline-block;
   height: 20vh;
   margin: 1em 1em auto auto;
   overflow: hidden;
   position: relative;
   width: 20vh;
+  width: 30vh;
+  height: 30vh;
+}
+
+.card :hover {
+  display: flex;
+  transform: rotateY(190deg);
+  transition-duration: 2s;
 }
 
 .card-invisible {
@@ -26,6 +38,27 @@
 .cssNew {
   -webkit-text-stroke-color: black;
   -webkit-text-stroke-width: 2px;
+  width: 161px;
+}
+
+.card-title {
+  align-items: flex-end;
+  display: flex;
+  font-size: 18px;
+  line-height: 21px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+.card-img {
+  border-radius: 6px 6px 0 0;
+  height: 109px;
+  width: 161px;
+}
+
+.card-invisible {
+  display: none;
 }
 
 .ButtonSearch {

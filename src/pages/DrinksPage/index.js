@@ -2,8 +2,22 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Card, CardFilters, Header, Footer, Loading } from '../../components';
 import { DrinksContext } from '../../contexts/DrinksContext';
+<<<<<<< HEAD
 import './Drinks.css';
 import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API';
+=======
+<<<<<<< HEAD
+import './Drinks.css';
+import {
+  fetchDrinkApi,
+  handleDrinksData,
+  fetchCategoriesApi,
+  handleCategoriesData,
+} from '../../services/APIs/DRINKS_API';
+=======
+import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API';
+>>>>>>> c2bdab2df9974a803118bc50e73df408d4da33af
+>>>>>>> master
 
 const manageState = (loading, drinks, error) => {
   if (loading) return <Loading />;
