@@ -17,7 +17,7 @@ const Header = ({ titleTag, filterMode }) => {
         </Link>
         <h2 data-testid="page-title">{titleTag}</h2>
         { filterMode ? (
-          <button onClick={() => setDisplaySearch((dplSearch) => !dplSearch)}>
+          <button className="hidden-button" onClick={() => setDisplaySearch((dplSch) => !dplSch)}>
             <img
               alt="search icon"
               className="searchButton"

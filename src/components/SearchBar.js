@@ -78,7 +78,7 @@ function SearchBar({ setFilter }) {
 }
 
 SearchBar.propTypes = {
-  setFilter: PropTypes.string.isRequired,
+  setFilter: PropTypes.func.isRequired,
 };
 
 export default SearchBar;
