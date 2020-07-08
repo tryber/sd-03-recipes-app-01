@@ -26,7 +26,9 @@ function FavoriteIcon({ recipe, type }) {
     setIsFavorite(!isFavorite);
   }, [isFavorite, setIsFavorite]);
 
-  useEffect(() => { handleFavoriteStorage(isFavorite); }, [isFavorite, handleFavoriteStorage]);
+  useEffect(() => {
+    handleFavoriteStorage(isFavorite);
+  }, [isFavorite, handleFavoriteStorage]);
 
   const src = isFavorite ? blackHeart : whiteHeart;
   const alt = `Item is ${isFavorite ? '' : 'not'} favorited`;

@@ -63,7 +63,7 @@ function InProcessPage({ id, type }) {
         name={name}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
-      <ShareIcon textToCopy={`${window.location.href.slice(0, -12)}`} />
+      <ShareIcon textToCopy={`${window.location.href.slice(0, -12)}`} testid="share-btn" />
       <FavoriteIcon recipe={recipe} type={type} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <p data-testid="instructions">{instructions}</p>

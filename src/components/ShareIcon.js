@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 import './ShareIcon.css';
 
-function ShareIcon({ textToCopy, index }) {
+function ShareIcon({ textToCopy, testid }) {
   const [copying, setCopying] = useState(false);
   const enableCopy = useCallback(() => { setCopying(true); }, []);
   const disableCopy = useCallback(() => { setCopying(false); }, []);
@@ -14,18 +14,17 @@ function ShareIcon({ textToCopy, index }) {
       navigator.clipboard.writeText(textToCopy)
         .catch((err) => console.log(err));
     }
-  }, [copying, setCopying]);
+  }, [copying, setCopying, textToCopy]);
 
   return (
     <button
       className="tooltip hidden-button"
       onClick={enableCopy}
       onMouseOut={disableCopy}
-      data-testid={`${index}-horizontal-share-btn`}
     >
       {copying
         ? <p>Link copiado!</p>
-        : <img data-testid="share-btn" src={shareIcon} alt="click to copy the link" />
+        : <img data-testid={testid} src={shareIcon} alt="click to copy the link" />
       }
       {copying || <span className="tooltiptext">Copiar Link</span>}
     </button>
@@ -33,8 +32,12 @@ function ShareIcon({ textToCopy, index }) {
 }
 
 ShareIcon.propTypes = {
-  index: PropTypes.number.isRequired,
   textToCopy: PropTypes.string.isRequired,
+  testid: PropTypes.string,
+};
+
+ShareIcon.defaultProps = {
+  testid: '',
 };
 
 export default ShareIcon;

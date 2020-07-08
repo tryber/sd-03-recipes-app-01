@@ -2,13 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ShareIcon from './ShareIcon';
+import blackHeart from '../images/blackHeartIcon.svg';
 import './CardFavDone.css';
-import { rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
 
 const addExtraInfo = (tags, doneDate, index) => (
   <div>
     <p data-testid={`${index}-horizontal-done-date`}>
-      Feita em: {new Date(doneDate).toLocaleDateString()}
+      Feita em: {doneDate}
     </p>
     {tags.map((tag) =>
       <span
@@ -22,19 +22,8 @@ const addExtraInfo = (tags, doneDate, index) => (
   </div>
 );
 
-function CardFavDone({
-  id,
-  type,
-  area,
-  name,
-  image,
-  category,
-  alcoholicOrNot,
-  doneDate,
-  tags,
-  mode,
-  index,
-}) {
+function CardFavDone({ recipe, mode, index, rmRecipe }) {
+  const { id, type, area, name, image, category, alcoholicOrNot, doneDate, tags } = recipe;
   return (
     <div className="card-fav-done">
       <Link to={`/${type}s/${id}`}>
@@ -58,15 +47,14 @@ function CardFavDone({
         <div className="action-bar">
           {mode === 'done'
           ? addExtraInfo(tags, doneDate, index)
-          : (
-            <button
-              className="unfavoriteBtn"
-              data-testid={`${index}-horizontal-favorite-btn`}
-              onClick={() => rmFromFavoriteStorage(id)}
-            />
-            )
+          : <button className="unfavoriteBtn hidden-button" onClick={() => rmRecipe(id)}>
+            <img src={blackHeart} alt="favorited Icon" data-testid={`${index}-horizontal-favorite-btn`} />
+          </button>
           }
-          <ShareIcon textToCopy={`${window.location.host}/${type}/${id}`} />
+          <ShareIcon
+            testid={`${index}-horizontal-share-btn`}
+            textToCopy={`${window.location.origin}/${type}s/${id}`}
+          />
         </div>
       </div>
     </div>
@@ -74,22 +62,26 @@ function CardFavDone({
 }
 
 CardFavDone.propTypes = {
-  id: PropTypes.string.isRequired,
+  recipe: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    area: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    doneDate: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    alcoholicOrNot: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }),
   index: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  area: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  doneDate: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  alcoholicOrNot: PropTypes.string.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   mode: PropTypes.string,
+  rmRecipe: PropTypes.func,
 };
 
 CardFavDone.defaultProps = {
   index: null,
   show: true,
+  rmRecipe: null,
 };
 
 export default CardFavDone;
