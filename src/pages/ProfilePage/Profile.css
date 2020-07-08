@@ -11,13 +11,13 @@
 }
 
 .Email {
-  display: flex;
-  margin: 2%;
-  border: solid black 2px;
   border-radius: 30px;
+  border: solid black 2px;
   color: green;
+  display: flex;
   font-size: 5vh;
   font-style: oblique;
+  margin: 2%;
   text-decoration: none;
 }
 

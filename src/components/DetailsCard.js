@@ -41,7 +41,7 @@ function DetailsCard({ recipe, type }) {
         ))}
       </ul>
       <p data-testid="instructions">{instructions}</p>
-      {video && <div class="ytb" data-testid="video"><ReactPlayer url={video} /></div>}
+      {video && <div className="ytb" data-testid="video"><ReactPlayer url={video} /></div>}
       {beginRecipeBtn(id, type)}
     </div>
   );

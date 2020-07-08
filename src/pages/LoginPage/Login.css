@@ -12,8 +12,8 @@
 
 .buttons {
   align-items: center;
-  display: inline-block;
   border-radius: 30px;
+  display: inline-block;
   text-shadow: greenyellow;
 }
 
@@ -32,6 +32,6 @@
   margin-left: 30%;
 }
 
-.Link{
+.Link {
   text-decoration: none;
 }
