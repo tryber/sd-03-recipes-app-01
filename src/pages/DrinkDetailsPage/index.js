@@ -24,7 +24,7 @@ function DrinkDetailsPage({ id }) {
   if (loading) return <h1>Carrgando detalhes de bebidas...</h1>;
   return (
     <div>
-      <DetailsCard type="drink" eat={drink} />
+      <DetailsCard type="drink" recipe={drink} />
       {errorRecom && <h3 data-testid="error-details">Aconteceu algo errado em recomendações</h3>}
       {!errorRecom && loadingRecom && <h3>Carregando detalhes de comida...</h3>}
       {!errorRecom && !loadingRecom && recomends && <Carrosel cards={recomends} />}

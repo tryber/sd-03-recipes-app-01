@@ -4,10 +4,12 @@ export const translateType = (type) => {
   switch (type) {
     case 'comida':
     case 'bebida':
+    case 'comidas':
+    case 'babidas':
       return type;
     case 'food': return 'comida';
     case 'drink': return 'bebida';
-    default: return `type ${type} is not valid`;
+    default: return `Type ${type} is not valid`;
   }
 };
 
@@ -61,7 +63,7 @@ const sin = (type) => {
     case 'drink':
     case 'cocktails':
       return 'cocktails';
-    default: return `type ${type} not valid to sin`;
+    default: return `Type ${type} not valid to sin`;
   }
 };
 
@@ -85,7 +87,7 @@ export const doneRecipes = (id) => {
 };
 
 export const setDoneRecipeStorage = (
-  { id, origin, category, isAlcoholic, name, srcImage: image }, type,
+  { id, origin, category, isAlcoholic, name, tags, srcImage: image }, type,
 ) => {
   const thisFood = {
     id,
@@ -96,7 +98,7 @@ export const setDoneRecipeStorage = (
     name,
     image,
     doneDate: new Date(),
-    tags: [],
+    tags: '' || tags.split(','),
   };
   localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes(), thisFood]));
 };

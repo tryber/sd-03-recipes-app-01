@@ -20,8 +20,8 @@ function CookedRecipesPage() {
       <button onClick={() => setResults(data)} data-testid="filter-by-all-btn">All</button>
       <div className="fav-grid">
         {filter
-          ? results.map((elem) => <CardFavDone {...elem} />)
-          : data.map((elem) => <CardFavDone {...elem} />)
+          ? results.map((e, index) => <CardFavDone {...e} mode="done" key={e.id} index={index} />)
+          : data.map((e, index) => <CardFavDone {...e} mode="done" key={e.id} index={index} />)
         }
       </div>
     </div>
