@@ -98,7 +98,7 @@ export const setDoneRecipeStorage = (
     name,
     image,
     doneDate: new Date().toLocaleDateString(),
-    tags: '' || tags.split(','),
+    tags: typeof tags === 'string' ? tags.split(',') : '',
   };
   localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes(), thisFood]));
 };
