@@ -1,24 +1,38 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
+import { eatShape, typeShape } from '../services/APIs/shapes';
+
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 import './FavoriteIcon.css';
+import {
+  sendToFavoriteStorage,
+  rmFromFavoriteStorage,
+  getFavStorage,
+} from '../services/APIs/APIlocalStorage';
 
-function FavoriteIcon({ handleFavoriteChange, isFavoriteInit }) {
-  const [isFavorite, setIsFavorite] = useState(isFavoriteInit);
+function FavoriteIcon({ recipe, type }) {
+  const [isFavorite, setIsFavorite] = useState(
+    getFavStorage().some((favorite) => Number(favorite.id) === Number(recipe.id)),
+  );
 
-  const inverteIsFavorite = useCallback(() => {
+  const handleFavoriteStorage = useCallback((isToSend) => {
+    if (isToSend) return sendToFavoriteStorage(recipe, type);
+    return rmFromFavoriteStorage(recipe.id);
+  }, [type, recipe]);
+
+  const toggleFavorite = useCallback(() => {
     setIsFavorite(!isFavorite);
   }, [isFavorite, setIsFavorite]);
 
-  useEffect(() => { handleFavoriteChange(isFavorite); }, [isFavorite, handleFavoriteChange]);
+  useEffect(() => { handleFavoriteStorage(isFavorite); }, [isFavorite, handleFavoriteStorage]);
 
   const src = isFavorite ? blackHeart : whiteHeart;
-  const alt = `is ${isFavorite ? '' : 'not'} favorited`;
+  const alt = `Item is ${isFavorite ? '' : 'not'} favorited`;
 
   return (
-    <button className="hidden-button" onClick={inverteIsFavorite}>
+    <button className="hidden-button" onClick={toggleFavorite}>
       <img
         alt={alt}
         data-testid="favorite-btn"
@@ -29,13 +43,8 @@ function FavoriteIcon({ handleFavoriteChange, isFavoriteInit }) {
 }
 
 FavoriteIcon.propTypes = {
-  handleFavoriteChange: PropTypes.func,
-  isFavoriteInit: PropTypes.bool,
-};
-
-FavoriteIcon.defaultProps = {
-  handleFavoriteChange: (fav) => console.log(fav),
-  isFavoriteInit: false,
+  recipe: PropTypes.shape(eatShape).isRequired,
+  type: typeShape.isRequired,
 };
 
 export default FavoriteIcon;

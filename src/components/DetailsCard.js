@@ -1,42 +1,36 @@
-import React, { useContext, useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 
 import Card from './Card';
+import ShareIcon from './ShareIcon';
+import FavoriteIcon from './FavoriteIcon';
 
-import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
+import { getInProgress, doneRecipes, translateType } from '../services/APIs/APIlocalStorage';
 
-import ActionsBar from './ActionsBar';
+const beginRecipeBtn = (id, type) => (
+  Boolean(doneRecipes(id)) ||
+    <Link to={`/${translateType(type)}s/${id}/in-progress`}>
+      <button
+        data-testid="start-recipe-btn"
+        className="buttonIniciar"
+      >{getInProgress(type)[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
+    </Link>
+);
 
-import { FoodsContext } from '../contexts/FoodsContext';
-
-function StoreRecipe(id, ingredients, type) {
-  const newStorage = {
-    ...getInProgress(),
-    [type === 'food' ? 'meals' : 'cocktails']: { ...getInProgress(type), [id]: ingredients },
-  };
-  localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
-}
-
-function DetailsCard({ eat, type }) {
-  const [, { setFoodInproggress }] = useContext(FoodsContext);
-  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
-
-  const startRecipe = useCallback(() => {
-    setFoodInproggress(eat);
-    StoreRecipe(eat.id, eat.ingredients, type);
-  }, [eat, type, setFoodInproggress]);
+function DetailsCard({ recipe, type }) {
+  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = recipe;
 
   return (
     <div>
       <Card
-        key={id}
         name={name}
         srcImage={srcImage}
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
-      <ActionsBar eat={eat} type={type} />
+      <ShareIcon textToCopy={window.location.href} />
+      <FavoriteIcon recipe={recipe} type={translateType(type)} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
@@ -47,22 +41,14 @@ function DetailsCard({ eat, type }) {
       </ul>
       <p data-testid="instructions">{instructions}</p>
       {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
-      {Boolean(doneRecipes(id)) ||
-        <Link to={`${type === 'food' ? '/comidas' : '/bebidas'}/${id}/in-progress`}>
-          <button
-            data-testid="start-recipe-btn"
-            className="buttonIniciar"
-            onClick={startRecipe}
-          >{getInProgress(type)[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
-        </Link>
-      }
+      {beginRecipeBtn(id, type)}
     </div>
   );
 }
 
 DetailsCard.propTypes = {
-  eat: PropTypes.shape({
-    id: PropTypes.string.isRequired, // number as string
+  recipe: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     instructions: PropTypes.string.isRequired,
@@ -82,7 +68,7 @@ DetailsCard.propTypes = {
 };
 
 DetailsCard.defaultProps = {
-  eat: { source: null, isAlcoholic: null, origin: '', video: '' },
+  recipe: { source: null, isAlcoholic: null, origin: '', video: '' },
 };
 
 export default DetailsCard;

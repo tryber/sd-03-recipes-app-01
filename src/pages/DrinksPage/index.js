@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Card, CardFilters, Header, Footer, Loading } from '../../components';
 import { DrinksContext } from '../../contexts/DrinksContext';
+<<<<<<< HEAD
 import './Drinks.css';
 import {
   fetchDrinkApi,
@@ -9,6 +10,9 @@ import {
   fetchCategoriesApi,
   handleCategoriesData,
 } from '../../services/APIs/DRINKS_API';
+=======
+import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API';
+>>>>>>> c2bdab2df9974a803118bc50e73df408d4da33af
 
 const manageState = (loading, drinks, error) => {
   if (loading) return <Loading />;
@@ -34,9 +38,9 @@ function DrinksPage() {
   }, [setDrinks, setLoading, drinkFilter]);
 
   useEffect(() => {
-    fetchCategoriesApi()
+    fetchDrinkApi('list.php?c=list')
       .then(({ drinks: drks }) =>
-        setCategories(drks.map((category) => handleCategoriesData(category))),
+        setCategories(drks.map(({ strCategory: category }) => ({ category }))),
       )
       .then(() => setLoading(false))
       .catch((err) => {
@@ -49,17 +53,12 @@ function DrinksPage() {
     manageState(loading, drinks, error) || (
       <div className="Drinksback">
         <Header titleTag="Bebidas" filterMode={setDrinkFilter} />
-        <CardFilters
-          categories={categories}
-          filterMode={setDrinkFilter}
-        />
-        {drinks
-          .slice(0, 12)
-          .map(({ id, name, srcImage }, index) => (
-            <Link key={id} to={`/bebidas/${id}`}>
-              <Card name={name} index={index} srcImage={srcImage} />
-            </Link>
-          ))}
+        <CardFilters categories={categories} filterMode={setDrinkFilter} />
+        {drinks.slice(0, 12).map(({ id, name, srcImage }, index) => (
+          <Link key={id} to={`/bebidas/${id}`}>
+            <Card name={name} index={index} srcImage={srcImage} />
+          </Link>
+        ))}
         <Footer />
       </div>
     )

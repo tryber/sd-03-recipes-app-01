@@ -1,10 +1,17 @@
 .card {
+<<<<<<< HEAD
   border-radius: 10%;
   border: 2px solid black;
+=======
+  border-radius: 6px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+>>>>>>> c2bdab2df9974a803118bc50e73df408d4da33af
   display: inline-block;
+  height: 172px;
   margin: 1em 1em auto auto;
   overflow: hidden;
   position: relative;
+<<<<<<< HEAD
   width: 30vh;
   height: 30vh;
 }
@@ -29,6 +36,29 @@
   position: absolute;
   text-align: center;
   width: 100%;
+=======
+  width: 161px;
+}
+
+.card-title {
+  align-items: flex-end;
+  display: flex;
+  font-size: 18px;
+  line-height: 21px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+.card-img {
+  border-radius: 6px 6px 0 0;
+  height: 109px;
+  width: 161px;
+}
+
+.card-invisible {
+  display: none;
+>>>>>>> c2bdab2df9974a803118bc50e73df408d4da33af
 }
 
 .ButtonSearch {

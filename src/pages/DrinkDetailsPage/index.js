@@ -20,11 +20,11 @@ function DrinkDetailsPage({ id }) {
   ), []);
   const [{ loading: loadingRecom, error: errorRecom }] = useRequisition(fetchRecomends);
 
-  if (error) return <h1>Aconteceu algo errado em detalhes de bebidas </h1>;
+  if (error) return <h1>Aconteceu algo errado em detalhes de bebidas</h1>;
   if (loading) return <h1>Carrgando detalhes de bebidas...</h1>;
   return (
     <div>
-      <DetailsCard type="drink" eat={drink} />
+      <DetailsCard type="drink" recipe={drink} />
       {errorRecom && <h3 data-testid="error-details">Aconteceu algo errado em recomendações</h3>}
       {!errorRecom && loadingRecom && <h3>Carregando detalhes de comida...</h3>}
       {!errorRecom && !loadingRecom && recomends && <Carrosel cards={recomends} />}
