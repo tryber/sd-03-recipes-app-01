@@ -10,9 +10,9 @@ const addExtraInfo = (tags, doneDate, index) => (
     <p data-testid={`${index}-horizontal-done-date`}>
       Feita em: {new Date(doneDate).toLocaleDateString()}
     </p>
-    {tags.map((tag, ind) =>
+    {tags.map((tag) =>
       <span
-        key={ind}
+        key={tag}
         className="food-tag"
         data-testid={`${index}-${tag}-horizontal-tag`}
       >
