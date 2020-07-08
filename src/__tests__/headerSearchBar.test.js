@@ -1,121 +1,105 @@
-///// <reference types="cypress" />
+import React from 'react';
+// const soupMeals = require('../mocks/soupMeals');
+// const ginDrinks = require('../mocks/ginDrinks');
+import { fireEvent, waitForDomChange, cleanup } from '@testing-library/react';
 
-//const fetchMock = require('../mocks/fetch');
-//const soupMeals = require('../mocks/soupMeals');
-//const ginDrinks = require('../mocks/ginDrinks');
+import { FoodsPage, DrinksPage } from '../pages';
 
-//describe('Todos os elementos devem respeitar os atributos descritos no protótipo para a barra de busca', () => {
-//  it('Tem os data-testids tanto da barra de busca quanto de todos os radio-buttons', () => {
-//    cy.visit('http://localhost:3000/comidas');
+import { mockedFetch, renderWithContext } from './tests_services';
 
-//    cy.get('[data-testid="search-top-btn"]').click();
+jest.spyOn(window, 'fetch').mockImplementation(mockedFetch);
+jest.spyOn(window, 'alert');
 
-//    cy.get('[data-testid="search-input"]');
-//    cy.get('[data-testid="ingredient-search-radio"]');
-//    cy.get('[data-testid="name-search-radio"]');
-//    cy.get('[data-testid="first-letter-search-radio"]');
-//    cy.get('[data-testid="exec-search-btn"]');
-//  });
-//});
+describe('Todos os elementos devem respeitar os atributos descritos no protótipo para a barra de busca', () => {
+ test('Tem os data-testids tanto da barra de busca quanto de todos os radio-buttons', async () => {
+  const { getByTestId } = renderWithContext(<FoodsPage />);
+  await waitForDomChange();
+  const searchIcon = getByTestId("search-top-btn");
+  fireEvent.click(searchIcon);
 
-//describe('A barra de busca deve ficar logo abaixo do header e deve possuir 3 radio buttons: Ingrediente, Nome e Primeira letra. Eles devem mudar a forma como serão filtradas as receitas', () => {
-//  it('Se o radio selecionado for Ingrediente, a busca na API é feita corretamente pelo ingrediente', () => {
-//    cy.visit('http://localhost:3000/comidas', {
-//      onBeforeLoad(win) {
-//        cy.spy(win, 'fetch');
-//      },
-//    });
+   expect(getByTestId("search-input")).toBeInTheDocument();
+   expect(getByTestId("ingredient-search-radio")).toBeInTheDocument();
+   expect(getByTestId("name-search-radio")).toBeInTheDocument();
+   expect(getByTestId("first-letter-search-radio")).toBeInTheDocument();
+   expect(getByTestId("exec-search-btn")).toBeInTheDocument();
+ });
+});
 
-//    cy.get('[data-testid="search-top-btn"]').click();
-//    cy.get('[data-testid="ingredient-search-radio"]').click();
-//    cy.get('[data-testid="search-input"]').type('chicken');
-//    cy.get('[data-testid="exec-search-btn"]').click();
-//    cy.window()
-//      .its('fetch')
-//      .should('be.calledWith', 'https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken');
-//  });
+describe('A barra de busca deve ficar logo abaixo do header e deve possuir 3 radio buttons: Ingrediente, Nome e Primeira letra. Eles devem mudar a forma como serão filtradas as receitas', () => {
+  afterEach(cleanup);
+  test('Se o radio selecionado for Ingrediente, a busca na API é feita corretamente pelo ingrediente', async () => {
+    const { getByTestId } = renderWithContext(<FoodsPage />);
+    await waitForDomChange();
+    const searchIcon = getByTestId("search-top-btn");
+    fireEvent.click(searchIcon);
+    fireEvent.click(getByTestId("ingredient-search-radio"));
+    fireEvent.change(getByTestId("search-input"), { target: { value: 'chicken' } });
+    fireEvent.click(getByTestId("exec-search-btn"));
+    expect(fetch).toHaveBeenLastCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken');
+  });
 
-//  it('Se o radio selecionado for Nome, a busca na API é feita corretamente pelo nome', () => {
-//    cy.visit('http://localhost:3000/comidas', {
-//      onBeforeLoad(win) {
-//        cy.spy(win, 'fetch');
-//      },
-//    });
+  test('Se o radio selecionado for Nome, a busca na API é feita corretamente pelo nome', async () => {
+    const { getByTestId } = renderWithContext(<FoodsPage />);
+    await waitForDomChange();
+    const searchIcon = getByTestId("search-top-btn");
+    fireEvent.click(searchIcon);
+    fireEvent.click(getByTestId("name-search-radio"));
+    fireEvent.change(getByTestId("search-input"), { target: { value: 'soup' } });
+    fireEvent.click(getByTestId("exec-search-btn"));
+    expect(fetch).toHaveBeenLastCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=soup');
+  });
+  test('Se o radio selecionado for Primeira letra, a busca na API é feita corretamente pelo primeira letra', async () => {
+    const { getByTestId } = renderWithContext(<FoodsPage />);
+    await waitForDomChange();
+    const searchIcon = getByTestId("search-top-btn");
+    fireEvent.click(searchIcon);
+    fireEvent.click(getByTestId("first-letter-search-radio"));
+    fireEvent.change(getByTestId("search-input"), { target: { value: 'a' } });
+    fireEvent.click(getByTestId("exec-search-btn"));
+    expect(fetch).toHaveBeenLastCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?f=a');
+  });
 
-//    cy.get('[data-testid="search-top-btn"]').click();
-//    cy.get('[data-testid="name-search-radio"]').click();
-//    cy.get('[data-testid="search-input"]').type('soup');
-//    cy.get('[data-testid="exec-search-btn"]').click();
-//    cy.window()
-//      .its('fetch')
-//      .should('be.calledWith', 'https://www.themealdb.com/api/json/v1/1/search.php?s=soup');
-//  });
+  test('Se o radio selecionado for Primeira letra e a busca na API for feita com mais de uma letra, deve-se exibir um alert', async () => {
+    const { getByTestId } = renderWithContext(<FoodsPage />);
+    await waitForDomChange();
+    const searchIcon = getByTestId("search-top-btn");
+    fireEvent.click(searchIcon);
+    fireEvent.click(getByTestId("first-letter-search-radio"));
+    fireEvent.change(getByTestId("search-input"), { target: { value: 'aaa' } });
+    fireEvent.click(getByTestId("exec-search-btn"));
+    expect(alert).toHaveBeenLastCalledWith('Sua busca deve conter somente 1 (um) caracter');
+  });
+});
 
-//  it('Se o radio selecionado for Primeira letra, a busca na API é feita corretamente pelo primeira letra', () => {
-//    cy.visit('http://localhost:3000/comidas', {
-//      onBeforeLoad(win) {
-//        cy.spy(win, 'fetch');
-//      },
-//    });
+describe('A busca deve ocorrer na API de comidas caso a pessoa esteja na página de comidas e na de bebidas caso esteja na de bebidas', () => {
+  afterEach(cleanup);
+  test('Na tela de bebidas, se o radio selecionado for Ingrediente, a busca na API é feita corretamente pelo ingrediente', async () => {
+    const { getByTestId } = renderWithContext(<DrinksPage />);
+    await waitForDomChange();
+    const searchIcon = getByTestId("search-top-btn");
+    fireEvent.click(searchIcon);
+    fireEvent.click(getByTestId("ingredient-search-radio"));
+    fireEvent.change(getByTestId("search-input"), { target: { value: 'lemon' } });
+    fireEvent.click(getByTestId("exec-search-btn"));
+    expect(fetch).toHaveBeenLastCalledWith('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=lemon');
+  });
 
-//    cy.get('[data-testid="search-top-btn"]').click();
-//    cy.get('[data-testid="first-letter-search-radio"]').click();
-//    cy.get('[data-testid="search-input"]').type('a');
-//    cy.get('[data-testid="exec-search-btn"]').click();
-//    cy.window()
-//      .its('fetch')
-//      .should('be.calledWith', 'https://www.themealdb.com/api/json/v1/1/search.php?f=a');
-//  });
-
-//  it('Se o radio selecionado for Primeira letra e a busca na API for feita com mais de uma letra, deve-se exibir um alert', () => {
-//    cy.visit('http://localhost:3000/comidas', {
-//      onBeforeLoad(win) {
-//        cy.spy(win, 'alert');
-//      },
-//    });
-
-//    cy.get('[data-testid="search-top-btn"]').click();
-//    cy.get('[data-testid="first-letter-search-radio"]').click();
-//    cy.get('[data-testid="search-input"]').type('aaa');
-//    cy.get('[data-testid="exec-search-btn"]').click();
-//    cy.window()
-//      .its('alert')
-//      .should('be.calledWith', 'Sua busca deve conter somente 1 (um) caracter');
-//  });
-//});
-
-//describe('A busca deve ocorrer na API de comidas caso a pessoa esteja na página de comidas e na de bebidas caso esteja na de bebidas', () => {
-//  it('Na tela de bebidas, se o radio selecionado for Ingrediente, a busca na API é feita corretamente pelo ingrediente', () => {
+  it('Na tela de bebidas, se o radio selecionado for Nome, a busca na API é feita corretamente pelo nome', async () => {
 //    cy.visit('http://localhost:3000/bebidas', {
 //      onBeforeLoad(win) {
 //        cy.spy(win, 'fetch');
 //      },
-//    });
-
-//    cy.get('[data-testid="search-top-btn"]').click();
-//    cy.get('[data-testid="ingredient-search-radio"]').click();
-//    cy.get('[data-testid="search-input"]').type('lemon');
-//    cy.get('[data-testid="exec-search-btn"]').click();
-//    cy.window()
-//      .its('fetch')
-//      .should('be.calledWith', 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=lemon');
-//  });
-
-//  it('Na tela de bebidas, se o radio selecionado for Nome, a busca na API é feita corretamente pelo nome', () => {
-//    cy.visit('http://localhost:3000/bebidas', {
-//      onBeforeLoad(win) {
-//        cy.spy(win, 'fetch');
-//      },
-//    });
-
-//    cy.get('[data-testid="search-top-btn"]').click();
-//    cy.get('[data-testid="name-search-radio"]').click();
-//    cy.get('[data-testid="search-input"]').type('gin');
-//    cy.get('[data-testid="exec-search-btn"]').click();
-//    cy.window()
-//      .its('fetch')
-//      .should('be.calledWith', 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=gin');
-//  });
+    //    });
+    const { getByTestId } = renderWithContext(<DrinksPage />);
+    await waitForDomChange();
+    const searchIcon = getByTestId("search-top-btn");
+    fireEvent.click(searchIcon);
+    fireEvent.click(getByTestId("name-search-radio"));
+    fireEvent.change(getByTestId("search-input"), { target: { value: 'gin' } });
+    fireEvent.click(getByTestId("exec-search-btn"));
+    expect(fetch).toHaveBeenLastCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=gin');
+  });
+});
 
 //  it('Na tela de bebidas, se o radio selecionado for Primeira letra, a busca na API é feita corretamente pelo primeira letra', () => {
 //    cy.visit('http://localhost:3000/bebidas', {

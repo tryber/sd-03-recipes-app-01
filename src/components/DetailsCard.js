@@ -7,19 +7,17 @@ import Card from './Card';
 import ShareIcon from './ShareIcon';
 import FavoriteIcon from './FavoriteIcon';
 
-import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
-
-const translate = (word) => (word === 'food' ? 'comidas' : 'bebidas');
+import { getInProgress, doneRecipes, translateType } from '../services/APIs/APIlocalStorage';
 
 const beginRecipeBtn = (id, type) => (
-    Boolean(doneRecipes(id)) ||
-      <Link to={`/${translate(type)}/${id}/in-progress`}>
-        <button
-          data-testid="start-recipe-btn"
-          className="buttonIniciar"
-        >{getInProgress(type)[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
-      </Link>
-  );
+  Boolean(doneRecipes(id)) ||
+    <Link to={`/${translateType(type)}s/${id}/in-progress`}>
+      <button
+        data-testid="start-recipe-btn"
+        className="buttonIniciar"
+      >{getInProgress(type)[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
+    </Link>
+);
 
 function DetailsCard({ eat, type }) {
   const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
@@ -32,7 +30,7 @@ function DetailsCard({ eat, type }) {
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
       <ShareIcon textToCopy={window.location.href} />
-      <FavoriteIcon eat={eat} type={translate(type)} />
+      <FavoriteIcon eat={eat} type={type} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (

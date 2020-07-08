@@ -26,9 +26,9 @@ const fetchAPI = async (type, id, setEat) => {
   } return Promise.reject(`type ${type} insn't valid`);
 };
 
-const endRecipe = (type, id) => () => {
-  rmInProgress(type, id);
-  setDoneRecipeStorage(id);
+const endRecipe = (type, eat) => () => {
+  rmInProgress(type, eat.id);
+  setDoneRecipeStorage(eat, type);
 };
 
 const changeCheckBox = (usedIng, checked, value) => {
@@ -80,7 +80,7 @@ function InProcessPage({ id, type }) {
       </div>
       <LinkBtn
         disabled={usedIngredients.length < ingredients.length}
-        onClick={endRecipe(type, id)}
+        onClick={endRecipe(type, eat)}
         testid="finish-recipe-btn"
         text="Finalizar receita"
         to="/receitas-feitas"

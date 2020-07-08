@@ -49,7 +49,7 @@ function ExploreFoodAreaPage() {
   return (
     manageState(loading, foods, error) || (
       <div>
-        <Header titleTag="Comidas" filterMode={setFoodFilter} />
+        <Header titleTag="Explorar Origem" filterMode={setFoodFilter} />
         <Dropdown areas={areas} filterMode={setFoodFilter} />
         {foods.slice(0, 12).map(({ id, name, srcImage }, index) => (
           <Link key={id} to={`/comidas/${id}`}>
