@@ -7,11 +7,11 @@ import Card from './Card';
 import ShareIcon from './ShareIcon';
 import FavoriteIcon from './FavoriteIcon';
 
-import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
+import { getInProgress, doneRecipes, translateType } from '../services/APIs/APIlocalStorage';
 
 const beginRecipeBtn = (id, type) => (
   Boolean(doneRecipes(id)) ||
-    <Link to={`/${type}s/${id}/in-progress`}>
+    <Link to={`/${translateType(type)}s/${id}/in-progress`}>
       <button
         data-testid="start-recipe-btn"
         className="buttonIniciar"
@@ -30,7 +30,7 @@ function DetailsCard({ recipe, type }) {
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
       <ShareIcon textToCopy={window.location.href} testid="share-btn" />
-      <FavoriteIcon recipe={recipe} type={type} />
+      <FavoriteIcon recipe={recipe} type={translateType(type)} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
