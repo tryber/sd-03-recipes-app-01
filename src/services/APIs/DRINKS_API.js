@@ -18,6 +18,7 @@ export const handleDrinksData = ({
   strYoutube,
   strSource,
   strAlcoholic,
+  strTags,
   ...drink
 }) => {
   const obj = {
@@ -30,6 +31,7 @@ export const handleDrinksData = ({
     video: strYoutube,
     source: strSource,
     isAlcoholic: strAlcoholic,
+    tags: strTags,
   };
 
   const ingredientBase = /^strIngredient(\d*)$/;

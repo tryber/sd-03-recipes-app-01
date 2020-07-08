@@ -7,15 +7,16 @@ import { rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
 
 const addExtraInfo = (tags, doneDate, index) => (
   <div>
-    <p
-      data-testid={`${index}-horizontal-done-date`}>Feita em: {new Date(doneDate).toLocaleDateString()}</p>
-    {tags.map((tag) => 
+    <p data-testid={`${index}-horizontal-done-date`}>
+      Feita em: {new Date(doneDate).toLocaleDateString()}
+    </p>
+    {tags.split(',').map((tag) =>
       <span
         className="food-tag"
         data-testid={`${index}-${tag}-horizontal-tag`}
       >
         {tag}
-      </span>
+      </span>,
       )}
   </div>
 );
@@ -75,6 +76,7 @@ function CardFavDone({
 
 CardFavDone.propTypes = {
   id: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   area: PropTypes.string.isRequired,

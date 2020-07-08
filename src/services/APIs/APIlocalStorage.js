@@ -95,8 +95,7 @@ export const setDoneRecipeStorage = (
     name,
     image,
     doneDate: new Date(),
-    tags,
-    // tags: [],
+    tags: tags || '',
   };
   localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes(), thisFood]));
 };

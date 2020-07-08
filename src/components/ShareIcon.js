@@ -24,7 +24,7 @@ function ShareIcon({ textToCopy, index }) {
       onClick={enableCopy}
       onMouseOut={disableCopy}
       data-testid={`${index}-horizontal-share-btn`}
-      >
+    >
       {copying
         ? <p>Link copiado!</p>
         : <img data-testid="share-btn" src={shareIcon} alt="click to copy the link" />
@@ -35,6 +35,7 @@ function ShareIcon({ textToCopy, index }) {
 }
 
 ShareIcon.propTypes = {
+  index: PropTypes.number.isRequired,
   textToCopy: PropTypes.string.isRequired,
 };
 
