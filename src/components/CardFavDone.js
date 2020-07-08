@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ShareIcon from './ShareIcon';
+import FavoriteIcon from './FavoriteIcon';
+import blackHeart from '../images/blackHeartIcon.svg';
 import './CardFavDone.css';
-import { rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
 
 const addExtraInfo = (tags, doneDate, index) => (
   <div>
@@ -22,19 +23,8 @@ const addExtraInfo = (tags, doneDate, index) => (
   </div>
 );
 
-function CardFavDone({
-  id,
-  type,
-  area,
-  name,
-  image,
-  category,
-  alcoholicOrNot,
-  doneDate,
-  tags,
-  mode,
-  index,
-}) {
+function CardFavDone({ recipe, mode, index, rmRecipe }) {
+  const { id, type, area, name, image, category, alcoholicOrNot, doneDate, tags, } = recipe;
   return (
     <div className="card-fav-done">
       <Link to={`/${type}s/${id}`}>
@@ -58,13 +48,10 @@ function CardFavDone({
         <div className="action-bar">
           {mode === 'done'
           ? addExtraInfo(tags, doneDate, index)
-          : (
-            <button
-              className="unfavoriteBtn"
-              data-testid={`${index}-horizontal-favorite-btn`}
-              onClick={() => rmFromFavoriteStorage(id)}
-            />
-            )
+          : <button className="unfavoriteBtn hidden-button" onClick={() => rmRecipe(id)}>
+            <img src={blackHeart} alt="favorited Icon" data-testid={`${index}-horizontal-favorite-btn`} />
+          </button>
+          /* <FavoriteIcon recipe={recipe} type={type} testid={`${index}-horizontal-favorite-btn`} /> */
           }
           <ShareIcon
             testid={`${index}-horizontal-share-btn`}
@@ -77,16 +64,18 @@ function CardFavDone({
 }
 
 CardFavDone.propTypes = {
-  id: PropTypes.string.isRequired,
+  recipe: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    area: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    doneDate: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    alcoholicOrNot: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }),
   index: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  area: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  doneDate: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  alcoholicOrNot: PropTypes.string.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   mode: PropTypes.string,
 };
 

@@ -30,7 +30,7 @@ function DetailsCard({ recipe, type }) {
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
       <ShareIcon textToCopy={window.location.href} testid="share-btn" />
-      <FavoriteIcon recipe={recipe} type={translateType(type)} />
+      <FavoriteIcon recipe={recipe} type={type} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (

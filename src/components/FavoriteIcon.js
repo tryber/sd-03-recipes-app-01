@@ -12,7 +12,7 @@ import {
   getFavStorage,
 } from '../services/APIs/APIlocalStorage';
 
-function FavoriteIcon({ recipe, type }) {
+function FavoriteIcon({ recipe, type, testid }) {
   const [isFavorite, setIsFavorite] = useState(
     getFavStorage().some((favorite) => Number(favorite.id) === Number(recipe.id)),
   );
@@ -35,7 +35,7 @@ function FavoriteIcon({ recipe, type }) {
     <button className="hidden-button" onClick={toggleFavorite}>
       <img
         alt={alt}
-        data-testid="favorite-btn"
+        data-testid={testid}
         src={src}
       />
     </button>
@@ -46,5 +46,7 @@ FavoriteIcon.propTypes = {
   recipe: PropTypes.shape(eatShape).isRequired,
   type: typeShape.isRequired,
 };
+
+FavoriteIcon.defaultProps = { testid: "favorite-btn" };
 
 export default FavoriteIcon;
