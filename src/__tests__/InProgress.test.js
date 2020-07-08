@@ -88,7 +88,7 @@ describe('InProcessPage food', () => {
     } = renderWithContext(<InProcessPage id={52977} type="food" />);
     await waitForDomChange();
     corba.ingredients.forEach(({ ingredient }, index) => {
-      expect(getByTestId(`${index}-ingredient-step`)).toEqual(getByLabelText(ingredient));
+      expect(getByTestId(`${index}-ingredient-step`)).toContainElement(getByLabelText(ingredient));
     });
   });
 
@@ -97,7 +97,7 @@ describe('InProcessPage food', () => {
       getByTestId,
     } = renderWithContext(<InProcessPage id={52977} type="food" />);
     await waitForDomChange();
-    const firstIngre = getByTestId('0-ingredient-step');
+    const firstIngre = getByTestId('0-ingredient-step').firstElementChild;
     expect(firstIngre).not.toBeChecked();
     expect(JSON.parse(localStorage.getItem('inProgressRecipes')).meals[52977]).toEqual([]);
     fireEvent.click(firstIngre);
@@ -113,11 +113,11 @@ describe('InProcessPage food', () => {
       getByTestId,
     } = renderWithContext(<InProcessPage id={52977} type="food" />);
     await waitForDomChange();
-    expect(getByTestId('0-ingredient-step')).toBeChecked();
-    expect(getByTestId('1-ingredient-step')).toBeChecked();
-    expect(getByTestId('2-ingredient-step')).not.toBeChecked();
-    expect(getByTestId('3-ingredient-step')).toBeChecked();
-    expect(getByTestId('12-ingredient-step')).not.toBeChecked();
+    expect(getByTestId('0-ingredient-step').firstElementChild).toBeChecked();
+    expect(getByTestId('1-ingredient-step').firstElementChild).toBeChecked();
+    expect(getByTestId('2-ingredient-step').firstElementChild).not.toBeChecked();
+    expect(getByTestId('3-ingredient-step').firstElementChild).toBeChecked();
+    expect(getByTestId('12-ingredient-step').firstElementChild).not.toBeChecked();
   });
 });
 
@@ -194,7 +194,7 @@ describe('InProcessPage drink', () => {
     } = renderWithContext(<InProcessPage id={15997} type="drink" />);
     await waitForDomChange();
     GG.ingredients.forEach(({ ingredient }, index) => {
-      expect(getByTestId(`${index}-ingredient-step`)).toEqual(getByLabelText(ingredient));
+      expect(getByTestId(`${index}-ingredient-step`)).toContainElement(getByLabelText(ingredient));
     });
   });
 
@@ -204,7 +204,7 @@ describe('InProcessPage drink', () => {
     } = renderWithContext(<InProcessPage id={15997} type="drink" />);
     await waitForDomChange();
 
-    const firstIngre = getByTestId('0-ingredient-step');
+    const firstIngre = getByTestId('0-ingredient-step').firstElementChild;
     expect(firstIngre).not.toBeChecked();
     expect(JSON.parse(localStorage.getItem('inProgressRecipes')).cocktails[15997]).toEqual([]);
     fireEvent.click(firstIngre);
@@ -220,8 +220,27 @@ describe('InProcessPage drink', () => {
       getByTestId,
     } = renderWithContext(<InProcessPage id={15997} type="drink" />);
     await waitForDomChange();
-    expect(getByTestId('0-ingredient-step')).toBeChecked();
-    expect(getByTestId('1-ingredient-step')).toBeChecked();
-    expect(getByTestId('2-ingredient-step')).not.toBeChecked();
+    expect(getByTestId('0-ingredient-step').firstElementChild).toBeChecked();
+    expect(getByTestId('1-ingredient-step').firstElementChild).toBeChecked();
+    expect(getByTestId('2-ingredient-step').firstElementChild).not.toBeChecked();
+  });
+
+  test('test the button Finalizar receita', async () => {
+    const {
+      getByTestId,
+      history,
+    } = renderWithContext(<InProcessPage id={15997} type="drink" />, '/bebidas/15977/in-progress');
+    await waitForDomChange();
+    expect(getByTestId('finish-recipe-btn')).toBeDisabled();
+    GG.ingredients.forEach((_, index) => {
+      fireEvent.click(getByTestId(`${index}-ingredient-step`))
+    });
+    expect(getByTestId('0-ingredient-step').firstElementChild).toBeChecked();
+    expect(getByTestId('1-ingredient-step').firstElementChild).toBeChecked();
+    expect(getByTestId('2-ingredient-step').firstElementChild).toBeChecked();
+
+    expect(getByTestId('finish-recipe-btn')).toBeEnabled();
+    fireEvent.click(getByTestId('finish-recipe-btn'));
+    expect(history.location.pathname).toBe('/receitas-feitas');
   });
 });

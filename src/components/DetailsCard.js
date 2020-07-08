@@ -7,19 +7,17 @@ import Card from './Card';
 import ShareIcon from './ShareIcon';
 import FavoriteIcon from './FavoriteIcon';
 
-import { getInProgress, doneRecipes } from '../services/APIs/APIlocalStorage';
-
-const translate = (word) => (word === 'food' ? 'comidas' : 'bebidas');
+import { getInProgress, doneRecipes, translateType } from '../services/APIs/APIlocalStorage';
 
 const beginRecipeBtn = (id, type) => (
-    Boolean(doneRecipes(id)) ||
-      <Link to={`/${translate(type)}/${id}/in-progress`}>
-        <button
-          data-testid="start-recipe-btn"
-          className="buttonIniciar"
-        >{getInProgress(type)[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
-      </Link>
-  );
+  Boolean(doneRecipes(id)) ||
+    <Link to={`/${translateType(type)}s/${id}/in-progress`}>
+      <button
+        data-testid="start-recipe-btn"
+        className="buttonIniciar"
+      >{getInProgress(type)[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
+    </Link>
+);
 
 function DetailsCard({ recipe, type }) {
   const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = recipe;

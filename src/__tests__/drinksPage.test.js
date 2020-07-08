@@ -10,6 +10,9 @@ import otherDrinks from "../../cypress/unit_tests_mocks/otherDrinks";
 import cocoaDrinks from "../../cypress/unit_tests_mocks/cocoaDrinks";
 import drinkCategories from "../../cypress/unit_tests_mocks/drinkCategories";
 
+
+window.alert = () => console.log();
+
 const clean = () => {
   cleanup();
 };

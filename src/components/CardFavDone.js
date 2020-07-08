@@ -64,10 +64,7 @@ function CardFavDone({
             />
             )
           }
-          <ShareIcon
-            index={index}
-            textToCopy={`${window.location.host}/${type}s/${id}`}
-          />
+          <ShareIcon textToCopy={`${window.location.host}/${type}/${id}`} />
         </div>
       </div>
     </div>

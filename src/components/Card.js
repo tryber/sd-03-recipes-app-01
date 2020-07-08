@@ -27,8 +27,8 @@ Card.propTypes = {
   index: PropTypes.number,
   show: PropTypes.bool,
   testid: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    img: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    img: PropTypes.string,
   }),
 };
 
