@@ -1,7 +1,7 @@
 .Login {
   background-image: url('../../images/receitas.jpg');
   border-radius: 50%;
-  color: green;
+  color: greenyellow;
   font-size: 2em;
   font-style: italic;
   height: 50vh;
@@ -25,7 +25,7 @@
 }
 
 .Iniciar {
-  background-color: green;
+  background-color: greenyellow;
   border-radius: 1em;
   display: flex;
   font-size: 1.5em;

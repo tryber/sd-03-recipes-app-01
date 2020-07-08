@@ -20,9 +20,13 @@
 .searchBar {
   background-image: url('../images/comidas.jpg');
   border: solid black 1px;
-  color: rgb(0, 4, 255);
   font-size: 1em;
   font-style: italic;
+}
+
+.newFormCss {
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: 1px;
 }
 
 .radioSearchButtons {

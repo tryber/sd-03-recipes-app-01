@@ -24,7 +24,7 @@ const Header = ({ titleTag, filterMode }) => {
         ) : <div />
         }
       </div>
-      <div className="searchBar"> {
+      <div className="searchBar newFormCss"> {
         displaySearch ?
           <SearchBar
             setFilter={filterMode}

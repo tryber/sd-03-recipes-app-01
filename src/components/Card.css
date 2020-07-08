@@ -1,5 +1,5 @@
 .card {
-  border: 2px solid black;
+  border: 0.5em solid white;
   border-radius: 10%;
   display: inline-block;
   height: 20vh;
@@ -20,7 +20,6 @@
 }
 
 .card-title {
-  border: solid black 1px;
   color: white;
   display: flex;
   font-size: 1.5em;
@@ -36,7 +35,7 @@
 }
 
 .ButtonSearch {
-  background-color: yellow;
+  background-color:greenyellow;
   border: black solid 1px;
   cursor: pointer;
   font-size: 1em;
@@ -53,11 +52,11 @@
 }
 
 .ig {
-  background-color: yellow;
+  background-color: greenyellow;
 }
 
 .instructions {
-  background-color: rgb(255, 255, 58);
+  background-color: greenyellow;
   font-size: 1em;
   font-style: italic;
 }
