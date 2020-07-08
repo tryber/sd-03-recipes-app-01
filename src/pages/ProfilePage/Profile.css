@@ -12,10 +12,10 @@
 }
 
 .Email {
-  font-size: 5vh;
-  font-style: oblique;
-  color: green;
-  text-decoration: none;
   border: solid black 2px;
   border-radius: 30px;
+  color: green;
+  font-size: 5vh;
+  font-style: oblique;
+  text-decoration: none;
 }
