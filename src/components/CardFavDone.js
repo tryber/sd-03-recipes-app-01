@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ShareIcon from './ShareIcon';
-import FavoriteIcon from './FavoriteIcon';
 import blackHeart from '../images/blackHeartIcon.svg';
 import './CardFavDone.css';
 
@@ -51,7 +50,6 @@ function CardFavDone({ recipe, mode, index, rmRecipe }) {
           : <button className="unfavoriteBtn hidden-button" onClick={() => rmRecipe(id)}>
             <img src={blackHeart} alt="favorited Icon" data-testid={`${index}-horizontal-favorite-btn`} />
           </button>
-          /* <FavoriteIcon recipe={recipe} type={type} testid={`${index}-horizontal-favorite-btn`} /> */
           }
           <ShareIcon
             testid={`${index}-horizontal-share-btn`}

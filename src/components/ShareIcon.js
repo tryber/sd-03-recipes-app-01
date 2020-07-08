@@ -14,7 +14,7 @@ function ShareIcon({ textToCopy, testid }) {
       navigator.clipboard.writeText(textToCopy)
         .catch((err) => console.log(err));
     }
-  }, [copying, setCopying]);
+  }, [copying, setCopying, textToCopy]);
 
   return (
     <button

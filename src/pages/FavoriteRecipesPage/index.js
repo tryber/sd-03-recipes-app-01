@@ -14,7 +14,7 @@ function FavoriteRecipesPage() {
 
   useEffect(() => { 
     setResults((res) => res.filter((fav) => Number(fav.id) !== Number(rmId)));
-  }, [rmId])
+  }, [rmId, setResults])
 
   return (
     <div className="fav-list">

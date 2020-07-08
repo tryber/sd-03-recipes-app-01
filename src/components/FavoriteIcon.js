@@ -12,7 +12,7 @@ import {
   getFavStorage,
 } from '../services/APIs/APIlocalStorage';
 
-function FavoriteIcon({ recipe, type, testid }) {
+function FavoriteIcon({ recipe, type, testid, onFavorite }) {
   const [isFavorite, setIsFavorite] = useState(
     getFavStorage().some((favorite) => Number(favorite.id) === Number(recipe.id)),
   );
@@ -22,11 +22,15 @@ function FavoriteIcon({ recipe, type, testid }) {
     return rmFromFavoriteStorage(recipe.id);
   }, [type, recipe]);
 
+  
   const toggleFavorite = useCallback(() => {
     setIsFavorite(!isFavorite);
   }, [isFavorite, setIsFavorite]);
-
-  useEffect(() => { handleFavoriteStorage(isFavorite); }, [isFavorite, handleFavoriteStorage]);
+  
+  useEffect(() => {
+    if (onFavorite) onFavorite(isFavorite);
+    handleFavoriteStorage(isFavorite);
+  }, [isFavorite, handleFavoriteStorage, onFavorite]);
 
   const src = isFavorite ? blackHeart : whiteHeart;
   const alt = `Item is ${isFavorite ? '' : 'not'} favorited`;
