@@ -8,7 +8,7 @@ import { rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
 const addExtraInfo = (tags, doneDate, index) => (
   <div>
     <p data-testid={`${index}-horizontal-done-date`}>
-      Feita em: {new Date(doneDate).toLocaleDateString()}
+      Feita em: {doneDate}
     </p>
     {tags.map((tag) =>
       <span
@@ -66,7 +66,10 @@ function CardFavDone({
             />
             )
           }
-          <ShareIcon textToCopy={`${window.location.host}/${type}/${id}`} />
+          <ShareIcon
+            testid={`${index}-horizontal-share-btn`}
+            textToCopy={`${window.location.origin}/${type}s/${id}`}
+          />
         </div>
       </div>
     </div>
