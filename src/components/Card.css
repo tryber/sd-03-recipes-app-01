@@ -21,10 +21,6 @@
   position: absolute;
   text-align: center;
   width: 100%;
-<<<<<<< HEAD
-=======
-
->>>>>>> 4a2f23fdef02bae38955b61ccf1e50ec9091f16c
 }
 
 .cssNew {
@@ -45,8 +41,8 @@
 }
 
 .ytb {
-  height: 60vh;
   display: flex;
+  height: 60vh;
 }
 
 .ig {

@@ -22,7 +22,11 @@ function ProfilePage() {
         <button className="Perfil" data-testid="profile-favorite-btn">Receitas Favoritas</button>
       </Link>
       <Link to="/" style={{ textDecoration: "none" }}>
-        <button className="Perfil" data-testid="profile-logout-btn" onClick={() => clearUP()} >Sair</button>
+        <button
+          className="Perfil"
+          data-testid="profile-logout-btn"
+          onClick={() => clearUP()} >Sair
+          </button>
       </Link>
       <Footer />
     </div>
