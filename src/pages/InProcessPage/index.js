@@ -16,19 +16,19 @@ import {
   setDoneRecipeStorage,
 } from '../../services/APIs/APIlocalStorage';
 
-const fetchAPI = async (type, id, setEat) => {
+const fetchAPI = async (type, id, setRecipe) => {
   if (type === 'food') {
     return fetchFoodsApi(`lookup.php?i=${id}`)
-      .then(({ meals }) => setEat(handleFoodsData(meals[0])));
+      .then(({ meals }) => setRecipe(handleFoodsData(meals[0])));
   } else if (type === 'drink') {
     return fetchDrinkApi(`lookup.php?i=${id}`)
-      .then(({ drinks }) => setEat(handleDrinksData(drinks[0])));
+      .then(({ drinks }) => setRecipe(handleDrinksData(drinks[0])));
   } return Promise.reject(`type ${type} insn't valid`);
 };
 
-const endRecipe = (type, id) => () => {
-  rmInProgress(type, id);
-  setDoneRecipeStorage(id, type);
+const endRecipe = (type, recipe) => () => {
+  rmInProgress(type, recipe.id);
+  setDoneRecipeStorage(recipe, type);
 };
 
 const changeCheckBox = (usedIng, checked, value) => {
@@ -39,9 +39,9 @@ const changeCheckBox = (usedIng, checked, value) => {
 const setInProgressUse = (type, id) => (newUsed) => setInProgress(type, id, newUsed);
 
 function InProcessPage({ id, type }) {
-  const [eat, setEat] = useState(null);
+  const [recipe, setRecipe] = useState(null);
   const [{ loading, error }] = useRequisition(
-    useCallback(() => fetchAPI(type, id, setEat), [type, id, setEat]),
+    useCallback(() => fetchAPI(type, id, setRecipe), [type, id, setRecipe]),
   );
   const [usedIngredients, setUsedIngredients] = useLocalStorage(
     getInProgress(type)[id] || [],
@@ -55,7 +55,7 @@ function InProcessPage({ id, type }) {
   if (error) return <h1>Aconteceu algo errado em detalhes de bebidas em progresso</h1>;
   if (loading) return <h1>Carrgando detalhes de bebidas em progresso...</h1>;
 
-  const { name, srcImage, category, ingredients, instructions, isAlcoholic } = eat;
+  const { name, srcImage, category, ingredients, instructions, isAlcoholic } = recipe;
   return (
     <div>
       <Card
@@ -64,7 +64,7 @@ function InProcessPage({ id, type }) {
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
       <ShareIcon textToCopy={`${window.location.href.slice(0, -12)}`} />
-      <FavoriteIcon eat={eat} type={type} />
+      <FavoriteIcon eat={recipe} type={type} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <p data-testid="instructions">{instructions}</p>
       <div>
@@ -80,7 +80,7 @@ function InProcessPage({ id, type }) {
       </div>
       <LinkBtn
         disabled={usedIngredients.length < ingredients.length}
-        onClick={endRecipe(type, id)}
+        onClick={endRecipe(type, recipe)}
         testid="finish-recipe-btn"
         text="Finalizar receita"
         to="/receitas-feitas"

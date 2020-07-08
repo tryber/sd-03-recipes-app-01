@@ -5,6 +5,13 @@ import ShareIcon from './ShareIcon';
 import './CardFavDone.css';
 import { rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
 
+const addExtraInfo = (tags, doneDate) => (
+  <div>
+    <p>Feita em: {new Date(doneDate).toLocaleDateString()}</p>
+    {tags.map((tag) => <span className='food-tag'>{tag}</span>)}
+  </div>
+);
+
 function CardFavDone({
   id,
   type,
@@ -13,6 +20,9 @@ function CardFavDone({
   image,
   category,
   alcoholicOrNot,
+  doneDate,
+  tags,
+  mode,
 }) {
   return (
     <div key={id} className="card-fav-done">
@@ -29,10 +39,15 @@ function CardFavDone({
           <p className="food-title">{name}</p>
         </Link>
         <div className="action-bar">
-          <button
-            className="unfavoriteBtn"
-            onClick={() => rmFromFavoriteStorage(id)}
-          />
+          {mode === 'done'
+          ? addExtraInfo(tags, doneDate)
+          : (<button
+              className="unfavoriteBtn"
+              onClick={() => rmFromFavoriteStorage(id)}
+            />
+            )
+          }
+
           <ShareIcon textToCopy={`${window.location.host}/${type}s/${id}`} />
         </div>
       </div>
