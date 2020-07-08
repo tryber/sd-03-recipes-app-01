@@ -3,11 +3,11 @@ import React from 'react';
 // const ginDrinks = require('../mocks/ginDrinks');
 import { fireEvent, waitForDomChange, cleanup } from '@testing-library/react';
 
-import { FoodsPage } from '../pages';
+import { FoodsPage, DrinksPage } from '../pages';
 
 import { mockedFetch, renderWithContext } from './tests_services';
 
-jest.spyOn(global, 'fetch').mockImplementation(mockedFetch);
+jest.spyOn(window, 'fetch').mockImplementation(mockedFetch);
 jest.spyOn(window, 'alert');
 
 describe('Todos os elementos devem respeitar os atributos descritos no protótipo para a barra de busca', () => {
@@ -35,7 +35,7 @@ describe('A barra de busca deve ficar logo abaixo do header e deve possuir 3 rad
     fireEvent.click(getByTestId("ingredient-search-radio"));
     fireEvent.change(getByTestId("search-input"), { target: { value: 'chicken' } });
     fireEvent.click(getByTestId("exec-search-btn"));
-    expect(fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken');
+    expect(fetch).toHaveBeenLastCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken');
   });
 
   test('Se o radio selecionado for Nome, a busca na API é feita corretamente pelo nome', async () => {
@@ -46,7 +46,7 @@ describe('A barra de busca deve ficar logo abaixo do header e deve possuir 3 rad
     fireEvent.click(getByTestId("name-search-radio"));
     fireEvent.change(getByTestId("search-input"), { target: { value: 'soup' } });
     fireEvent.click(getByTestId("exec-search-btn"));
-    expect(fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=soup');
+    expect(fetch).toHaveBeenLastCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=soup');
   });
   test('Se o radio selecionado for Primeira letra, a busca na API é feita corretamente pelo primeira letra', async () => {
     const { getByTestId } = renderWithContext(<FoodsPage />);
@@ -56,7 +56,7 @@ describe('A barra de busca deve ficar logo abaixo do header e deve possuir 3 rad
     fireEvent.click(getByTestId("first-letter-search-radio"));
     fireEvent.change(getByTestId("search-input"), { target: { value: 'a' } });
     fireEvent.click(getByTestId("exec-search-btn"));
-    expect(fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?f=a');
+    expect(fetch).toHaveBeenLastCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?f=a');
   });
 
   test('Se o radio selecionado for Primeira letra e a busca na API for feita com mais de uma letra, deve-se exibir um alert', async () => {
@@ -67,42 +67,39 @@ describe('A barra de busca deve ficar logo abaixo do header e deve possuir 3 rad
     fireEvent.click(getByTestId("first-letter-search-radio"));
     fireEvent.change(getByTestId("search-input"), { target: { value: 'aaa' } });
     fireEvent.click(getByTestId("exec-search-btn"));
-    expect(alert).toHaveBeenCalledWith('Sua busca deve conter somente 1 (um) caracter');
+    expect(alert).toHaveBeenLastCalledWith('Sua busca deve conter somente 1 (um) caracter');
   });
 });
 
-//describe('A busca deve ocorrer na API de comidas caso a pessoa esteja na página de comidas e na de bebidas caso esteja na de bebidas', () => {
-//  it('Na tela de bebidas, se o radio selecionado for Ingrediente, a busca na API é feita corretamente pelo ingrediente', () => {
+describe('A busca deve ocorrer na API de comidas caso a pessoa esteja na página de comidas e na de bebidas caso esteja na de bebidas', () => {
+  afterEach(cleanup);
+  test('Na tela de bebidas, se o radio selecionado for Ingrediente, a busca na API é feita corretamente pelo ingrediente', async () => {
+    const { getByTestId } = renderWithContext(<DrinksPage />);
+    await waitForDomChange();
+    const searchIcon = getByTestId("search-top-btn");
+    fireEvent.click(searchIcon);
+    fireEvent.click(getByTestId("ingredient-search-radio"));
+    fireEvent.change(getByTestId("search-input"), { target: { value: 'lemon' } });
+    fireEvent.click(getByTestId("exec-search-btn"));
+    expect(fetch).toHaveBeenLastCalledWith('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=lemon');
+  });
+
+  it('Na tela de bebidas, se o radio selecionado for Nome, a busca na API é feita corretamente pelo nome', async () => {
 //    cy.visit('http://localhost:3000/bebidas', {
 //      onBeforeLoad(win) {
 //        cy.spy(win, 'fetch');
 //      },
-//    });
-
-//    cy.get('[data-testid="search-top-btn"]').click();
-//    cy.get('[data-testid="ingredient-search-radio"]').click();
-//    cy.get('[data-testid="search-input"]').type('lemon');
-//    cy.get('[data-testid="exec-search-btn"]').click();
-//    cy.window()
-//      .its('fetch')
-//      .should('be.calledWith', 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=lemon');
-//  });
-
-//  it('Na tela de bebidas, se o radio selecionado for Nome, a busca na API é feita corretamente pelo nome', () => {
-//    cy.visit('http://localhost:3000/bebidas', {
-//      onBeforeLoad(win) {
-//        cy.spy(win, 'fetch');
-//      },
-//    });
-
-//    cy.get('[data-testid="search-top-btn"]').click();
-//    cy.get('[data-testid="name-search-radio"]').click();
-//    cy.get('[data-testid="search-input"]').type('gin');
-//    cy.get('[data-testid="exec-search-btn"]').click();
-//    cy.window()
-//      .its('fetch')
-//      .should('be.calledWith', 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=gin');
-//  });
+    //    });
+    const { getByTestId } = renderWithContext(<DrinksPage />);
+    await waitForDomChange();
+    const searchIcon = getByTestId("search-top-btn");
+    fireEvent.click(searchIcon);
+    fireEvent.click(getByTestId("name-search-radio"));
+    fireEvent.change(getByTestId("search-input"), { target: { value: 'gin' } });
+    fireEvent.click(getByTestId("exec-search-btn"));
+    expect(fetch).toHaveBeenLastCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=gin');
+  });
+});
 
 //  it('Na tela de bebidas, se o radio selecionado for Primeira letra, a busca na API é feita corretamente pelo primeira letra', () => {
 //    cy.visit('http://localhost:3000/bebidas', {
