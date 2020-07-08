@@ -2,8 +2,13 @@
   background-color: #c4c4c4;
   bottom: 0;
   display: flex;
+  height: 58px;
   justify-content: space-around;
   left: 50%;
   position: fixed;
   right: 50%;
+}
+
+.footer img {
+  width: 40px;
 }

@@ -1,0 +1,11 @@
+.fav-list button {
+  height: 45px;
+  margin: 10px;
+  padding: 0.5em 1.5em;
+  width: 100px;
+}
+
+.fav-grid {
+  display: flex;
+  flex-wrap: wrap;
+}

@@ -1,33 +1,28 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-import srcShareIcon from '../images/shareIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 import './ShareIcon.css';
 
 function ShareIcon({ textToCopy }) {
-  const [coping, setCoping] = useState(false);
-  const enableCopy = useCallback(() => { setCoping(true); }, []);
-  const disableCopy = useCallback(() => { setCoping(false); }, []);
+  const [copying, setCopying] = useState(false);
+  const enableCopy = useCallback(() => { setCopying(true); }, []);
+  const disableCopy = useCallback(() => { setCopying(false); }, []);
 
   useEffect(() => {
-    if (coping) {
+    if (copying) {
       navigator.clipboard.writeText(textToCopy)
-        .then(() => console.log('succes copy'))
         .catch((err) => console.log(err));
     }
-  }, [coping, setCoping, textToCopy]);
+  }, [copying, setCopying]);
 
   return (
-    <button
-      className="tooltip hidden-button"
-      onClick={enableCopy}
-      onMouseOut={disableCopy}
-    >
-      {coping
+    <button className="tooltip hidden-button" onClick={enableCopy} onMouseOut={disableCopy}>
+      {copying
         ? <p>Link copiado!</p>
-        : <img data-testid="share-btn" src={srcShareIcon} alt="click to copy the link" />
+        : <img data-testid="share-btn" src={shareIcon} alt="click to copy the link" />
       }
-      {coping || <span className="tooltiptext">Copiar Link</span>}
+      {copying || <span className="tooltiptext">Copiar Link</span>}
     </button>
   );
 }

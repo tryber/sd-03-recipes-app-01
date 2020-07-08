@@ -20,7 +20,7 @@ function DrinkDetailsPage({ id }) {
   ), []);
   const [{ loading: loadingRecom, error: errorRecom }] = useRequisition(fetchRecomends);
 
-  if (error) return <h1>Aconteceu algo errado em detalhes de bebidas 1</h1>;
+  if (error) return <h1>Aconteceu algo errado em detalhes de bebidas</h1>;
   if (loading) return <h1>Carrgando detalhes de bebidas...</h1>;
   return (
     <div>

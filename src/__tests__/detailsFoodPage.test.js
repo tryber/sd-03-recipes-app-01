@@ -2,20 +2,18 @@ import React from 'react';
 import { cleanup, waitForDomChange, fireEvent } from '@testing-library/react';
 import {
   mockedFetch,
+  renderWithContext,
   LocalStorage,
   Clipboard,
-  renderWithContextAndRouter,
-} from '../mocks/';
-
+} from './tests_services';
 import { FoodDetailsPage } from '../pages';
-
-import { meals } from '../../cypress/mocks/meals';
-import { drinks } from '../../cypress/mocks/drinks';
+import { meals } from '../../cypress/unit_tests_mocks/meals';
+import { drinks } from '../../cypress/unit_tests_mocks/drinks';
 import srcShareBtn from '../images/shareIcon.svg';
 import srcWhiteFavoriteBtn from '../images/whiteHeartIcon.svg';
 import srcBlackFavoriteBtn from '../images/blackHeartIcon.svg';
 
-window.localStorage = new LocalStorage();
+localStorage = new LocalStorage();
 navigator.clipboard = new Clipboard();
 
 jest.spyOn(window, 'fetch').mockImplementation(mockedFetch);
@@ -25,7 +23,7 @@ describe('DetailsFoodPage', () => {
 
   test('should have all the data-testids', async () => {
     const corba = meals[0];
-    const { getByTestId } = renderWithContextAndRouter(<FoodDetailsPage id={52977}/>, '/comidas/52977');
+    const { getByTestId } = renderWithContext(<FoodDetailsPage id={52977}/>, '/comidas/52977');
 
     await waitForDomChange();
     expect(fetch).toHaveBeenCalledWith(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${52977}`);
@@ -61,8 +59,7 @@ describe('DetailsFoodPage', () => {
     })
 
     const mealInstructions = getByTestId('instructions');
-    // expect(mealInstructions).toHaveTextContent(corba.strInstructions.replace(/\r\n/g, ' '));
-
+    
     expect(fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
 
     drinks.slice(0, 6).forEach((drink, index) => {
@@ -74,7 +71,7 @@ describe('DetailsFoodPage', () => {
   });
 
   test('localStorage favorite', async () => {
-    const { getByTestId, getByText } = renderWithContextAndRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
+    const { getByTestId, getByText } = renderWithContext(<FoodDetailsPage id={52977} />, '/comidas/52977');
 
     await waitForDomChange();
 
@@ -110,7 +107,7 @@ describe('DetailsFoodPage', () => {
   test('should begin favorited', async () => {
     localStorage.setItem('favoriteRecipes', JSON.stringify([{ id: '52977' }]));
 
-    const { getByTestId } = renderWithContextAndRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
+    const { getByTestId } = renderWithContext(<FoodDetailsPage id={52977} />, '/comidas/52977');
     await waitForDomChange();
 
     const favoriteBtn = getByTestId('favorite-btn');
@@ -118,7 +115,7 @@ describe('DetailsFoodPage', () => {
   });
 
   test('the Carrosel', async () => {
-    const { getByTestId } = renderWithContextAndRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
+    const { getByTestId } = renderWithContext(<FoodDetailsPage id={52977} />, '/comidas/52977');
     await waitForDomChange();
     const dotsContainer = getByTestId('dot-containers');
     const firstDot = dotsContainer.children[0];
@@ -156,7 +153,7 @@ describe('DetailsFoodPage', () => {
   });
 
   test('prev and next arrows of Carrosel', async () => {
-    const { getByText, getByTestId } = renderWithContextAndRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
+    const { getByText, getByTestId } = renderWithContext(<FoodDetailsPage id={52977} />, '/comidas/52977');
     
     await waitForDomChange();
 
@@ -208,7 +205,7 @@ describe('DetailsFoodPage', () => {
     global.fetch
       .mockReturnValueOnce(Promise.resolve({ ok: 200, json: () => Promise.resolve({ meals }) }))
       .mockReturnValue(Promise.resolve({ ok: null, json: () => Promise.resolve('Deu erradamente certo em detalhes testes') }));
-    const { getByTestId } = renderWithContextAndRouter(<FoodDetailsPage id={52977} />, '/comidas/52977');
+    const { getByTestId } = renderWithContext(<FoodDetailsPage id={52977} />, '/comidas/52977');
 
     await waitForDomChange();
 

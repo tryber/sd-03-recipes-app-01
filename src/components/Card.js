@@ -8,16 +8,15 @@ function Card({ srcImage, name, index, testid, show }) {
       className={`card ${show ? '' : 'card-invisible'}`}
       data-testid={testid.title || `${index}-recipe-card`}
     >
-      <h3 className="card-title" data-testid={`${index}-card-name`}>
-        {name}
-      </h3>
       <img
         alt="food"
         className="card-img"
         data-testid={testid.img || `${index}-card-img`}
         src={srcImage}
-        width="300px"
       />
+      <h3 className="card-title" data-testid={`${index}-card-name`}>
+        {name}
+      </h3>
     </div>
   );
 }
@@ -28,8 +27,8 @@ Card.propTypes = {
   index: PropTypes.number,
   show: PropTypes.bool,
   testid: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    img: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    img: PropTypes.string,
   }),
 };
 

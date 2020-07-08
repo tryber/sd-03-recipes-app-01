@@ -11,8 +11,7 @@ import {
   DrinksPage,
   FoodDetailsPage,
   DrinkDetailsPage,
-  FoodProcessPage,
-  DrinkProcessPage,
+  InProcessPage,
   ExploreMainPage,
   ExploreFoodPage,
   ExploreDrinkPage,
@@ -22,6 +21,7 @@ import {
   ProfilePage,
   CookedRecipesPage,
   FavoriteRecipesPage,
+  NotFoundPage,
 } from './pages';
 import './App.css';
 
@@ -33,8 +33,16 @@ function App() {
           <Route exact path="/" component={LoginPage} />
           <Route exact path="/comidas" component={FoodsPage} />
           <Route exact path="/bebidas" component={DrinksPage} />
-          <Route exact path="/comidas/:id/in-progress" component={FoodProcessPage} />
-          <Route exact path="/bebidas/:id/in-progress" component={DrinkProcessPage} />
+          <Route
+            exact
+            path="/comidas/:id/in-progress"
+            render={({ match }) => <InProcessPage id={Number(match.params.id)} type="food" />}
+          />
+          <Route
+            exact
+            path="/bebidas/:id/in-progress"
+            render={({ match }) => <InProcessPage id={Number(match.params.id)} type="drink" />}
+          />
           <Route
             exact
             path="/comidas/:id"
@@ -54,10 +62,10 @@ function App() {
           <Route exact path="/perfil" component={ProfilePage} />
           <Route exact path="/receitas-feitas" component={CookedRecipesPage} />
           <Route exact path="/receitas-favoritas" component={FavoriteRecipesPage} />
+          <Route component={NotFoundPage} />
         </Switch>
       </Router>
     </Provider>
-
   );
 }
 
