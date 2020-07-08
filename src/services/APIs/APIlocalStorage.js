@@ -2,11 +2,14 @@ export const getFavStorage = () => JSON.parse(localStorage.getItem('favoriteReci
 
 export const translateType = (type) => {
   switch (type) {
-    case /ida/:
+    case 'comida':
+    case 'bebida':
+    case 'comidas':
+    case 'babidas':
       return type;
     case 'food': return 'comida';
     case 'drink': return 'bebida';
-    default: return `type ${type} is not valid`;
+    default: return `Type ${type} is not valid`;
   }
 };
 
@@ -60,7 +63,7 @@ const sin = (type) => {
     case 'drink':
     case 'cocktails':
       return 'cocktails';
-    default: return `type ${type} not valid to sin`;
+    default: return `Type ${type} not valid to sin`;
   }
 };
 
@@ -95,7 +98,7 @@ export const setDoneRecipeStorage = (
     name,
     image,
     doneDate: new Date(),
-    tags: tags || '',
+    tags: '' || tags.split(','),
   };
   localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes(), thisFood]));
 };

@@ -10,8 +10,9 @@ const addExtraInfo = (tags, doneDate, index) => (
     <p data-testid={`${index}-horizontal-done-date`}>
       Feita em: {new Date(doneDate).toLocaleDateString()}
     </p>
-    {tags.split(',').map((tag) =>
+    {tags.map((tag, ind) =>
       <span
+        key={ind}
         className="food-tag"
         data-testid={`${index}-${tag}-horizontal-tag`}
       >
@@ -35,10 +36,11 @@ function CardFavDone({
   index,
 }) {
   return (
-    <div key={id} className="card-fav-done">
+    <div className="card-fav-done">
       <Link to={`/${type}s/${id}`}>
         <img
           alt={name}
+          data-testid={`${index}-horizontal-image`}
           src={image}
           width="165px"
         />
@@ -72,17 +74,17 @@ function CardFavDone({
 }
 
 CardFavDone.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   area: PropTypes.string.isRequired,
-  mode: PropTypes.string.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   image: PropTypes.string.isRequired,
   doneDate: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   alcoholicOrNot: PropTypes.string.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  mode: PropTypes.string,
 };
 
 CardFavDone.defaultProps = {
