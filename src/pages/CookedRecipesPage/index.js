@@ -14,7 +14,7 @@ function CookedRecipesPage() {
 
   return (
     <div className="fav-list">
-      <Header titleTag="Receitas Favoritas" />
+      <Header titleTag="Receitas Feitas" />
       <button onClick={() => setFilter('comida')} data-testid="filter-by-food-btn">Food</button>
       <button onClick={() => setFilter('bebida')} data-testid="filter-by-drink-btn">Drink</button>
       <button onClick={() => setResults(data)} data-testid="filter-by-all-btn">All</button>

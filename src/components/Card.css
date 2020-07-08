@@ -9,12 +9,6 @@
   width: 20vh;
 }
 
-.card :hover {
-  display: flex;
-  transform: rotateY(190deg);
-  transition-duration: 2s;
-}
-
 .card-invisible {
   display: none;
 }

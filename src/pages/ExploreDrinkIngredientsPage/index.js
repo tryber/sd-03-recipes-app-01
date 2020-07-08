@@ -40,7 +40,7 @@ function ExploreDrinkIngredientsPage() {
     <div>
       <Header titleTag="Explorar Ingredientes" />
       {ingredients.slice(0, 12).map(({ name, srcImage }, index) => (
-        <button onClick={() => handleRedirect(name, setDrinkFilter, setRedirect)}>
+        <button key={name} onClick={() => handleRedirect(name, setDrinkFilter, setRedirect)}>
           <Card
             name={name}
             index={index}
