@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Card from './Card';
 import ShareIcon from './ShareIcon';
 import FavoriteIcon from './FavoriteIcon';
+import './Card.css';
 
 import { getInProgress, doneRecipes, translateType } from '../services/APIs/APIlocalStorage';
 
@@ -40,7 +41,7 @@ function DetailsCard({ recipe, type }) {
         ))}
       </ul>
       <p data-testid="instructions">{instructions}</p>
-      {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
+      {video && <div class="ytb" data-testid="video"><ReactPlayer url={video} /></div>}
       {beginRecipeBtn(id, type)}
     </div>
   );

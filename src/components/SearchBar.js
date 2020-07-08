@@ -60,6 +60,7 @@ function SearchBar({ setFilter }) {
     <div>
       <div>
         <input
+          className="search"
           data-testid="search-input"
           placeholder="Buscar Receita"
           onChange={(evt) => setSearchTerm(evt.target.value)}
@@ -67,6 +68,7 @@ function SearchBar({ setFilter }) {
       </div>
       {radioButtons(setRadioFilter)}
       <button
+        className="btnSearch"
         data-testid="exec-search-btn"
         disabled={!radioFilter}
         onClick={() => setFilter(setURL(radioFilter, searchTerm))}

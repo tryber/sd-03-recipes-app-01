@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Card, CardFilters, Header, Footer, Loading } from '../../components';
 import { DrinksContext } from '../../contexts/DrinksContext';
 import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API';
+import './Drinks.css';
 
 const manageState = (loading, drinks, error) => {
   if (loading) return <Loading />;
@@ -41,7 +42,7 @@ function DrinksPage() {
 
   return (
     manageState(loading, drinks, error) || (
-      <div>
+      <div className="Drinks">
         <Header titleTag="Bebidas" filterMode={setDrinkFilter} />
         <CardFilters categories={categories} filterMode={setDrinkFilter} />
         {drinks.slice(0, 12).map(({ id, name, srcImage }, index) => (
