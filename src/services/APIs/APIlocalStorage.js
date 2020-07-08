@@ -97,8 +97,8 @@ export const setDoneRecipeStorage = (
     alcoholicOrNot: isAlcoholic || '',
     name,
     image,
-    doneDate: new Date(),
-    tags: '' || tags.split(','),
+    doneDate: new Date().toLocaleDateString(),
+    tags: typeof tags === 'string' ? tags.split(',') : [],
   };
   localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes(), thisFood]));
 };
