@@ -20,6 +20,10 @@
   width: auto;
 }
 
+.food-tag {
+  border-radius: 1em;
+}
+
 .action-bar {
   display: flex;
 }
