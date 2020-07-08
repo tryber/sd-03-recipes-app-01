@@ -9,10 +9,10 @@ function ExploreMainPage() {
     <center>
       <div>
         <Header titleTag="Explorar" />
-        <Link to="/explorar/comidas" style={{ textDecoration: "none" }}>
+        <Link to="/explorar/comidas" style={{ textDecoration: 'none' }}>
           <button className="explorer" data-testid="explore-food">Explorar Comidas</button>
         </Link>
-        <Link to="/explorar/bebidas" style={{ textDecoration: "none" }}>
+        <Link to="/explorar/bebidas" style={{ textDecoration: 'none' }}>
           <button className="explorer" data-testid="explore-drinks">Explorar Bebidas</button>
         </Link>
         <Footer />

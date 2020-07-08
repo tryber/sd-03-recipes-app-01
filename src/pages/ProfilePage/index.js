@@ -13,15 +13,15 @@ function ProfilePage() {
 
   return (
     <div>
-      <Header titleTag="Perfil" style={{ textDecoration: "none" }} />
+      <Header titleTag="Perfil" style={{ textDecoration: 'none' }} />
       <h1 className="Email" data-testid="profile-email">{email}</h1>
-      <Link to="/receitas-feitas" style={{ textDecoration: "none" }} >
+      <Link to="/receitas-feitas" style={{ textDecoration: 'none' }} >
         <button className="Perfil" data-testid="profile-done-btn">Receitas Feitas</button>
       </Link>
-      <Link to="/receitas-favoritas" style={{ textDecoration: "none" }} >
+      <Link to="/receitas-favoritas" style={{ textDecoration: 'none' }} >
         <button className="Perfil" data-testid="profile-favorite-btn">Receitas Favoritas</button>
       </Link>
-      <Link to="/" style={{ textDecoration: "none" }}>
+      <Link to="/" style={{ textDecoration: 'none' }}>
         <button
           className="Perfil"
           data-testid="profile-logout-btn"
