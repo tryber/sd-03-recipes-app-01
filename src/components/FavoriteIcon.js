@@ -37,7 +37,7 @@ function FavoriteIcon({ recipe, type }) {
     <button className="hidden-button" onClick={toggleFavorite}>
       <img
         alt={alt}
-        data-testid={"favorite-btn"}
+        data-testid="favorite-btn"
         src={src}
       />
     </button>
