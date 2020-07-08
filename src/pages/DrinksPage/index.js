@@ -41,7 +41,7 @@ function DrinksPage() {
 
   return (
     manageState(loading, drinks, error) || (
-      <div>
+      <div className="Drinksback">
         <Header titleTag="Bebidas" filterMode={setDrinkFilter} />
         <CardFilters categories={categories} filterMode={setDrinkFilter} />
         {drinks.slice(0, 12).map(({ id, name, srcImage }, index) => (

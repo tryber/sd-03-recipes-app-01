@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import './FoodDetails.css';
 
 import { DetailsCard, Carrosel } from '../../components';
 
@@ -22,12 +23,14 @@ function FoodDetailsPage({ id }) {
   if (error) return <h1>Aconteceu algo errado em detalhes de comida</h1>;
   if (loading) return <h1>Carregando receita</h1>;
   return (
-    <div>
-      <DetailsCard type="food" recipe={food} />
-      {errorRecom && <h3 data-testid="error-recom">Aconteceu algo errado em recomendações</h3>}
-      {!errorRecom && loadingRecom && <h3>Carregando receita</h3>}
-      {!errorRecom && !loadingRecom && recomends && <Carrosel cards={recomends} />}
-    </div>
+    <center>
+      <div className="allPage">
+        <DetailsCard type="food" eat={food} />
+        {errorRecom && <h3 data-testid="error-recom">Aconteceu algo errado em recomendações</h3>}
+        {!errorRecom && loadingRecom && <h3>Carregando detalhes de comida...</h3>}
+        {!errorRecom && !loadingRecom && recomends && <Carrosel cards={recomends} />}
+      </div>
+    </center>
   );
 }
 

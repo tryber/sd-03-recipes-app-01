@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import './Card.css';
 
 
 const setURL = (category) => {
@@ -14,8 +15,9 @@ const setURL = (category) => {
 function CardFilters({ categories, filterMode }) {
   const [categorySel, setCategorySel] = useState('all');
   return (
-    <div>
+    <div className="backSearch">
       <button
+        className="ButtonSearch"
         type="button"
         value="all"
         data-testid="All-category-filter"
@@ -29,6 +31,7 @@ function CardFilters({ categories, filterMode }) {
       </button>
       {categories.slice(0, 5).map(({ category }) => (
         <button
+          className="ButtonSearch"
           key={category}
           type="button"
           data-testid={`${category}-category-filter`}

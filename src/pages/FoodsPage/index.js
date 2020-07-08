@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Card, CardFilters, Header, Footer, Loading } from '../../components';
 import { FoodsContext } from '../../contexts/FoodsContext';
+import './FoodPage.css';
 import {
   fetchFoodsApi,
   handleFoodsData,
@@ -45,14 +46,16 @@ function FoodsPage() {
         categories={categories}
         filterMode={setFoodFilter}
       />
-      {foods
-        .slice(0, 12)
-        .map(({ id, name, srcImage }, index) => (
-          <Link key={id} to={`/comidas/${id}`}>
-            <Card name={name} index={index} srcImage={srcImage} />
-          </Link>
-        ))}
-      <Footer />
+      <div className="FodePage">
+        {foods
+          .slice(0, 12)
+          .map(({ id, name, srcImage }, index) => (
+            <Link key={id} to={`/comidas/${id}`}>
+              <Card name={name} index={index} srcImage={srcImage} />
+            </Link>
+          ))}
+        <Footer />
+      </div>
     </div>
   );
 }

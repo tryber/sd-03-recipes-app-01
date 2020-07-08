@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
+import './Card.css';
 
 import Card from './Card';
 import ShareIcon from './ShareIcon';
@@ -39,8 +40,18 @@ function DetailsCard({ recipe, type }) {
           </li>
         ))}
       </ul>
+      <p className="instructions" data-testid="instructions">{instructions}</p>
+      {video && <div data-testid="video"><p className="ytb"><ReactPlayer url={video} /></p></div>}
+      {Boolean(doneRecipes(id)) ||
+        <Link to={`${type === 'food' ? '/comidas' : '/bebidas'}/${id}/in-progress`}>
+          <button
+            data-testid="start-recipe-btn"
+            className="buttonIniciar"
+          >{getInProgress(type)[id] ? 'Continuar Receita' : 'Iniciar Receita'}</button>
+        </Link>
+      }
       <p data-testid="instructions">{instructions}</p>
-      {video && <div data-testid="video"><ReactPlayer url={video} /></div>}
+      {video && <div data-testid="video" className="ytb"><ReactPlayer url={video} /></div>}
       {beginRecipeBtn(id, type)}
     </div>
   );
