@@ -1,40 +1,28 @@
 .headerBar {
   align-items: center;
   background-image: url('../images/receitas.jpg');
-  border: black solid 1px;
   display: flex;
-  font-size: 1em;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 3em;
   height: 2em;
   justify-content: space-around;
 }
 
 .searchButton {
-<<<<<<< HEAD
-  background-color: #c4c4c4;
-=======
-<<<<<<< HEAD
   background-color: rgba(10,23,55,0.0);
   background-image: url('../images/searchIcon.svg');
-=======
-  background-color: #c4c4c4;
->>>>>>> c2bdab2df9974a803118bc50e73df408d4da33af
->>>>>>> master
   border: none;
   cursor: pointer;
-  height: 2.3em;
+  height:2.3em;
   width: 2.2em;
 }
 
 .searchBar {
   background-image: url('../images/comidas.jpg');
-  border: solid black 1px;
-  font-size: 1em;
+  color: rgb(255, 255, 255);
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.5em;
   font-style: italic;
-}
-
-.newFormCss {
-  -webkit-text-stroke-color: black;
-  -webkit-text-stroke-width: 1px;
 }
 
 .radioSearchButtons {

@@ -8,24 +8,18 @@ function Card({ srcImage, name, index, testid, show }) {
       className={`card ${show ? '' : 'card-invisible'}`}
       data-testid={testid.title || `${index}-recipe-card`}
     >
-      <h3 className="card-title cssNew" data-testid={`${index}-card-name`}>
-        {name}
-      </h3>
       <img
         alt="food"
         className="card-img"
         data-testid={testid.img || `${index}-card-img`}
         src={srcImage}
-<<<<<<< HEAD
         width="100%"
-=======
-<<<<<<< HEAD
-        width="100%"
-=======
->>>>>>> c2bdab2df9974a803118bc50e73df408d4da33af
->>>>>>> master
       />
+      <h3 className="card-title" data-testid={`${index}-card-name`}>
+        {name}
+      </h3>
     </div>
+
   );
 }
 

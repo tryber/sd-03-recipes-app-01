@@ -2,19 +2,8 @@
   background-image: url('../images/comidas.jpg');
   bottom: 0;
   display: flex;
-<<<<<<< HEAD
-  height: 58px;
-  justify-content: space-around;
-  left: 30%;
-=======
-<<<<<<< HEAD
-=======
-  height: 58px;
-  justify-content: space-around;
-  left: 50%;
->>>>>>> c2bdab2df9974a803118bc50e73df408d4da33af
->>>>>>> master
   position: fixed;
+  transform: translateX(50%);
 }
 
 .footer img {
