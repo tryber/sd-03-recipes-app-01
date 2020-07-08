@@ -23,7 +23,7 @@ const fetchAPI = async (type, id, setRecipe) => {
   } else if (type === 'drink') {
     return fetchDrinkApi(`lookup.php?i=${id}`)
       .then(({ drinks }) => setRecipe(handleDrinksData(drinks[0])));
-  } return Promise.reject(`type ${type} insn't valid`);
+  } return Promise.reject(`Type ${type} isn't valid`);
 };
 
 const endRecipe = (type, recipe) => () => {
@@ -48,12 +48,12 @@ function InProcessPage({ id, type }) {
     setInProgressUse(type, id),
   );
 
-  const toogleCheckbox = useCallback(({ target: { value, checked } }) => {
+  const toggleCheckbox = useCallback(({ target: { value, checked } }) => {
     setUsedIngredients((usedIng) => changeCheckBox(usedIng, checked, value));
   }, [setUsedIngredients]);
 
   if (error) return <h1>Aconteceu algo errado em detalhes de bebidas em progresso</h1>;
-  if (loading) return <h1>Carrgando detalhes de bebidas em progresso...</h1>;
+  if (loading) return <h1>Carregando detalhes de bebidas em progresso...</h1>;
 
   const { name, srcImage, category, ingredients, instructions, isAlcoholic } = recipe;
   return (
@@ -64,7 +64,7 @@ function InProcessPage({ id, type }) {
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
       <ShareIcon textToCopy={`${window.location.href.slice(0, -12)}`} />
-      <FavoriteIcon eat={recipe} type={type} />
+      <FavoriteIcon recipe={recipe} type={type} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <p data-testid="instructions">{instructions}</p>
       <div>
@@ -74,7 +74,7 @@ function InProcessPage({ id, type }) {
             checked={usedIngredients.some((used) => used === index)}
             index={index}
             item={ingredient}
-            handleChange={toogleCheckbox}
+            handleChange={toggleCheckbox}
           />
         ))}
       </div>

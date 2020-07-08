@@ -21,8 +21,8 @@ function FavoriteRecipesPage() {
       <button onClick={() => setResults(data)} data-testid="filter-by-all-btn">All</button>
       <div className="fav-grid">
         {filter
-          ? results.map((elem) => <CardFavDone {...elem} />)
-          : data.map((elem) => <CardFavDone {...elem} />)
+          ? results.map((elem, index) => <CardFavDone {...elem} index={index} />)
+          : data.map((elem, index) => <CardFavDone {...elem} index={index} />)
         }
       </div>
     </div>

@@ -2,8 +2,7 @@ export const getFavStorage = () => JSON.parse(localStorage.getItem('favoriteReci
 
 export const translateType = (type) => {
   switch (type) {
-    case 'comida':
-    case 'bebida':
+    case /ida/:
       return type;
     case 'food': return 'comida';
     case 'drink': return 'bebida';
@@ -85,7 +84,7 @@ export const doneRecipes = (id) => {
 };
 
 export const setDoneRecipeStorage = (
-  { id, origin, category, isAlcoholic, name, srcImage: image }, type,
+  { id, origin, category, isAlcoholic, name, tags, srcImage: image }, type,
 ) => {
   const thisFood = {
     id,
@@ -96,7 +95,8 @@ export const setDoneRecipeStorage = (
     name,
     image,
     doneDate: new Date(),
-    tags: [],
+    tags,
+    // tags: [],
   };
   localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes(), thisFood]));
 };

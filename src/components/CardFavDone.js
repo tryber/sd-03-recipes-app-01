@@ -5,10 +5,18 @@ import ShareIcon from './ShareIcon';
 import './CardFavDone.css';
 import { rmFromFavoriteStorage } from '../services/APIs/APIlocalStorage';
 
-const addExtraInfo = (tags, doneDate) => (
+const addExtraInfo = (tags, doneDate, index) => (
   <div>
-    <p>Feita em: {new Date(doneDate).toLocaleDateString()}</p>
-    {tags.map((tag) => <span className='food-tag'>{tag}</span>)}
+    <p
+      data-testid={`${index}-horizontal-done-date`}>Feita em: {new Date(doneDate).toLocaleDateString()}</p>
+    {tags.map((tag) => 
+      <span
+        className="food-tag"
+        data-testid={`${index}-${tag}-horizontal-tag`}
+      >
+        {tag}
+      </span>
+      )}
   </div>
 );
 
@@ -23,6 +31,7 @@ function CardFavDone({
   doneDate,
   tags,
   mode,
+  index,
 }) {
   return (
     <div key={id} className="card-fav-done">
@@ -35,20 +44,29 @@ function CardFavDone({
       </Link>
       <div className="info">
         <Link to={`/${type}s/${id}`}>
-          <p className="food-info">{area || alcoholicOrNot} - {category}</p>
-          <p className="food-title">{name}</p>
+          <p
+            className="food-info"
+            data-testid={`${index}-horizontal-top-text`}
+          >
+            {area || alcoholicOrNot} - {category}
+          </p>
+          <p className="food-title" data-testid={`${index}-horizontal-name`} >{name}</p>
         </Link>
         <div className="action-bar">
           {mode === 'done'
-          ? addExtraInfo(tags, doneDate)
-          : (<button
+          ? addExtraInfo(tags, doneDate, index)
+          : (
+            <button
               className="unfavoriteBtn"
+              data-testid={`${index}-horizontal-favorite-btn`}
               onClick={() => rmFromFavoriteStorage(id)}
             />
             )
           }
-
-          <ShareIcon textToCopy={`${window.location.host}/${type}s/${id}`} />
+          <ShareIcon
+            index={index}
+            textToCopy={`${window.location.host}/${type}s/${id}`}
+          />
         </div>
       </div>
     </div>
@@ -60,13 +78,15 @@ CardFavDone.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   area: PropTypes.string.isRequired,
+  mode: PropTypes.string.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   image: PropTypes.string.isRequired,
+  doneDate: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   alcoholicOrNot: PropTypes.string.isRequired,
 };
 
 CardFavDone.defaultProps = {
-  // testid: { title: '', img: '' },
   index: null,
   show: true,
 };

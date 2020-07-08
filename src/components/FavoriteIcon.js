@@ -12,15 +12,15 @@ import {
   getFavStorage,
 } from '../services/APIs/APIlocalStorage';
 
-function FavoriteIcon({ eat, type }) {
+function FavoriteIcon({ recipe, type }) {
   const [isFavorite, setIsFavorite] = useState(
-    getFavStorage().some((favorite) => Number(favorite.id) === Number(eat.id)),
+    getFavStorage().some((favorite) => Number(favorite.id) === Number(recipe.id)),
   );
 
   const handleFavoriteStorage = useCallback((isToSend) => {
-    if (isToSend) return sendToFavoriteStorage(eat, type);
-    return rmFromFavoriteStorage(eat.id);
-  }, [type, eat]);
+    if (isToSend) return sendToFavoriteStorage(recipe, type);
+    return rmFromFavoriteStorage(recipe.id);
+  }, [type, recipe]);
 
   const toggleFavorite = useCallback(() => {
     setIsFavorite(!isFavorite);
@@ -43,7 +43,7 @@ function FavoriteIcon({ eat, type }) {
 }
 
 FavoriteIcon.propTypes = {
-  eat: PropTypes.shape(eatShape).isRequired,
+  recipe: PropTypes.shape(eatShape).isRequired,
   type: typeShape.isRequired,
 };
 

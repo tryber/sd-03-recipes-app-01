@@ -21,8 +21,8 @@ const beginRecipeBtn = (id, type) => (
       </Link>
   );
 
-function DetailsCard({ eat, type }) {
-  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = eat;
+function DetailsCard({ recipe, type }) {
+  const { id, name, srcImage, video, category, ingredients, instructions, isAlcoholic } = recipe;
 
   return (
     <div>
@@ -32,7 +32,7 @@ function DetailsCard({ eat, type }) {
         testid={{ title: 'recipe-title', img: 'recipe-photo' }}
       />
       <ShareIcon textToCopy={window.location.href} />
-      <FavoriteIcon eat={eat} type={translate(type)} />
+      <FavoriteIcon recipe={recipe} type={translate(type)} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
         {ingredients.map(({ ingredient, measure }, index) => (
@@ -49,7 +49,7 @@ function DetailsCard({ eat, type }) {
 }
 
 DetailsCard.propTypes = {
-  eat: PropTypes.shape({
+  recipe: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
@@ -70,7 +70,7 @@ DetailsCard.propTypes = {
 };
 
 DetailsCard.defaultProps = {
-  eat: { source: null, isAlcoholic: null, origin: '', video: '' },
+  recipe: { source: null, isAlcoholic: null, origin: '', video: '' },
 };
 
 export default DetailsCard;
