@@ -25,7 +25,9 @@ function ProfilePage() {
         <button
           className="Perfil"
           data-testid="profile-logout-btn"
-          onClick={() => clearUP()} >Sair</button>
+          onClick={() => clearUP()}
+          >Sair
+          </button>
       </Link>
       <Footer />
     </div>
