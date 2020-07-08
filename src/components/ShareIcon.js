@@ -33,6 +33,7 @@ function ShareIcon({ textToCopy, index }) {
 }
 
 ShareIcon.propTypes = {
+  index: PropTypes.number.isRequired,
   textToCopy: PropTypes.string.isRequired,
 };
 
