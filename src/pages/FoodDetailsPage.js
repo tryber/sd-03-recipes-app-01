@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { DetailsCard, Carrosel } from '../components';
 
-import { fetchApis, handleFoodsData, handleDrinksData } from '../services/APIs/FOODS_API';
+import { fetchApis, handleFoodsData, handleDrinksData } from '../services/APIs/recipesApi';
 import useRequisition from '../hooks/requisition';
 
 function FoodDetailsPage({ id }) {

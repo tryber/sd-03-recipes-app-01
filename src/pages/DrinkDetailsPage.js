@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { DetailsCard, Carrosel } from '../components';
-import { fetchApis, handleDrinksData, handleFoodsData } from '../services/APIs/FOODS_API';
+import { fetchApis, handleDrinksData, handleFoodsData } from '../services/APIs/recipesApi';
 import useRequisition from '../hooks/requisition';
 
 function DrinkDetailsPage({ id }) {

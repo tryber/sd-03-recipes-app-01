@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import { Footer } from '../components';
-import { fetchApis } from '../services/APIs/FOODS_API';
+import { fetchApis } from '../services/APIs/recipesApi';
 
 const handleRedirect = async (setId) => {
   const data = await fetchApis('random.php');

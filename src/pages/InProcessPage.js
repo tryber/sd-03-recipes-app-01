@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { CheckBox, Card, FavoriteIcon, ShareIcon, LinkBtn } from '../components';
 
-import { fetchApis, handleDrinksData, handleFoodsData } from '../services/APIs/FOODS_API';
+import { fetchApis, handleDrinksData, handleFoodsData } from '../services/APIs/recipesApi';
 
 import useRequisition from '../hooks/requisition';
 import useLocalStorage from '../hooks/localStorage';

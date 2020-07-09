@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Card, Header, Footer, Loading } from '../components';
 import { FoodsContext } from '../contexts/FoodsContext';
-import { fetchApis } from '../services/APIs/FOODS_API';
+import { fetchApis } from '../services/APIs/recipesApi';
 
 const handleRedirect = (name, setFoodFilter, setRedirect) => {
   const search = `filter.php?i=${name}`;

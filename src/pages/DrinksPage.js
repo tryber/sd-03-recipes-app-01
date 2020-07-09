@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Card, CardFilters, Header, Footer, Loading } from '../components';
 import { DrinksContext } from '../contexts/DrinksContext';
-import { fetchApis, handleDrinksData } from '../services/APIs/FOODS_API';
+import { fetchApis, handleDrinksData } from '../services/APIs/recipesApi';
 
 const manageState = (loading, drinks, error) => {
   if (loading) return <Loading />;

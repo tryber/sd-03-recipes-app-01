@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchApis } from '../services/APIs/FOODS_API';
+import { fetchApis } from '../services/APIs/recipesApi';
 
 const useRequisition = (requisition, setState, type, query, key) => {
   const [loading, setLoading] = useState(true);
