@@ -1,11 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Card, CardFilters, Header, Footer, Loading } from '../../components';
-import { FoodsContext } from '../../contexts/FoodsContext';
-import {
-  fetchFoodsApi,
-  handleFoodsData,
-} from '../../services/APIs/FOODS_API';
+import { Card, CardFilters, Header, Footer, Loading } from '../components';
+import { FoodsContext } from '../contexts/FoodsContext';
+import { fetchApis, handleFoodsData } from '../services/APIs/FOODS_API';
 
 const manageState = (loading, foods, error) => {
   if (loading) return <Loading />;
@@ -21,7 +18,7 @@ function FoodsPage() {
   const [{ foods, foodFilter }, { setFoods, setFoodFilter }] = useContext(FoodsContext);
 
   useEffect(() => {
-    fetchFoodsApi(foodFilter)
+    fetchApis(foodFilter)
       .then(({ meals }) => setFoods(meals.map((food) => handleFoodsData(food))))
       .then(() => setLoading(false))
       .catch((err) => {
@@ -31,7 +28,7 @@ function FoodsPage() {
   }, [setFoods, setLoading, foodFilter]);
 
   useEffect(() => {
-    fetchFoodsApi('list.php?c=list')
+    fetchApis('list.php?c=list')
       .then(({ meals }) => meals.map(({ strCategory: category }) => ({ category })))
       .then((arr) => { setCategories(arr); setLoading(false); })
       .catch((err) => { console.log(err); setError(err); });

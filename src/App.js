@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Provider from './contexts/Provider';
 import {
   LoginPage,
@@ -28,7 +24,7 @@ import './App.css';
 function App() {
   return (
     <Provider>
-      <Router>
+      <BrowserRouter>
         <Switch>
           <Route exact path="/" component={LoginPage} />
           <Route exact path="/comidas" component={FoodsPage} />
@@ -36,12 +32,12 @@ function App() {
           <Route
             exact
             path="/comidas/:id/in-progress"
-            render={({ match }) => <InProcessPage id={Number(match.params.id)} type="food" />}
+            render={({ match }) => <InProcessPage id={Number(match.params.id)} type="meal" />}
           />
           <Route
             exact
             path="/bebidas/:id/in-progress"
-            render={({ match }) => <InProcessPage id={Number(match.params.id)} type="drink" />}
+            render={({ match }) => <InProcessPage id={Number(match.params.id)} type="cocktail" />}
           />
           <Route
             exact
@@ -64,7 +60,7 @@ function App() {
           <Route exact path="/receitas-favoritas" component={FavoriteRecipesPage} />
           <Route component={NotFoundPage} />
         </Switch>
-      </Router>
+      </BrowserRouter>
     </Provider>
   );
 }

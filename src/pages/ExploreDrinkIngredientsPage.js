@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Card, Header, Footer, Loading } from '../../components';
-import { DrinksContext } from '../../contexts/DrinksContext';
-import { fetchDrinkApi } from '../../services/APIs/DRINKS_API';
+import { Card, Header, Footer, Loading } from '../components';
+import { DrinksContext } from '../contexts/DrinksContext';
+import { fetchApis } from '../services/APIs/FOODS_API';
 
 const handleRedirect = (name, setDrinkFilter, setRedirect) => {
   const search = `filter.php?i=${name}`;
@@ -17,7 +17,7 @@ function ExploreDrinkIngredientsPage() {
   const [, { setDrinkFilter }] = useContext(DrinksContext);
 
   useEffect(() => {
-    fetchDrinkApi('list.php?i=list')
+    fetchApis('list.php?i=list')
       .then(({ drinks }) =>
         drinks.map(({ strIngredient1: ingredient }) => ({
           name: ingredient,

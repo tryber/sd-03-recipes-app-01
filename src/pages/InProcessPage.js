@@ -1,27 +1,26 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { CheckBox, Card, FavoriteIcon, ShareIcon, LinkBtn } from '../../components';
+import { CheckBox, Card, FavoriteIcon, ShareIcon, LinkBtn } from '../components';
 
-import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API';
-import { fetchFoodsApi, handleFoodsData } from '../../services/APIs/FOODS_API';
+import { fetchApis, handleDrinksData, handleFoodsData } from '../services/APIs/FOODS_API';
 
-import useRequisition from '../../hooks/requisition';
-import useLocalStorage from '../../hooks/localStorage';
+import useRequisition from '../hooks/requisition';
+import useLocalStorage from '../hooks/localStorage';
 
 import {
   getInProgress,
   setInProgress,
   rmInProgress,
   setDoneRecipeStorage,
-} from '../../services/APIs/APIlocalStorage';
+} from '../services/APIs/APIlocalStorage';
 
 const fetchAPI = async (type, id, setRecipe) => {
   if (type === 'food') {
-    return fetchFoodsApi(`lookup.php?i=${id}`)
+    return fetchApis(`lookup.php?i=${id}`)
       .then(({ meals }) => setRecipe(handleFoodsData(meals[0])));
   } else if (type === 'drink') {
-    return fetchDrinkApi(`lookup.php?i=${id}`)
+    return fetchApis(`lookup.php?i=${id}`)
       .then(({ drinks }) => setRecipe(handleDrinksData(drinks[0])));
   } return Promise.reject(`Type ${type} isn't valid`);
 };

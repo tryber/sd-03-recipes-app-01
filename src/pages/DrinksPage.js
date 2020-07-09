@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Card, CardFilters, Header, Footer, Loading } from '../../components';
-import { DrinksContext } from '../../contexts/DrinksContext';
-import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API';
+import { Card, CardFilters, Header, Footer, Loading } from '../components';
+import { DrinksContext } from '../contexts/DrinksContext';
+import { fetchApis, handleDrinksData } from '../services/APIs/FOODS_API';
 
 const manageState = (loading, drinks, error) => {
   if (loading) return <Loading />;
@@ -18,7 +18,7 @@ function DrinksPage() {
   const [{ drinks, drinkFilter }, { setDrinks, setDrinkFilter }] = useContext(DrinksContext);
 
   useEffect(() => {
-    fetchDrinkApi(drinkFilter)
+    fetchApis(drinkFilter)
       .then(({ drinks: drk }) => setDrinks(drk.map((drink) => handleDrinksData(drink))))
       .then(() => setLoading(false))
       .catch((err) => {
@@ -28,7 +28,7 @@ function DrinksPage() {
   }, [setDrinks, setLoading, drinkFilter]);
 
   useEffect(() => {
-    fetchDrinkApi('list.php?c=list')
+    fetchApis('list.php?c=list')
       .then(({ drinks: drks }) =>
         setCategories(drks.map(({ strCategory: category }) => ({ category }))),
       )

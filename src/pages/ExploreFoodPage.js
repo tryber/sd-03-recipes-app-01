@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import Header from '../../components/Header';
-import { Footer } from '../../components';
-import { fetchFoodsApi } from '../../services/APIs/FOODS_API';
+import Header from '../components/Header';
+import { Footer } from '../components';
+import { fetchApis } from '../services/APIs/FOODS_API';
 
 const handleRedirect = async (setId) => {
-  const data = await fetchFoodsApi('random.php');
+  const data = await fetchApis('random.php');
   const { idMeal } = data.meals[0];
   return setId(idMeal);
 };

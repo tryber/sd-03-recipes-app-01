@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../../components/Header';
-import CardFavDone from '../../components/CardFavDone';
-import './index.css';
-import { getFavStorage } from '../../services/APIs/APIlocalStorage';
-import useLocalStorage from '../../hooks/localStorage';
+import Header from '../components/Header';
+import CardFavDone from '../components/CardFavDone';
+import './FavoriteRecipesPage.css';
+import { getFavStorage } from '../services/APIs/APIlocalStorage';
+import useLocalStorage from '../hooks/localStorage';
 
 const setStorage = (nS) => localStorage.setItem('favoriteRecipes', JSON.stringify(nS));
 

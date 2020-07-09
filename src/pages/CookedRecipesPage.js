@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../../components/Header';
-import { doneRecipes } from '../../services/APIs/APIlocalStorage';
-import CardFavDone from '../../components/CardFavDone';
+import Header from '../components/Header';
+import { doneRecipes } from '../services/APIs/APIlocalStorage';
+import CardFavDone from '../components/CardFavDone';
 
 function CookedRecipesPage() {
   const data = doneRecipes();

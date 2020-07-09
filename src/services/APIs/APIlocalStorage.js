@@ -7,8 +7,8 @@ export const translateType = (type) => {
     case 'comidas':
     case 'babidas':
       return type;
-    case 'food': return 'comida';
-    case 'drink': return 'bebida';
+    case 'meal': return 'comida';
+    case 'cocktail': return 'bebida';
     default: return `Type ${type} is not valid`;
   }
 };
@@ -55,28 +55,26 @@ export const getInProgress = (type) => {
   }
 };
 
-const sin = (type) => {
+export const synonym = (type) => {
   switch (type) {
-    case 'food':
     case 'meals':
-      return 'meals';
-    case 'drink':
+      return 'meal';
     case 'cocktails':
-      return 'cocktails';
-    default: return `Type ${type} not valid to sin`;
+      return 'cocktail';
+    default: return `Type ${type} not valid to synonym`;
   }
 };
 
 export const setInProgress = (type, id, value) => {
   const current = getInProgress();
-  const key = sin(type);
+  const key = synonym(type);
   const newInProgress = { ...current, [key]: { ...current[key], [id]: value } };
   localStorage.setItem('inProgressRecipes', JSON.stringify(newInProgress));
 };
 
 export const rmInProgress = (type, id) => {
   const current = getInProgress();
-  delete current[sin(type)][id];
+  delete current[synonym(type)][id];
   localStorage.setItem('inProgressRecipes', JSON.stringify(current));
 };
 
