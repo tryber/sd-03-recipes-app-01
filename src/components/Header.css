@@ -24,3 +24,7 @@
 .radioSearchButtons {
   justify-content: space-around;
 }
+
+.header-title {
+  text-transform: capitalize;
+}

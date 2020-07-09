@@ -3,8 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Provider from './contexts/Provider';
 import {
   LoginPage,
-  FoodsPage,
-  DrinksPage,
+  MainPage,
   FoodDetailsPage,
   DrinkDetailsPage,
   InProcessPage,
@@ -27,8 +26,8 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={LoginPage} />
-          <Route exact path="/comidas" component={FoodsPage} />
-          <Route exact path="/bebidas" component={DrinksPage} />
+          <Route exact path="/comidas" render={() => <MainPage type="meal" />} />
+          <Route exact path="/bebidas" render={() => <MainPage type="drink" />} />
           <Route
             exact
             path="/comidas/:id/in-progress"

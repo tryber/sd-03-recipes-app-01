@@ -15,7 +15,7 @@ const Header = ({ titleTag, filterMode }) => {
         <Link to="/perfil" data-testid="profile-link-btn" >
           <img data-testid="profile-top-btn" src={profileIcon} alt="Ícone de perfil" />
         </Link>
-        <h2 data-testid="page-title">{titleTag}</h2>
+        <h2 data-testid="page-title" className="header-title">{titleTag}</h2>
         { filterMode ? (
           <button className="hidden-button" onClick={() => setDisplaySearch((dplSch) => !dplSch)}>
             <img

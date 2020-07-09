@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { handleCategs } from '../services/APIs/recipesApi';
 import PropTypes from 'prop-types';
-
+import useRequisition from '../hooks/requisition';
+import { Loading } from '../components';
 
 const setURL = (category) => {
   switch (category) {
@@ -11,8 +13,16 @@ const setURL = (category) => {
   }
 };
 
-function CardFilters({ categories, filterMode }) {
+const dplMsn = () => alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+
+function CardFilters({ type, filterMode = () => null }) {
   const [categorySel, setCategorySel] = useState('all');
+  const [{ loading, error, recipe: categories }] = useRequisition(
+    [type, 'list.php?c=list'], handleCategs, dplMsn,
+  );
+
+  if (error) return <h1>Something went wrong</h1>;
+  if (loading) return <Loading />;
   return (
     <div>
       <button
@@ -23,11 +33,10 @@ function CardFilters({ categories, filterMode }) {
           filterMode(setURL(value));
           setCategorySel('all');
         }}
-
       >
         All
       </button>
-      {categories.slice(0, 5).map(({ category }) => (
+      {categories.slice(0, 5).map((category) => (
         <button
           key={category}
           type="button"
@@ -53,5 +62,7 @@ CardFilters.propTypes = {
   categories: PropTypes.instanceOf(Array).isRequired,
   filterMode: PropTypes.func.isRequired,
 };
+
+CardFilters.defaultProps = { categories: [] };
 
 export default CardFilters;

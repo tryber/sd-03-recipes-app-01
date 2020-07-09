@@ -20,4 +20,4 @@ export const eatShape = {
   isAlcoholic: PropTypes.string,
 };
 
-export const typeShape = PropTypes.oneOf(['food', 'drink']);
+export const typeShape = PropTypes.oneOf(['meal', 'drink']);

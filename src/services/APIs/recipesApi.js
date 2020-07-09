@@ -1,5 +1,18 @@
+const toApiName = (type) => {
+  if (type === 'drink') return 'cocktail';
+  return type;
+};
+
+export const translateType = (type) => {
+  switch (type) {
+    case 'drink': case 'cocktail': return 'bebida';
+    case 'meal': return 'bebida';
+    default: return `Type ${type} not valid`;
+  }
+}
+
 export async function fetchApis(type, query = 'search.php?s=') {
-  const response = await fetch(`https://www.the${type}db.com/api/json/v1/1/${query}`);
+  const response = await fetch(`https://www.the${toApiName(type)}db.com/api/json/v1/1/${query}`);
   const json = await response.json();
   return response.ok ? Promise.resolve(json) : Promise.reject(json);
 }
@@ -68,3 +81,14 @@ export const handleFoodsData = ({
   obj.ingredients = reorganizeIngredients(food);
   return obj;
 };
+
+export const handleData = (type, json) => {
+  const data = json[type + 's'];
+  if (type === 'meal') {
+    return Array.isArray(data) ? data.map(handleFoodsData) : handleFoodsData(data);
+  } else if (type === 'drink') {
+    return Array.isArray(data) ? data.map(handleDrinksData) : handleDrinksData(data);
+  }
+};
+
+export const handleCategs = (type, json) => json[type + 's'].map(({ strCategory: cat }) => cat);

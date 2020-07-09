@@ -1,6 +1,5 @@
 export { default as LoginPage } from './LoginPage';
-export { default as FoodsPage } from './FoodsPage';
-export { default as DrinksPage } from './DrinksPage';
+export { default as MainPage } from './MainPage';
 export { default as FoodDetailsPage } from './FoodDetailsPage';
 export { default as DrinkDetailsPage } from './DrinkDetailsPage';
 export { default as InProcessPage } from './InProcessPage';
