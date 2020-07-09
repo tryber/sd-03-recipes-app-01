@@ -60,7 +60,6 @@ function CardFilters({ type, filterMode = () => null }) {
 
 CardFilters.propTypes = {
   categories: PropTypes.instanceOf(Array).isRequired,
-  filterMode: PropTypes.func.isRequired,
 };
 
 CardFilters.defaultProps = { categories: [] };

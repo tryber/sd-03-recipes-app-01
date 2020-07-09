@@ -26,8 +26,8 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={LoginPage} />
-          <Route exact path="/comidas" render={() => <MainPage type="meal" />} />
-          <Route exact path="/bebidas" render={() => <MainPage type="drink" />} />
+          <Route exact path="/comidas"><MainPage type="meal" /></Route>
+          <Route exact path="/bebidas"><MainPage type="drink" /></Route>
           <Route
             exact
             path="/comidas/:id/in-progress"

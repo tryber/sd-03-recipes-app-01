@@ -7,13 +7,12 @@ const useRequisition = ([type, query], handleData = (p) => p, onError = console.
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    if (loading && !error) {
-      fetchApis(type, query)
+    setLoading(true)
+    fetchApis(type, query)
       .then((json) => handleData(type, json))
       .then((res) => { setRecipe(res); setLoading(false); })
       .catch((err) => { setError(err); setLoading(false); onError(err); });
-    }
-  }, [loading, error, query, type, handleData, onError]);
+  }, [query, type, handleData, onError]);
 
   return [{ loading, error, recipe }, { setLoading, setError, setRecipe }];
 };

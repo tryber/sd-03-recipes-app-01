@@ -1,12 +1,13 @@
 const toApiName = (type) => {
   if (type === 'drink') return 'cocktail';
+  if (type === 'meal') return 'meal';
   return type;
 };
 
 export const translateType = (type) => {
   switch (type) {
     case 'drink': case 'cocktail': return 'bebida';
-    case 'meal': return 'bebida';
+    case 'meal': return 'comida';
     default: return `Type ${type} not valid`;
   }
 }
