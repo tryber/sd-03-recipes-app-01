@@ -4,10 +4,17 @@ import useRequisition from '../hooks/requisition';
 import { Card, CardFilters, Header, Footer, Loading } from '../components';
 
 import { typeShape } from '../services/APIs/shapes';
-import { handleData, translateType } from '../services/APIs/recipesApi';
+import { handleCategs, handleData, translateType, createURL } from '../services/APIs/recipesApi';
+
+const dplMsn = () => alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
 
 function MainPage({ type }) {
-  const [{ loading, error, recipe }] = useRequisition([type], handleData);
+  const [{ loading, error, recipe }] = useRequisition(
+    createURL(type), handleData, [type], console.log,
+  );
+  const [{ loading: loadCats, error: errCats, recipe: categories }] = useRequisition(
+    createURL(type, 'list.php?c=list'), handleCategs, [type], dplMsn,
+  );
 
   if (error) return <h1 data-testid="error-recipe-page">Something Went Wrong</h1>;
   if (loading) return <Loading />;
@@ -15,7 +22,10 @@ function MainPage({ type }) {
   return (
     <div>
       <Header titleTag={`${translateType(type)}s`} />
-      <CardFilters type={type} />
+      { loadCats ? <Loading /> :
+        errCats ? <h1>Something went wrong</h1> :
+        <CardFilters type={type} categories={categories} />
+      }
       {recipe.slice(0, 12).map(({ id, name, srcImage }, index) => (
         <Link key={id} to={`/${translateType(type)}s/${id}`}>
           <Card name={name} index={index} srcImage={srcImage} />

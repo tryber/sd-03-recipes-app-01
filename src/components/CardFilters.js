@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import { handleCategs } from '../services/APIs/recipesApi';
 import PropTypes from 'prop-types';
-import useRequisition from '../hooks/requisition';
-import { Loading } from '../components';
 
 const setURL = (category) => {
   switch (category) {
@@ -13,16 +10,9 @@ const setURL = (category) => {
   }
 };
 
-const dplMsn = () => alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-
-function CardFilters({ type, filterMode = () => null }) {
+function CardFilters({ categories, filterMode }) {
   const [categorySel, setCategorySel] = useState('all');
-  const [{ loading, error, recipe: categories }] = useRequisition(
-    [type, 'list.php?c=list'], handleCategs, dplMsn,
-  );
 
-  if (error) return <h1>Something went wrong</h1>;
-  if (loading) return <Loading />;
   return (
     <div>
       <button

@@ -12,8 +12,12 @@ export const translateType = (type) => {
   }
 }
 
+export const createURL = (type, query = 'search.php?s=') => (
+  `https://www.the${toApiName(type)}db.com/api/json/v1/1/${query}`
+);
+
 export async function fetchApis(type, query = 'search.php?s=') {
-  const response = await fetch(`https://www.the${toApiName(type)}db.com/api/json/v1/1/${query}`);
+  const response = await fetch(createURL(type, query));
   const json = await response.json();
   return response.ok ? Promise.resolve(json) : Promise.reject(json);
 }
@@ -41,7 +45,7 @@ export const handleDrinksData = ({
   strTags,
   ...drink
 }) => {
-  const obj = {
+  return {
     id: idDrink,
     name: strDrink,
     category: strCategory,
@@ -52,9 +56,8 @@ export const handleDrinksData = ({
     source: strSource,
     isAlcoholic: strAlcoholic,
     tags: strTags,
+    ingredients: reorganizeIngredients(drink),
   };
-  obj.ingredientBase = reorganizeIngredients(drink);
-  return obj;
 };
 
 export const handleFoodsData = ({
@@ -69,7 +72,7 @@ export const handleFoodsData = ({
   strTags,
   ...food
 }) => {
-  const obj = {
+  return {
     id: idMeal,
     name: strMeal,
     category: strCategory,
@@ -78,12 +81,11 @@ export const handleFoodsData = ({
     srcImage: strMealThumb,
     video: strYoutube,
     tags: strTags,
+    ingredients: reorganizeIngredients(food),
   };
-  obj.ingredients = reorganizeIngredients(food);
-  return obj;
 };
 
-export const handleData = (type, json) => {
+export const handleData = (type, json) => () => {
   const data = json[type + 's'];
   if (type === 'meal') {
     return Array.isArray(data) ? data.map(handleFoodsData) : handleFoodsData(data);
