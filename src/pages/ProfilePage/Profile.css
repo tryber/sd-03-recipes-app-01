@@ -1,0 +1,26 @@
+.Perfil {
+  background-color: green;
+  border: black solid 2px;
+  border-radius: 20px;
+  display: flex;
+  font-size: 2em;
+  font-style: italic;
+  height: 50%;
+  text-align: center;
+  width: 40vh;
+}
+
+.Email {
+  border: solid black 2px;
+  border-radius: 30px;
+  color: green;
+  display: flex;
+  font-size: 5vh;
+  font-style: oblique;
+  margin: 2%;
+  text-decoration: none;
+}
+
+.Link {
+  text-decoration: none;
+}

@@ -6,6 +6,7 @@ import { DetailsCard, Carrosel } from '../../components';
 import { fetchFoodsApi, handleFoodsData } from '../../services/APIs/FOODS_API';
 import { fetchDrinkApi, handleDrinksData } from '../../services/APIs/DRINKS_API';
 import useRequisition from '../../hooks/requisition';
+import './FoodDetails.css';
 
 function FoodDetailsPage({ id }) {
   const [food, setFood] = useState(null);
@@ -22,7 +23,7 @@ function FoodDetailsPage({ id }) {
   if (error) return <h1>Aconteceu algo errado em detalhes de comida</h1>;
   if (loading) return <h1>Carregando receita</h1>;
   return (
-    <div>
+    <div className="detailsback">
       <DetailsCard type="food" recipe={food} />
       {errorRecom && <h3 data-testid="error-recom">Aconteceu algo errado em recomendações</h3>}
       {!errorRecom && loadingRecom && <h3>Carregando receita</h3>}

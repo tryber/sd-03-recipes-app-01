@@ -5,7 +5,7 @@ import './Card.css';
 function Card({ srcImage, name, index, testid, show }) {
   return (
     <div
-      className={`card ${show ? '' : 'card-invisible'}`}
+      className={`card ${show ? '' : 'card-invisible'} backcard`}
       data-testid={testid.title || `${index}-recipe-card`}
     >
       <img
@@ -14,7 +14,7 @@ function Card({ srcImage, name, index, testid, show }) {
         data-testid={testid.img || `${index}-card-img`}
         src={srcImage}
       />
-      <h3 className="card-title" data-testid={`${index}-card-name`}>
+      <h3 className="card-title cssNew" data-testid={`${index}-card-name`}>
         {name}
       </h3>
     </div>
