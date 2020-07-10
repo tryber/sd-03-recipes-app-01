@@ -36,10 +36,7 @@ function CardFavDone({ recipe, mode, index, rmRecipe }) {
       </Link>
       <div className="info">
         <Link to={`/${type}s/${id}`}>
-          <p
-            className="food-info"
-            data-testid={`${index}-horizontal-top-text`}
-          >
+          <p className="food-info" data-testid={`${index}-horizontal-top-text`}>
             {area || alcoholicOrNot} - {category}
           </p>
           <p className="food-title" data-testid={`${index}-horizontal-name`} >{name}</p>
