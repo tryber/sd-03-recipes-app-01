@@ -12,7 +12,7 @@ const setURL = (category) => {
 
 function CardFilters({ categories, filterMode }) {
   const [categorySel, setCategorySel] = useState('all');
-
+  
   return (
     <div>
       <button

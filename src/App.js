@@ -4,7 +4,6 @@ import Provider from './contexts/Provider';
 import {
   LoginPage,
   MainPage,
-  FoodDetailsPage,
   DrinkDetailsPage,
   InProcessPage,
   ExploreMainPage,
@@ -41,12 +40,12 @@ function App() {
           <Route
             exact
             path="/comidas/:id"
-            render={({ match }) => <FoodDetailsPage id={Number(match.params.id)} />}
+            render={({ match }) => <DrinkDetailsPage type="meal" id={Number(match.params.id)} />}
           />
           <Route
             exact
             path="/bebidas/:id"
-            render={({ match }) => <DrinkDetailsPage id={Number(match.params.id)} />}
+            render={({ match }) => <DrinkDetailsPage type="drink" id={Number(match.params.id)} />}
           />
           <Route exact path="/explorar" component={ExploreMainPage} />
           <Route exact path="/explorar/comidas" component={ExploreFoodPage} />

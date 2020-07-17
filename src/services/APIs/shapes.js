@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 export const ingredientShape = {
-  ingredient: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   measure: PropTypes.string,
 };
 

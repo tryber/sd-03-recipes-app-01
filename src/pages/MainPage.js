@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback as useCB } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import useRequisition from '../hooks/requisition';
 import { Card, CardFilters, Header, Footer, Loading } from '../components';
@@ -10,15 +10,16 @@ const dplMsn = () => alert('Sinto muito, não encontramos nenhuma receita para e
 
 function MainPage({ type }) {
   const [{ loading, error, recipe }] = useRequisition(
-    createURL(type), handleData, [type], console.log,
+    createURL(type), useCB(handleData(type), [type]),
   );
   const [{ loading: loadCats, error: errCats, recipe: categories }] = useRequisition(
-    createURL(type, 'list.php?c=list'), handleCategs, [type], dplMsn,
+    createURL(type, 'list.php?c=list'), useCB(handleCategs(type), [type]), dplMsn,
   );
 
   if (error) return <h1 data-testid="error-recipe-page">Something Went Wrong</h1>;
   if (loading) return <Loading />;
   if (recipe.length === 1) return <Redirect to={`/${translateType(type)}s/${recipe[0].id}`} />;
+
   return (
     <div>
       <Header titleTag={`${translateType(type)}s`} />

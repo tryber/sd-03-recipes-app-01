@@ -12,6 +12,14 @@ export const translateType = (type) => {
   }
 }
 
+export const otherType = (type) => {
+  switch (type) {
+    case 'meal': return 'drink';
+    case 'drink': return 'meal';
+    default: return `Type ${type} is not valid`;
+  }
+};
+
 export const createURL = (type, query = 'search.php?s=') => (
   `https://www.the${toApiName(type)}db.com/api/json/v1/1/${query}`
 );
@@ -85,8 +93,8 @@ export const handleFoodsData = ({
   };
 };
 
-export const handleData = (type, json) => () => {
-  const data = json[type + 's'];
+export const handleData = (type, qnt = -1) => (json) => {
+  const data = json[type + 's'].slice(0, qnt);
   if (type === 'meal') {
     return Array.isArray(data) ? data.map(handleFoodsData) : handleFoodsData(data);
   } else if (type === 'drink') {
@@ -94,4 +102,6 @@ export const handleData = (type, json) => () => {
   }
 };
 
-export const handleCategs = (type, json) => json[type + 's'].map(({ strCategory: cat }) => cat);
+export const handleCategs = (type) => (
+  (json) => json[type + 's'].map(({ strCategory }) => strCategory)
+);

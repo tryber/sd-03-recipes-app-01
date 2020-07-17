@@ -33,9 +33,9 @@ function DetailsCard({ recipe, type }) {
       <FavoriteIcon recipe={recipe} type={type} />
       <p data-testid="recipe-category">{isAlcoholic || category}</p>
       <ul>
-        {ingredients.map(({ ingredient, measure }, index) => (
-          <li data-testid={`${index}-ingredient-name-and-measure`} key={ingredient}>
-            {ingredient} {measure}
+        {ingredients.map(({ name, measure }, index) => (
+          <li data-testid={`${index}-ingredient-name-and-measure`} key={name}>
+            {name} {measure}
           </li>
         ))}
       </ul>
@@ -58,7 +58,7 @@ DetailsCard.propTypes = {
     source: PropTypes.string,
     ingredients: PropTypes.arrayOf(
       PropTypes.shape({
-        ingredient: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
         measure: PropTypes.string,
       }).isRequired,
     ).isRequired,

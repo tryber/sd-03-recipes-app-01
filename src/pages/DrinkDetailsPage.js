@@ -1,37 +1,34 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback as useCB } from 'react';
 import PropTypes from 'prop-types';
 
 import { DetailsCard, Carrosel } from '../components';
-import { fetchApis, handleDrinksData, handleFoodsData } from '../services/APIs/recipesApi';
 import useRequisition from '../hooks/requisition';
+import { handleData, createURL, otherType } from '../services/APIs/recipesApi';
+import { typeShape } from '../services/APIs/shapes';
 
-function DrinkDetailsPage({ id }) {
-  const [drink, setDrink] = useState(null);
-  const fetchDrink = useCallback(() => fetchApis(`lookup.php?i=${id}`)
-    .then(({ drinks }) => setDrink(handleDrinksData(drinks[0])))
-  , [id]);
-  const [{ loading, error }] = useRequisition(fetchDrink);
-
-  const [recomends, setRecomends] = useState(null);
-  const fetchRecomends = useCallback(() => (fetchApis()
-    .then(({ meals }) => setRecomends(meals.slice(0, 6).map((meal) => handleFoodsData(meal))))
-  ), []);
-  const [{ loading: loadingRecom, error: errorRecom }] = useRequisition(fetchRecomends);
+function DrinkDetailsPage({ id, type }) {
+  const [{ loading, error, recipe }] = useRequisition(
+    createURL(type, `lookup.php?i=${id}`), useCB(handleData(type, 1), [type]),
+  );
+  const [{ loading: loadRecom, error: errRecom, recipe: recomends }] = useRequisition(
+    createURL(otherType(type)), useCB(handleData(otherType(type)), [type]),
+  );
 
   if (error) return <h1>Aconteceu algo errado em detalhes de bebidas</h1>;
   if (loading) return <h1>Carrgando detalhes de bebidas...</h1>;
   return (
     <div>
-      <DetailsCard type="drink" recipe={drink} />
-      {errorRecom && <h3 data-testid="error-details">Aconteceu algo errado em recomendações</h3>}
-      {!errorRecom && loadingRecom && <h3>Carregando detalhes de comida...</h3>}
-      {!errorRecom && !loadingRecom && recomends && <Carrosel cards={recomends} />}
+      <DetailsCard type="drink" recipe={recipe[0]} />
+      {errRecom && <h3 data-testid="error-details">Aconteceu algo errado em recomendações</h3>}
+      {!errRecom && loadRecom && <h3>Carregando detalhes de comida...</h3>}
+      {!errRecom && !loadRecom && recomends && <Carrosel cards={recomends} />}
     </div>
   );
 }
 
 DrinkDetailsPage.propTypes = {
   id: PropTypes.number.isRequired,
+  type: typeShape.isRequired,
 };
 
 export default DrinkDetailsPage;
