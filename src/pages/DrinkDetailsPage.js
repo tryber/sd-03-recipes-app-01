@@ -1,12 +1,13 @@
 import React, { useCallback as useCB } from 'react';
-import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 
 import { DetailsCard, Carrosel } from '../components';
 import useRequisition from '../hooks/requisition';
 import { handleData, createURL, otherType } from '../services/APIs/recipesApi';
 import { typeShape } from '../services/APIs/shapes';
 
-function DrinkDetailsPage({ id, type }) {
+function DrinkDetailsPage({ type }) {
+  const { id } = useParams();
   const [{ loading, error, recipe }] = useRequisition(
     createURL(type, `lookup.php?i=${id}`), useCB(handleData(type, 1), [type]),
   );
@@ -27,7 +28,6 @@ function DrinkDetailsPage({ id, type }) {
 }
 
 DrinkDetailsPage.propTypes = {
-  id: PropTypes.number.isRequired,
   type: typeShape.isRequired,
 };
 

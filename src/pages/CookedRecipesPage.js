@@ -10,7 +10,7 @@ function CookedRecipesPage() {
 
   useEffect(() => {
     setResults(data.filter((el) => el.type === filter));
-  }, [filter]);
+  }, [filter, data]);
 
   return (
     <div className="fav-list">
