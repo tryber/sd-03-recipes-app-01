@@ -2,6 +2,7 @@ import React, { useCallback as useCB } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import useRequisition from '../hooks/requisition';
 import { Card, CardFilters, Header, Footer, Loading } from '../components';
+import Grid from '@material-ui/core/Grid';
 
 import { typeShape } from '../services/APIs/shapes';
 import { handleCategs, handleData, translateType, createURL } from '../services/APIs/recipesApi';
@@ -22,16 +23,20 @@ function MainPage({ type }) {
 
   return (
     <div>
-      <Header titleTag={`${translateType(type)}s`} />
+      <Header titleTag={`${translateType(type)}s`} filterMode />
       { loadCats ? <Loading /> :
         errCats ? <h1>Something went wrong</h1> :
         <CardFilters type={type} categories={categories} />
       }
-      {recipe.slice(0, 12).map(({ id, name, srcImage }, index) => (
-        <Link key={id} to={`/${translateType(type)}s/${id}`}>
-          <Card name={name} index={index} srcImage={srcImage} />
-        </Link>
-      ))}
+      <Grid container spacing={1} justify="space-around">
+        {recipe.slice(0, 12).map(({ id, name, srcImage }, index) => (
+          <Grid item lg={3} key={id}>
+            <Link to={`/${translateType(type)}s/${id}`}>
+              <Card name={name} index={index} srcImage={srcImage} />
+            </Link>
+          </Grid>
+        ))}
+      </Grid>
       <Footer />
     </div>
   );
